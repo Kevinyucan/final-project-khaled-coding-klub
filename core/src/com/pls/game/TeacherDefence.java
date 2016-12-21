@@ -7,9 +7,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TeacherDefence extends ApplicationAdapter {
-	SpriteBatch batch;
+//to draw stuff	
+    private SpriteBatch batch;
 	Texture img;
+        
+        private StateManager stateManager;
+        
+        //resolution of the screen
+        public static final int WIDTH = 480;
+        public static final int HEIGHT = 800;
 	
+        
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
