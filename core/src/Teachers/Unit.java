@@ -8,6 +8,11 @@ package Teachers;
  *
  * @author yuk4142
  */
-public class Math extends Unit {
+public abstract class Unit {
+    
+    private int health;
+    private String name;
+    
+    
     
 }
