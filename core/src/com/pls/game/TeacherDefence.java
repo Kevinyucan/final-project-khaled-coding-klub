@@ -1,5 +1,6 @@
 package com.pls.game;
 
+import States.StateManager;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -22,6 +23,13 @@ public class TeacherDefence extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+                
+                
+                
+                State firstScreen = new MenuState(stateManager);
+                //set the screen (load first screen)
+                stateManager.push(firstScreen);
+                
 	}
 
 	@Override

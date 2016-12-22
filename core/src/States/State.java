@@ -4,10 +4,25 @@
  */
 package States;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 /**
  *
  * @author hadik9595
  */
-public class State {
+public abstract class State {
+    
+    private StateManager stateManager;
+    
+    public abstract void render(SpriteBatch batch);
+    public abstract void handleInput();
+    public abstract void update(float deltaTime);
+    public abstract void dispose();
+    
+    public StateManager getStateManager(){
+        return stateManager;
+    }
+    
+    
     
 }
