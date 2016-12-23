@@ -4,10 +4,12 @@
  */
 package com.pls.game;
 
+import com.badlogic.gdx.math.Vector3;
+
 /**
  *
  * @author hadik9595
  */
 public class Player {
-    
+    private Vector3 position;
 }

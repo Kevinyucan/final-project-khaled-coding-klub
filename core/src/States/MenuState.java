@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Vector3;
  *
  * @author hadik9595
  */
-public class MenuState {
+public class MenuState extends State {
         private Texture bg;
     private Texture button;
     
@@ -28,8 +28,8 @@ public class MenuState {
     
     public MenuState(StateManager gsm){
        super(gsm);
-       bg = new Texture("bg.png");
-       button = new Texture("playbtn.png");
+       
+     
        
        
        //stores the highscore... "highscore" is the name of file being stored
@@ -50,32 +50,21 @@ public class MenuState {
         //draws the score
         
         // the getviewwidth and height commands are used to stretch the screen according to your screen (phone or pc)
-        batch.draw(bg, 0, 0, getViewWidth(), getViewHeight());
+        //batch.draw(bg, 0, 0, getViewWidth(), getViewHeight());
         // to match the button and centre it!
-        batch.draw(button, getViewWidth()/2 - button.getWidth(), getViewHeight()/2 - button.getHeight());
-        font.draw(batch, "" + highScore, getViewWidth()/2, getViewHeight()-100);
+        //batch.draw(button, getViewWidth()/2 - button.getWidth(), getViewHeight()/2 - button.getHeight());
+        //font.draw(batch, "" + highScore, getViewWidth()/2, getViewHeight()-100);
         batch.end();
     }
 
     @Override
     public void handleInput() {
         if(Gdx.input.justTouched()){
-            //grabbing coordinates of mouse
-            Vector3 touch =  new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-            //convert that point to "game coordinates"
-            unproject(touch);
-            float buttonX = getViewWidth()/2 - button.getWidth();
-            float buttonY = getViewHeight()/2;
-            //check if button is pressed
-            if(touch.x > buttonX && touch.x < buttonX + button.getWidth()
-                    && touch.y > buttonY && touch.y < buttonY + button.getHeight()){
-                
-                StateManager gsm = getStateManager();
-            gsm.push(new PlayState(gsm));
+          
             }
             
         }
-    }
+    
     
     
     public void updateScore(){

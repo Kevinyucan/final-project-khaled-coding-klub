@@ -19,6 +19,11 @@ public abstract class State {
     public abstract void update(float deltaTime);
     public abstract void dispose();
     
+    public State(StateManager sm){
+        stateManager = sm;
+    }
+    
+    
     public StateManager getStateManager(){
         return stateManager;
     }
