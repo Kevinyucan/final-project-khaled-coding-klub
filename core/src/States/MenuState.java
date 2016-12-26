@@ -10,19 +10,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.pls.game.Game;
 
 /**
  *
  * @author hadik9595
  */
 public class MenuState extends State {
-        private Texture bg;
+    private Texture bg;
     private Texture button;
     
     
     private int highScore;
-    //for high score
-    private BitmapFont font;
+    
     
     //passes in the gamestate manager 
     
@@ -31,14 +31,13 @@ public class MenuState extends State {
        
      
        
-       
+        bg = new Texture("menu.jpg");
        //stores the highscore... "highscore" is the name of file being stored
        Preferences pref = Gdx.app.getPreferences("highscore");
        highScore = pref.getInteger("highscore", 0);
        
        highScore = 0;
-       //creates default 15pt Arial font
-       font = new BitmapFont();
+       
                                                         
     }
 
@@ -50,9 +49,9 @@ public class MenuState extends State {
         //draws the score
         
         // the getviewwidth and height commands are used to stretch the screen according to your screen (phone or pc)
-        //batch.draw(bg, 0, 0, getViewWidth(), getViewHeight());
+        batch.draw(bg, 0, 0);
         // to match the button and centre it!
-        //batch.draw(button, getViewWidth()/2 - button.getWidth(), getViewHeight()/2 - button.getHeight());
+        //batch.draw(button,0,0 ,   46, 66);
         //font.draw(batch, "" + highScore, getViewWidth()/2, getViewHeight()-100);
         batch.end();
     }
@@ -60,7 +59,8 @@ public class MenuState extends State {
     @Override
     public void handleInput() {
         if(Gdx.input.justTouched()){
-          
+          StateManager gsm = getStateManager();
+            gsm.push(new PlayState(gsm));
             }
             
         }

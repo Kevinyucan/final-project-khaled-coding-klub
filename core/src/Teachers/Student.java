@@ -6,8 +6,13 @@ package Teachers;
 
 /**
  *
- * @author yuk4142
+ * @author yuk4142, Khaled and Victor Guanine 
  */
-public class Student {
+public class Student extends Unit {
     
+    public Student(int x, int y, int movement, String textureName, int radius){
+        super(x,y,textureName,radius);
+        
+        
+    }
 }

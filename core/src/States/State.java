@@ -15,8 +15,8 @@ public abstract class State {
     private StateManager stateManager;
     
     public abstract void render(SpriteBatch batch);
-    public abstract void handleInput();
     public abstract void update(float deltaTime);
+    public abstract void handleInput();
     public abstract void dispose();
     
     public State(StateManager sm){
