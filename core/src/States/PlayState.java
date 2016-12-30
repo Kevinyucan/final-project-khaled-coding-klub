@@ -5,6 +5,7 @@
 package States;
 
 import Teachers.Student;
+import Teachers.Teacher;
 import com.badlogic.gdx.Gdx;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -21,7 +22,8 @@ import com.pls.game.AISprites;
  */
 public class PlayState extends State {
     
-    private Student unit;
+    private Student student;
+    private Teacher teacher;
     private Texture bg;
     private Texture character;
     
@@ -32,7 +34,7 @@ public class PlayState extends State {
     public PlayState(StateManager sm){
         super(sm);
         bg = new Texture("background.jpg");
-        unit = new Student(0, 0,1, "teacher.jpg", 5);
+        student = new Student(0, 0,1, "teacher.jpg", 5);
         
         
         
@@ -49,7 +51,7 @@ public class PlayState extends State {
         batch.begin();
         batch.draw(bg, 0, 0);
         
-        unit.render(batch);
+        student.render(batch);
 
         batch.end();
     }
@@ -61,14 +63,21 @@ public class PlayState extends State {
 
     @Override
     public void update(float deltaTime) {
-       unit.update(deltaTime);
+       student.update(deltaTime);
+       
+       
+       
+       if(student.collides(teacher)){
+           StateManager gsm = getStateManager();
+            gsm.pop();
+       }
     }
  
     
     @Override
     public void dispose() {
         bg.dispose();
-        unit.dispose();
+        student.dispose();
        
     }
     

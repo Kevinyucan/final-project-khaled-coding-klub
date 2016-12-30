@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -18,11 +20,10 @@ import com.badlogic.gdx.utils.Array;
 public class Game extends ApplicationAdapter {
 
 
-    private SpriteBatch batch;
-    Texture img;
     
+    private SpriteBatch batch;
   
-
+ 
     private StateManager stateManager;
 
     //resolution of the screen
@@ -41,9 +42,6 @@ public class Game extends ApplicationAdapter {
 
         Gdx.gl.glClearColor(0, 0, 0, 0);
 
-       
-        
-        
         stateManager = new StateManager();
 
         State firstScreen = new MenuState(stateManager);
@@ -63,14 +61,18 @@ public class Game extends ApplicationAdapter {
         stateManager.update(Gdx.graphics.getDeltaTime());
         // draw the screen
         stateManager.render(batch);
+
     }
 
     @Override
     public void dispose() {
         batch.dispose();
-        
 
     }
+    
+    
+
+
 
  
 }

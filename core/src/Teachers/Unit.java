@@ -94,6 +94,7 @@ public abstract class Unit {
         for (int i = 0; i < MathUtils.random(5, 10); i++) {
             //adds random point, 
             path.add(new Vector2(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight())));
+            
         }
         return path;
 
@@ -103,6 +104,11 @@ public abstract class Unit {
         //draws the background since it's static and we don't change it in middle of the game
         batchs.draw(unitModel, damage, damage);
 
+        
+        
+        
+        
+        
         //starts drawing (way to update screen)
         batch.begin();
         for (AISprites aiSprite : aiSprites) {
@@ -113,6 +119,7 @@ public abstract class Unit {
         //responsible for drawing the lines from point to point
         sr.setColor(Color.WHITE);
         sr.begin(ShapeType.Line);
+        
         //loop for drawing each line
         for (AISprites aiSprite : aiSprites) {
             Vector2 previous = aiSprite.getPath().first();
@@ -195,6 +202,16 @@ public abstract class Unit {
         unitModel.dispose();
         sprite.getTexture().dispose();
         sr.dispose();
+        
+    }
+    
+    
+    public boolean collides(Teacher a){
+        if(this.damageBounds.overlaps(a.getBounds())){
+            System.out.println("WE AE HIT");
+            
+        }
+        return false;
     }
 
 }
