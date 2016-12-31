@@ -24,25 +24,29 @@ public class AISprites extends Sprite {
     //The character essentially holds x and y coordinates 
     private Vector2 velocity = new Vector2();
     //Indicates how many pixels per seconds we move by, (tolerance is a way to notify once we reach 3 pixels before a waypoint)
-    private float speed = 500;
+    
     //waypoint
     private int waypoint = 0;
+    
+    private int speed;
     
     //an array of set points  (holds x and y ) 
     private Array<Vector2> path;
     
-    public AISprites(Sprite sprite, Array<Vector2> path){
+    public AISprites(Sprite sprite, Array<Vector2> path, int speed){
         super(sprite);
         this.path = path;
+        
+        this.speed = speed;
     }
 
     public void draw(SpriteBatch spriteBatch){
      //updates the screen
-     update(Gdx.graphics.getDeltaTime());   
+     update();   
      super.draw(spriteBatch);
     }
     
-    public void update(float delta){
+    public void update(){
         //the angle of the current point to next point which is used by arc tangent (inverse of tangent) hence (y,x)
         float angle = (float) Math.atan2(path.get(waypoint).y - getY(), path.get(waypoint).x - getX());
         
@@ -50,7 +54,7 @@ public class AISprites extends Sprite {
         velocity.set((float) Math.cos(angle)*speed, (float) Math.sin(angle)*speed);
         
         //update position (move to the waypoint)
-        setPosition(getX() + velocity.x * delta, getY() + velocity.y * delta);
+        setPosition(getNextX(), getNextY());
         //set rotation of the character, converts radians to degrees
         setRotation(angle * MathUtils.radiansToDegrees);
         
@@ -90,5 +94,23 @@ public class AISprites extends Sprite {
     public int getWaypoint() {
 		return waypoint;
 	}
+    
+    public float getXCord(){
+        return velocity.x;
+    }
+    
+    public float getYCord(){
+        return velocity.y;
+    }
+    
+    public float getNextX(){
+        return getX() + velocity.x * Gdx.graphics.getDeltaTime();
+    }
+    
+    public float getNextY(){
+        return getY() + velocity.y * Gdx.graphics.getDeltaTime();
+    }
+
+    
 }
 

@@ -16,8 +16,8 @@ public class Math extends Unit{
     private int movement;
     
     
-    public Math(int x, int y, String textureName, int radius, int damage){
-        super(x,y,textureName,radius);
+    public Math(int x, int y, String textureName, int radius, int movement){
+        super(x,y,movement,textureName,radius);
         
         this.movement = movement;
         this.damage = damage;

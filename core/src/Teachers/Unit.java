@@ -39,6 +39,8 @@ public abstract class Unit {
     private int damageRadius;
 
     private int health;
+    
+    private AISprites hello;
 
     private TextureRegion textures;
 
@@ -49,7 +51,7 @@ public abstract class Unit {
     private ShapeRenderer sr;
     private SpriteBatch batch;
 
-    public Unit(int x, int y, String textureName, int radius) {
+    public Unit(int x, int y,  int movement, String textureName, int radius) {
         sr = new ShapeRenderer();
         batch = new SpriteBatch();
         //initializes the unit's coords
@@ -59,14 +61,15 @@ public abstract class Unit {
         //unitModel = new Texture(textureName);
 
         //new changes 
-        sprite = new Sprite(new Texture(textureName));
+        sprite = new Sprite(unitModel);
         //set size of sprite
         sprite.setSize(50, 50);
         //set starting point
-        sprite.setOrigin(0, 0);
+        sprite.setOrigin(0,0);
+        
 
         aiSprites = new Array<AISprites>();
-        aiSprites.add(new AISprites(sprite, getRandomPath()));
+        aiSprites.add(new AISprites(sprite, getRandomPath(), movement));
 
         //the bounds where the teachers can attack once 
         //damageBounds = new Circle(position.x, position.y, unitModel.getWidth() + radius , unitModel.getHeight() + radius);
@@ -77,10 +80,17 @@ public abstract class Unit {
     public void fire() {
 
     }
+    
+    public void createCharacter(){
+        
+    }
+    
+    
 
     public void update(float deltaTime) {
 
         position.x += 1;
+        
 
         position.y = this.function((int) position.x);
 
@@ -134,6 +144,10 @@ public abstract class Unit {
         for (AISprites aiSprite : aiSprites) {
             for (Vector2 waypoint : aiSprite.getPath()) {
                 sr.circle(waypoint.x, waypoint.y, 5);
+                sr.circle(aiSprite.getNextX(),aiSprite.getNextY(), 40);
+                
+               
+                
             }
         }
         sr.end();
@@ -184,6 +198,15 @@ public abstract class Unit {
     public int getDamage() {
         return this.damage;
     }
+    
+ 
+    
+    public float getY(){
+        return position.y;
+    }
+    
+    
+   
 
     public int function(int x) {
 
@@ -207,11 +230,11 @@ public abstract class Unit {
     
     
     public boolean collides(Teacher a){
-        if(this.damageBounds.overlaps(a.getBounds())){
-            System.out.println("WE AE HIT");
+        if(damageBounds.overlaps(a.getBounds())){
+//            return true;
             
         }
-        return false;
+       return false;
     }
 
 }
