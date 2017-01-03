@@ -13,12 +13,20 @@ import com.badlogic.gdx.math.Circle;
 public class Teacher extends Unit {
     
      private Circle damageBounds;
+     private int damageRadius;
     
-      public Teacher(int x, int y,int movement, String textureName, int radius){
-        super(x,y,movement,textureName,radius);
+      public Teacher(int x, int y,int movement,  String textureName,int radius ){
+        super(x,y,textureName);
+        
+        this.damageRadius = radius;
         
         
     }
+      
+      
+      public int getRadius(){
+          return damageRadius;
+      }
 
 
 }

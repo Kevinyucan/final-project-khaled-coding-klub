@@ -27,17 +27,21 @@ public class Game extends ApplicationAdapter {
     private StateManager stateManager;
 
     //resolution of the screen
-    public static final int WIDTH = 1000;
-    public static final int HEIGHT = 1000;
+    public static final int WIDTH = 480;
+    public static final int HEIGHT = 800;
 
     //The price to hire teachers
     public static final int SCIENCE = 150;
     public static final int MATH = 200;
     public static final int GYM = 75;
     public static final int ART = 100;
+    
+    public int studentAmount = 3;
+    
 
     @Override
     public void create() {
+        
         batch = new SpriteBatch();
 
         Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -70,6 +74,10 @@ public class Game extends ApplicationAdapter {
 
     }
     
+      
+    public int getStudentAmount(){
+        return studentAmount;
+    }
     
 
 

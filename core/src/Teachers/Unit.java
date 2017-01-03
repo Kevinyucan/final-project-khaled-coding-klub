@@ -4,9 +4,13 @@
  */
 package Teachers;
 
+import States.PlayState;
+import States.State;
+import States.StateManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -28,6 +32,7 @@ import com.pls.game.Game;
  */
 public abstract class Unit {
 
+    private Game game;
     private int damage;
     //An instance used for holding position (x,y,z)
     private Vector3 position;
@@ -39,26 +44,41 @@ public abstract class Unit {
     private int damageRadius;
 
     private int health;
+    private int amount;
     
-    private AISprites hello;
+    
 
     private TextureRegion textures;
-
+    BitmapFont font = new BitmapFont(); 
     //new changes
     private Array<AISprites> aiSprites;
     private Sprite sprite;
     //instance variable designated for shaping a path
     private ShapeRenderer sr;
     private SpriteBatch batch;
+    
+    private Student student;
+    private Teacher[] teacher;
+    
+    private AISprites spritee;
 
-    public Unit(int x, int y,  int movement, String textureName, int radius) {
+    public Unit(int x, int y, String textureName) {
         sr = new ShapeRenderer();
         batch = new SpriteBatch();
+        game = new Game();
+        
+       
+        
+        
+        
+        
         //initializes the unit's coords
         position = new Vector3(x, y, 0);
         //intializes the unit's texture
         unitModel = new Texture(textureName);
         //unitModel = new Texture(textureName);
+        
+       
 
         //new changes 
         sprite = new Sprite(unitModel);
@@ -67,13 +87,26 @@ public abstract class Unit {
         //set starting point
         sprite.setOrigin(0,0);
         
+        //sets the coordinates of each character
+        sprite.setPosition(x, y);
+        
+        
 
         aiSprites = new Array<AISprites>();
-        aiSprites.add(new AISprites(sprite, getRandomPath(), movement));
+        
+        aiSprites.add(new AISprites(sprite, getRandomPath(), 100));
 
         //the bounds where the teachers can attack once 
         //damageBounds = new Circle(position.x, position.y, unitModel.getWidth() + radius , unitModel.getHeight() + radius);
-        damageBounds = new Circle(sprite.getX(), sprite.getY(), radius);
+       
+        
+        for (AISprites aiSprite : aiSprites) {
+            Student c = (Student)student;
+            damageBounds = new Circle(aiSprite.getNextX() + aiSprite.getWidth()/2, aiSprite.getNextY() + aiSprite.getHeight()/2, 100);
+            amount++;
+        }
+        
+        
 
     }
 
@@ -81,21 +114,22 @@ public abstract class Unit {
 
     }
     
-    public void createCharacter(){
-        
-    }
+    
     
     
 
     public void update(float deltaTime) {
 
-        position.x += 1;
         
 
-        position.y = this.function((int) position.x);
-
         // set the new bounds
-        damageBounds.setPosition(position.x, position.y);
+        for (AISprites aiSprite : aiSprites) {
+            
+            sprite.setX(aiSprite.getY());
+            sprite.setY(aiSprite.getX());
+            
+        damageBounds.setPosition(sprite.getX(), sprite.getY());
+        }
     }
 
     //new changes
@@ -103,7 +137,25 @@ public abstract class Unit {
         Array<Vector2> path = new Array<Vector2>();
         for (int i = 0; i < MathUtils.random(5, 10); i++) {
             //adds random point, 
-            path.add(new Vector2(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight())));
+            //path.add(new Vector2(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight())));
+           path.add(new Vector2(338, 0)); 
+           path.add(new Vector2(338, 99));
+           path.add(new Vector2(542, 99));
+            path.add(new Vector2(542, Gdx.graphics.getHeight() - 120));
+   
+           path.add(new Vector2(50, Gdx.graphics.getHeight() - 120));
+           path.add(new Vector2(50, 254));
+           path.add(new Vector2(257, 254));
+           path.add(new Vector2(257, 0));
+           
+           
+           
+          
+           
+           
+           
+           
+           
             
         }
         return path;
@@ -112,18 +164,24 @@ public abstract class Unit {
 
     public void render(SpriteBatch batchs) {
         //draws the background since it's static and we don't change it in middle of the game
-        batchs.draw(unitModel, damage, damage);
+        batchs.draw(unitModel, 0, 0);
 
         
-        
+          
+
         
         
         
         //starts drawing (way to update screen)
         batch.begin();
+        
         for (AISprites aiSprite : aiSprites) {
             aiSprite.draw(batch);
+            
+            
+            font.draw(batch, ""+ 100 , aiSprite.getX() + sprite.getWidth()/2 - 10, aiSprite.getY() + sprite.getHeight() + 20 );
         }
+       
         batch.end();
 
         //responsible for drawing the lines from point to point
@@ -135,18 +193,23 @@ public abstract class Unit {
             Vector2 previous = aiSprite.getPath().first();
             for (Vector2 waypoint : aiSprite.getPath()) {
                 sr.line(previous, waypoint);
+//                sr.ellipse(0, 0, 300, 400);
+                
+                
                 previous = waypoint;
             }
         }
         sr.end();
 
-        sr.begin(ShapeType.Filled);
+        sr.setColor(Color.RED);
+        sr.begin(ShapeType.Line);
+       
         for (AISprites aiSprite : aiSprites) {
             for (Vector2 waypoint : aiSprite.getPath()) {
                 sr.circle(waypoint.x, waypoint.y, 5);
-                sr.circle(aiSprite.getNextX(),aiSprite.getNextY(), 40);
+                sr.circle(aiSprite.getNextX() + aiSprite.getWidth()/2,aiSprite.getNextY() + aiSprite.getHeight()/2, damageRadius);
                 
-               
+              
                 
             }
         }
@@ -188,6 +251,7 @@ public abstract class Unit {
     }
 
     public Circle getBounds() {
+        
         return damageBounds;
     }
 
@@ -206,6 +270,7 @@ public abstract class Unit {
     }
     
     
+    
    
 
     public int function(int x) {
@@ -221,20 +286,34 @@ public abstract class Unit {
         }
     }
 
-    public void dispose() {
-        unitModel.dispose();
-        sprite.getTexture().dispose();
-        sr.dispose();
-        
-    }
+   
     
     
     public boolean collides(Teacher a){
+       
         if(damageBounds.overlaps(a.getBounds())){
+            
 //            return true;
+            
+           
+            
             
         }
        return false;
+    }
+    
+     public void dispose() {
+        unitModel.dispose();
+        sprite.getTexture().dispose();
+        sr.dispose();
+        font.dispose();
+        
+        
+        
+    }
+
+    public void createCharacter(float x, float y) {
+        
     }
 
 }

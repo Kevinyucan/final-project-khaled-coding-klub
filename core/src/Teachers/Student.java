@@ -11,9 +11,14 @@ package Teachers;
 public class Student extends Unit {
     
     private int movement;
-    
-    public Student(int x, int y, int movement, String textureName, int radius){
-        super(x,y,movement,textureName,radius);
+    private int health;
+  
+    public Student(int x, int y, int movement, int health, String textureName){
+        super(x,y,textureName);
+        
+        this.health = health;
+        this.movement = movement;
+        
         
         
         
@@ -23,4 +28,10 @@ public class Student extends Unit {
      public int getSpeed(){
         return this.movement;
     }
+     
+     public int getHealth(){
+         return this.health;
+     }
+     
+     
 }

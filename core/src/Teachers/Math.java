@@ -14,13 +14,15 @@ public class Math extends Unit{
     
     private int damage;
     private int movement;
+    private int health;
     
     
-    public Math(int x, int y, String textureName, int radius, int movement){
-        super(x,y,movement,textureName,radius);
+    public Math(int x, int y,int health, String textureName, int movement){
+        super(x,y,textureName);
         
         this.movement = movement;
         this.damage = damage;
+        this.health = health; 
         
         
     }
