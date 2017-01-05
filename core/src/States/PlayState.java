@@ -8,10 +8,13 @@ import Teachers.Student;
 import Teachers.Teacher;
 import Teachers.Unit;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -34,13 +37,18 @@ public class PlayState extends State {
     private Texture panel;
     
     private boolean deployed;
-    private int money;
+    private int money = 30;
     private int teacherAmount = 1;
-    
-    public int wave;
     public int studentAmount = 1;
+    public int wave;
+   
+    BitmapFont font = new BitmapFont();
     
     private Array<AISprites> aiSprites;
+    
+    //variable used to separate individual pieces within a picture
+    private TextureRegion region[];
+    private Texture balance;
     
    
     
@@ -50,7 +58,22 @@ public class PlayState extends State {
        setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
         bg = new Texture("Background.jpg");
         button = new Texture("button.jpg");
-        panel = new Texture("panel.jpg");
+        panel = new Texture("units.jpg");
+        balance = new Texture("money.jpg");
+        
+        
+       
+      
+        region = new TextureRegion[5];
+        region[0] = new TextureRegion(panel,0,0,136,156);
+        region[1] = new TextureRegion(panel,136,0,136,156);
+        region[2] = new TextureRegion(panel,136*2,0,136,156);
+        region[3] = new TextureRegion(panel,136*3,0,136,156);
+        region[4] = new TextureRegion(panel,136*4,0,136,156);
+        
+        
+        
+        
  
          student = new Student[studentAmount];
          teacher = new Teacher[teacherAmount];
@@ -75,11 +98,23 @@ public class PlayState extends State {
         batch.setProjectionMatrix(getCombinedCamera());
 
         batch.begin();
+        
         batch.draw(bg, 0 , 0,getViewWidth(), getViewHeight());
         
-        batch.draw(button, 0, 0);
-        batch.draw(panel, 0 , 0 , getViewWidth()/4, getViewHeight());
+        //batch.draw(button, 0, 0);
+        //batch.draw(panel, 0 , 0 , getViewWidth()/4, getViewHeight());
+//        batch.draw(region[0],panel.getWidth()- getViewWidth(), 0, getViewWidth()/8 , getViewHeight()/8);
+//        batch.draw(region[1], 0, 0, getViewWidth()/8, getViewHeight()/8);
+//        batch.draw(region[4], 0, 0, getViewWidth()/8, getViewHeight()/8);
+         
         
+         for (int i = 0; i < region.length; i++) {
+           batch.draw(region[i],i*64,0, getViewWidth()/8 , getViewHeight()/8);
+            
+        }
+         batch.draw(balance, getViewWidth() - balance.getWidth() + 109 , 0, getViewWidth()/3 , getViewHeight()/8); 
+           font.setColor(Color.BLACK);
+           font.draw(batch, "" + money, getViewWidth() - 125, 50 );
         
         for ( int i = 0; i < student.length; i++) {
             student[i].render(batch);
@@ -91,8 +126,9 @@ public class PlayState extends State {
         }
         
         
-
+         
         batch.end();
+       
         
       
     }
@@ -107,20 +143,30 @@ public class PlayState extends State {
             // Convert that point to "game coordinates"
             unproject(touch);
             System.out.println("Mouse X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY());
-            System.out.println("X: " + touch.x + " Y: " + touch.y );
+              System.out.println("X " + touch.x + " Y " + touch.y);
+
             
-              System.out.println("W "  + Gdx.graphics.getWidth());
-              System.out.println("H " + Gdx.graphics.getHeight());
+
             // Check if the button is pressed
-            float buttonX = 0;
-            float buttonY =0;
-            if (touch.x > buttonX && touch.x < buttonX + button.getWidth()
-                    && touch.y > buttonY && touch.y < buttonY + button.getHeight()) {
+              
+              for (int i = 0; i < region.length; i++) {
+              
+            float buttonX = i*64;
+            float buttonY = 0;
+            
+            if (touch.x > buttonX && touch.x < buttonX + region[i].getRegionWidth()/2
+                    && touch.y > buttonY && touch.y < buttonY + region[i].getRegionHeight()/2) {
+                
                 //unit.createCharacter(touch.x,touch.y);
-                teacherAmount++;
-                teacher[teacherAmount] = new Teacher((int)touch.x,(int)touch.y ,50, "student.jpg", 5);
+//                teacherAmount++;
+//                teacher[teacherAmount] = new Teacher((int)touch.x,(int)touch.y ,50, "student.jpg", 5);
                
             }
+              }
+  
+            
+            
+         
 
         }
 
@@ -145,6 +191,9 @@ public class PlayState extends State {
            StateManager gsm = getStateManager();
             gsm.pop();
        }
+       
+       
+       
     }
     }
   
@@ -153,6 +202,9 @@ public class PlayState extends State {
     public void dispose() {
         bg.dispose();
         button.dispose();
+        font.dispose();
+        panel.dispose();
+        balance.dispose();
 
         for (int i = 0; i < student.length; i++){
            student[i].dispose(); 

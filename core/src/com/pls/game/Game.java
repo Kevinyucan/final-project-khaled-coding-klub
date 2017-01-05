@@ -31,10 +31,10 @@ public class Game extends ApplicationAdapter {
     public static final int HEIGHT = 800;
 
     //The price to hire teachers
-    public static final int SCIENCE = 150;
-    public static final int MATH = 200;
-    public static final int GYM = 75;
-    public static final int ART = 100;
+    public static final int SCIENCE = 850;
+    public static final int MATH = 400;
+    public static final int PRINTER = 550;
+    public static final int ENGLISH = 2000;
     
     public int studentAmount = 3;
     

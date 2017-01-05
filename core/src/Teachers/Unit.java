@@ -46,7 +46,7 @@ public abstract class Unit {
     private int health;
     private int amount;
     
-    
+ 
 
     private TextureRegion textures;
     BitmapFont font = new BitmapFont(); 
@@ -139,24 +139,16 @@ public abstract class Unit {
             //adds random point, 
             //path.add(new Vector2(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight())));
            path.add(new Vector2(338, 0)); 
-           path.add(new Vector2(338, 99));
-           path.add(new Vector2(542, 99));
-            path.add(new Vector2(542, Gdx.graphics.getHeight() - 120));
+           path.add(new Vector2(338, 148));
+           path.add(new Vector2(542, 148));
+            path.add(new Vector2(542, Gdx.graphics.getHeight() - 115));
    
-           path.add(new Vector2(50, Gdx.graphics.getHeight() - 120));
-           path.add(new Vector2(50, 254));
-           path.add(new Vector2(257, 254));
+           path.add(new Vector2(50, Gdx.graphics.getHeight() - 115));
+           path.add(new Vector2(50, 270));
+           path.add(new Vector2(257, 270));
            path.add(new Vector2(257, 0));
            
-           
-           
-          
-           
-           
-           
-           
-           
-            
+
         }
         return path;
 
@@ -178,15 +170,24 @@ public abstract class Unit {
         for (AISprites aiSprite : aiSprites) {
             aiSprite.draw(batch);
             
-            
+           
             font.draw(batch, ""+ 100 , aiSprite.getX() + sprite.getWidth()/2 - 10, aiSprite.getY() + sprite.getHeight() + 20 );
         }
-       
+      
         batch.end();
 
         //responsible for drawing the lines from point to point
         sr.setColor(Color.WHITE);
         sr.begin(ShapeType.Line);
+        
+        sr.rect(542, 148, 55, 267);
+        sr.rect(50, 365,492 , 50);
+        sr.rect(50, 270, 55, 95);
+        sr.rect(50, 270, 207, 30);
+        sr.rect(257, 0, 50, 300);
+        sr.rect(307, 0, 30 , 132);
+        sr.rect(338, 0, 50, 190);
+        sr.rect(338, 148, 205, 42);
         
         //loop for drawing each line
         for (AISprites aiSprite : aiSprites) {
