@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -40,6 +41,7 @@ public abstract class Unit {
     private Texture unitModel;
     //instance for boundaries (TEMPORARY SINCE OUR IDEA IS NOT FULLY DEVELOPED) 
     private Circle damageBounds;
+    private Rectangle studentBounds;
 
     private int damageRadius;
 
@@ -59,10 +61,10 @@ public abstract class Unit {
     
     private Student student;
     private Teacher[] teacher;
-    
+    private int woah;
     private AISprites spritee;
 
-    public Unit(int x, int y, String textureName) {
+    public Unit(int x, int y, String textureName, int movement) {
         sr = new ShapeRenderer();
         batch = new SpriteBatch();
         game = new Game();
@@ -94,7 +96,7 @@ public abstract class Unit {
 
         aiSprites = new Array<AISprites>();
         
-        aiSprites.add(new AISprites(sprite, getRandomPath(), 100));
+        aiSprites.add(new AISprites(sprite, getRandomPath(), movement));
 
         //the bounds where the teachers can attack once 
         //damageBounds = new Circle(position.x, position.y, unitModel.getWidth() + radius , unitModel.getHeight() + radius);
@@ -102,7 +104,8 @@ public abstract class Unit {
         
         for (AISprites aiSprite : aiSprites) {
             Student c = (Student)student;
-            damageBounds = new Circle(aiSprite.getNextX() + aiSprite.getWidth()/2, aiSprite.getNextY() + aiSprite.getHeight()/2, 100);
+            damageBounds = new Circle(aiSprite.getNextX() + aiSprite.getWidth()/2, aiSprite.getNextY() + aiSprite.getHeight()/2, 100 );
+            studentBounds = new Rectangle(aiSprite.getNextX(), aiSprite.getNextY(), aiSprite.getWidth(), aiSprite.getHeight());
             amount++;
         }
         
@@ -120,16 +123,20 @@ public abstract class Unit {
 
     public void update(float deltaTime) {
 
-        
-
         // set the new bounds
         for (AISprites aiSprite : aiSprites) {
             
-            sprite.setX(aiSprite.getY());
-            sprite.setY(aiSprite.getX());
+            sprite.setX(aiSprite.getX());
+            sprite.setY(aiSprite.getY());
             
         damageBounds.setPosition(sprite.getX(), sprite.getY());
+        studentBounds.setPosition(sprite.getX(), sprite.getY());
+            
         }
+        
+        
+        
+        
     }
 
     //new changes
@@ -159,7 +166,6 @@ public abstract class Unit {
         batchs.draw(unitModel, 0, 0);
 
         
-          
 
         
         
@@ -171,7 +177,7 @@ public abstract class Unit {
             aiSprite.draw(batch);
             
            
-            font.draw(batch, ""+ 100 , aiSprite.getX() + sprite.getWidth()/2 - 10, aiSprite.getY() + sprite.getHeight() + 20 );
+            font.draw(batch, ""+ woah , aiSprite.getX() + sprite.getWidth()/2 - 5, aiSprite.getY() + sprite.getHeight() + 20 );
         }
       
         batch.end();
@@ -208,7 +214,7 @@ public abstract class Unit {
         for (AISprites aiSprite : aiSprites) {
             for (Vector2 waypoint : aiSprite.getPath()) {
                 sr.circle(waypoint.x, waypoint.y, 5);
-                sr.circle(aiSprite.getNextX() + aiSprite.getWidth()/2,aiSprite.getNextY() + aiSprite.getHeight()/2, damageRadius);
+                sr.circle(damageBounds.x + sprite.getWidth()/2 ,damageBounds.y + aiSprite.getHeight()/2, 100);
                 
               
                 
@@ -220,6 +226,7 @@ public abstract class Unit {
         sr.begin(ShapeType.Line);
         for (AISprites aiSprite : aiSprites) {
             sr.line(new Vector2(aiSprite.getX(), aiSprite.getY()), aiSprite.getPath().get(aiSprite.getWaypoint()));
+          
         }
         sr.end();
 
@@ -255,6 +262,10 @@ public abstract class Unit {
         
         return damageBounds;
     }
+    
+    public Rectangle getBoundaries(){
+        return studentBounds;
+    }
 
     public int getHealth() {
         return this.health;
@@ -274,27 +285,18 @@ public abstract class Unit {
     
    
 
-    public int function(int x) {
-
-        x = x * x;
-        int changeY = 2 * (x + 300) + 30;
-
-        if (changeY < Game.HEIGHT) {
-
-            return changeY;
-        } else {
-            return 0;
-        }
-    }
+  
 
    
     
     
     public boolean collides(Teacher a){
        
-        if(damageBounds.overlaps(a.getBounds())){
+        if(Intersector.overlaps(a.getBounds(), getBoundaries())){
+           
+          
             
-//            return true;
+          return true;
             
            
             
@@ -313,8 +315,5 @@ public abstract class Unit {
         
     }
 
-    public void createCharacter(float x, float y) {
-        
-    }
-
+  
 }

@@ -18,9 +18,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.utils.Array;
 import com.pls.game.AISprites;
 import com.pls.game.Game;
+import java.util.ArrayList;
 
 /**
  *
@@ -37,7 +41,8 @@ public class PlayState extends State {
     private Texture panel;
     
     private boolean deployed;
-    private int money = 30;
+    private int money;
+    private int passed;
     private int teacherAmount = 1;
     public int studentAmount = 1;
     public int wave;
@@ -49,7 +54,8 @@ public class PlayState extends State {
     //variable used to separate individual pieces within a picture
     private TextureRegion region[];
     private Texture balance;
-    
+    ArrayList<Unit> obj = new ArrayList<Unit>();
+    private Array<Unit> help;
    
     
     public PlayState(StateManager sm){
@@ -72,17 +78,19 @@ public class PlayState extends State {
         region[4] = new TextureRegion(panel,136*4,0,136,156);
         
         
-        
+       
         
  
          student = new Student[studentAmount];
          teacher = new Teacher[teacherAmount];
         for (int i = 0; i < student.length; i++) {
             student[i] = new Student(338, 0,100,200, "student.jpg");
-            teacher[i] = new Teacher(338, 0,100, "teacher.jpg", 70);
+            teacher[i] = new Teacher(338, 300,0, "teacher.jpg", 100);
+            
+            
         }
         
-        
+        DragAndDrop dnd = new DragAndDrop();
         
         
         
@@ -100,7 +108,7 @@ public class PlayState extends State {
         batch.begin();
         
         batch.draw(bg, 0 , 0,getViewWidth(), getViewHeight());
-        
+       
         //batch.draw(button, 0, 0);
         //batch.draw(panel, 0 , 0 , getViewWidth()/4, getViewHeight());
 //        batch.draw(region[0],panel.getWidth()- getViewWidth(), 0, getViewWidth()/8 , getViewHeight()/8);
@@ -136,7 +144,7 @@ public class PlayState extends State {
     @Override
     public void handleInput() {
           if (Gdx.input.justTouched()) {
-              
+             
        // Get the mouse click/touch position
             Vector3 touch = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             
@@ -144,6 +152,7 @@ public class PlayState extends State {
             unproject(touch);
             System.out.println("Mouse X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY());
               System.out.println("X " + touch.x + " Y " + touch.y);
+               teacher[0] = new Teacher((int)touch.x,(int)touch.y ,0, "teacher.jpg", 100);
 
             
 
@@ -158,8 +167,11 @@ public class PlayState extends State {
                     && touch.y > buttonY && touch.y < buttonY + region[i].getRegionHeight()/2) {
                 
                 //unit.createCharacter(touch.x,touch.y);
-//                teacherAmount++;
-//                teacher[teacherAmount] = new Teacher((int)touch.x,(int)touch.y ,50, "student.jpg", 5);
+                
+                
+                System.out.println(teacherAmount);
+                System.out.println("Button " + i);
+               
                
             }
               }
@@ -174,6 +186,7 @@ public class PlayState extends State {
 
     @Override
     public void update(float deltaTime) {
+        
        for (int i = 0; i < student.length; i++){
         student[i].update(deltaTime);
        }
@@ -188,13 +201,18 @@ public class PlayState extends State {
         for ( int i = 0; i < student.length; i++){
        if(student[i].collides(teacher[i])){
            System.out.println("Ham");
-           StateManager gsm = getStateManager();
-            gsm.pop();
+           money = money + 100;
+//           StateManager gsm = getStateManager();
+//            gsm.pop();
        }
        
        
        
     }
+    }
+    
+    public int getMoney(){
+        return money;
     }
   
     
@@ -216,6 +234,17 @@ public class PlayState extends State {
        
     }
     
-   
+    public Payload dragStart(InputEvent event, float x, float y, int pointer) {
+        Teacher item = teacher[0];
+        payload.setObject(item);
+        inventory.getItems().removeIndex(inventory.getSelectedIndex());
+        payload.setDragActor(new Label(item, skin));
+        payload.setInvalidDragActor(new Label(item + " (\"No thanks!\")", skin));
+        payload.setValidDragActor(new Label(item + " (\"I'll buy this!\")", skin));
+        return payload;
+    }
+    
+  
+
     
 }

@@ -46,6 +46,7 @@ public class AISprites extends Sprite {
     }
 
     public void update() {
+      
         //the angle of the current point to next point which is used by arc tangent (inverse of tangent) hence (y,x)
         float angle = (float) Math.atan2(path.get(waypoint).y - getY(), path.get(waypoint).x - getX());
 

@@ -18,11 +18,11 @@ public class Math extends Unit{
     
     
     public Math(int x, int y,int health, String textureName, int movement){
-        super(x,y,textureName);
+        super(x,y,textureName,movement);
         
-        this.movement = movement;
-        this.damage = damage;
-        this.health = health; 
+//        this.movement = movement;
+//        this.damage = damage;
+//        this.health = health; 
         
         
     }

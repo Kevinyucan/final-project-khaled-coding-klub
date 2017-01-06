@@ -14,10 +14,10 @@ public class Student extends Unit {
     private int health;
   
     public Student(int x, int y, int movement, int health, String textureName){
-        super(x,y,textureName);
+        super(x,y,textureName, movement);
         
-        this.health = health;
-        this.movement = movement;
+//        this.health = health;
+//        this.movement = movement;
         
         
         
