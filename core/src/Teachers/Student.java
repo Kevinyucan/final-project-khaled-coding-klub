@@ -16,8 +16,8 @@ public class Student extends Unit {
     public Student(int x, int y, int movement, int health, String textureName){
         super(x,y,textureName, movement);
         
-//        this.health = health;
-//        this.movement = movement;
+        this.health = health;
+        this.movement = movement;
         
         
         
@@ -30,8 +30,13 @@ public class Student extends Unit {
     }
      
      public int getHealth(){
+         
          return this.health;
+         
      }
+     
+     
+     
      
      
 }

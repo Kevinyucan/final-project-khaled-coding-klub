@@ -19,12 +19,20 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.Array;
 import com.pls.game.AISprites;
 import com.pls.game.Game;
-import java.util.ArrayList;
+
 
 /**
  *
@@ -46,15 +54,20 @@ public class PlayState extends State {
     private int teacherAmount = 1;
     public int studentAmount = 1;
     public int wave;
+    
+    private Stage stage;
    
+    //Skin skin = Assets.manager.get(Assets.uiskin, Skin.class);
+    
     BitmapFont font = new BitmapFont();
     
     private Array<AISprites> aiSprites;
+    private Array<Student> students;
     
     //variable used to separate individual pieces within a picture
     private TextureRegion region[];
     private Texture balance;
-    ArrayList<Unit> obj = new ArrayList<Unit>();
+    
     private Array<Unit> help;
    
     
@@ -67,9 +80,8 @@ public class PlayState extends State {
         panel = new Texture("units.jpg");
         balance = new Texture("money.jpg");
         
+        students = new Array<Student>();
         
-       
-      
         region = new TextureRegion[5];
         region[0] = new TextureRegion(panel,0,0,136,156);
         region[1] = new TextureRegion(panel,136,0,136,156);
@@ -86,11 +98,13 @@ public class PlayState extends State {
         for (int i = 0; i < student.length; i++) {
             student[i] = new Student(338, 0,100,200, "student.jpg");
             teacher[i] = new Teacher(338, 300,0, "teacher.jpg", 100);
+          
             
             
         }
         
-        DragAndDrop dnd = new DragAndDrop();
+         students.add(new Student(400, 0,100,200, "teacher.jpg"));
+          students.add(new Student(400, 0,50,200, "teacher.jpg"));
         
         
         
@@ -106,7 +120,7 @@ public class PlayState extends State {
         batch.setProjectionMatrix(getCombinedCamera());
 
         batch.begin();
-        
+       
         batch.draw(bg, 0 , 0,getViewWidth(), getViewHeight());
        
         //batch.draw(button, 0, 0);
@@ -126,13 +140,17 @@ public class PlayState extends State {
         
         for ( int i = 0; i < student.length; i++) {
             student[i].render(batch);
+            
         }
         //student.render(batch);
         
         for (int i = 0; i < teacherAmount; i++) {
             teacher[i].render(batch);
         }
-        
+         for (Student student : students) {
+           student.render(batch);
+         }
+            
         
          
         batch.end();
@@ -152,7 +170,7 @@ public class PlayState extends State {
             unproject(touch);
             System.out.println("Mouse X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY());
               System.out.println("X " + touch.x + " Y " + touch.y);
-               teacher[0] = new Teacher((int)touch.x,(int)touch.y ,0, "teacher.jpg", 100);
+               
 
             
 
@@ -168,9 +186,10 @@ public class PlayState extends State {
                 
                 //unit.createCharacter(touch.x,touch.y);
                 
-                
-                System.out.println(teacherAmount);
+           
+               
                 System.out.println("Button " + i);
+                create();
                
                
             }
@@ -195,20 +214,41 @@ public class PlayState extends State {
         teacher[i].update(deltaTime);
        }
        
+       for (Student student : students) {
+           student.update(deltaTime);
+         }
        
-       
-        
+        for (Student studentz : students){
         for ( int i = 0; i < student.length; i++){
-       if(student[i].collides(teacher[i])){
-           System.out.println("Ham");
+       if(studentz.collides(teacher[i])){
+           
+           
            money = money + 100;
+         
+        
+           
 //           StateManager gsm = getStateManager();
 //            gsm.pop();
+           
+       }
+       //array method
+        if(student[i].collides(teacher[i])){
+           
+           money = money + 100;
+           
+           
+//           StateManager gsm = getStateManager();
+//            gsm.pop();
+           
        }
        
        
-       
+         if(students.get(i).getHealth() <= -100){
+               students.removeIndex(i);
+           }
     }
+        }
+       
     }
     
     public int getMoney(){
@@ -223,6 +263,7 @@ public class PlayState extends State {
         font.dispose();
         panel.dispose();
         balance.dispose();
+        stage.dispose();
 
         for (int i = 0; i < student.length; i++){
            student[i].dispose(); 
@@ -233,17 +274,87 @@ public class PlayState extends State {
         }
        
     }
+ 
     
-    public Payload dragStart(InputEvent event, float x, float y, int pointer) {
-        Teacher item = teacher[0];
-        payload.setObject(item);
-        inventory.getItems().removeIndex(inventory.getSelectedIndex());
-        payload.setDragActor(new Label(item, skin));
-        payload.setInvalidDragActor(new Label(item + " (\"No thanks!\")", skin));
-        payload.setValidDragActor(new Label(item + " (\"I'll buy this!\")", skin));
-        return payload;
+    
+  
+    
+    public void create () {
+		stage = new Stage();
+		Gdx.input.setInputProcessor(stage);
+System.out.println("Dragging");
+		final Skin skin = new Skin();
+		skin.add("default", new LabelStyle(new BitmapFont(), Color.WHITE));
+		skin.add("badlogic", new Texture("student.jpg"));
+
+		Image sourceImage = new Image(skin, "badlogic");
+		sourceImage.setBounds(50, 125, 100, 100);
+		stage.addActor(sourceImage);
+
+		Image validTargetImage = new Image(skin, "badlogic");
+		validTargetImage.setBounds(200, 50, 100, 100);
+		stage.addActor(validTargetImage);
+
+		Image invalidTargetImage = new Image(skin, "badlogic");
+		invalidTargetImage.setBounds(200, 200, 100, 100);
+		stage.addActor(invalidTargetImage);
+
+		DragAndDrop dragAndDrop = new DragAndDrop();
+    
+    	dragAndDrop.addSource(new Source(sourceImage) {
+			public Payload dragStart (InputEvent event, float x, float y, int pointer) {
+				Payload payload = new Payload();
+				payload.setObject(payload);
+
+				payload.setDragActor(new Label("Some payload!", skin));
+
+				Label validLabel = new Label("Some payload!", skin);
+				validLabel.setColor(0, 1, 0, 1);
+				payload.setValidDragActor(validLabel);
+                                
+                                
+
+				Label invalidLabel = new Label("Some payload!", skin);
+				invalidLabel.setColor(1, 0, 0, 1);
+				payload.setInvalidDragActor(invalidLabel);
+
+				return payload;
+			}
+		});
+            dragAndDrop.addTarget(new Target(validTargetImage) {
+			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
+				getActor().setColor(Color.GREEN);
+				return true;
+			}
+
+                    @Override
+                    public void drop(Source source, Payload payload, float x, float y, int pointer) {
+                        System.out.println("Nice");
+                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    }
+        });
+                }
+    
+    
+    
+    
+    
+    
+    
+    public void dragStop(InputEvent event, float x, float y, int pointer, Payload payload, Target target) {
+        if (target == null) {
+            
+        }
+        
+       
+        
     }
+     public void resize (int width, int height) {
+		stage.getViewport().update(width, height, true);
+	}
     
+    
+
   
 
     
