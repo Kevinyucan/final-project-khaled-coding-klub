@@ -148,7 +148,7 @@ public class PlayState extends State {
             teacher[i].render(batch);
         }
          for (Student student : students) {
-           student.render(batch);
+           student.renderz(batch);
             
             
              
@@ -165,6 +165,7 @@ public class PlayState extends State {
     @Override
     public void handleInput() {
           if (Gdx.input.justTouched()) {
+              
              
        // Get the mouse click/touch position
             Vector3 touch = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -229,8 +230,8 @@ public class PlayState extends State {
          }
        
         for (Student studentz : students){
-        for ( int i = 0; i < student.length; i++){
-       if(studentz.collides(teacher[i])){
+        for ( int i = 0; i < students.size; i++){
+       if(studentz.collides(teacher[0])){
            int temp = students.get(i).getHealth();
            temp--;
            students.get(i).setHealth(temp);
@@ -246,7 +247,7 @@ public class PlayState extends State {
        
        
        //array method
-        if(studentz.collides(teacher[i])){
+        if(studentz.collides(teacher[0])){
            
            money = money + 100;
            

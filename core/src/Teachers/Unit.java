@@ -181,15 +181,10 @@ public abstract class Unit {
             
         }
         
-        font.draw(batch, "" + health, sprite.getX() + sprite.getWidth() / 2 - 5, sprite.getY() + sprite.getHeight() + 20);
+//        font.draw(batch, "" + health, sprite.getX() + sprite.getWidth() / 2 - 5, sprite.getY() + sprite.getHeight() + 20);
 
      
-         for (Student student : students) {
-          
-            font.draw(batch, "SONICCCC" + student.getHealth(), student.getX() , student.getY() );
-             System.out.println("Snacky "+student.getHealth());
-             
-         }
+      
       
         batch.end();
 
@@ -287,11 +282,11 @@ public abstract class Unit {
  
     
     public float getY(){
-        return position.y;
+        return sprite.getY();
     }
     
     public float getX(){
-        return position.x;
+        return sprite.getX();
     }
     
     public Texture getTexture(){
