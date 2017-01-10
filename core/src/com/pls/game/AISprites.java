@@ -92,6 +92,7 @@ public class AISprites extends Sprite {
     public Array<Vector2> getPath() {
         return path;
     }
+   
 
     public int getWaypoint() {
         return waypoint;

@@ -35,6 +35,12 @@ public class Student extends Unit {
          
      }
      
+     public void setHealth(int hp){
+         this.health = hp;
+     }
+     
+     
+    
      
      
      

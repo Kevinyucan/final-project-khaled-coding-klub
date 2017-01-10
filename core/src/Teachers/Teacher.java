@@ -15,8 +15,8 @@ public class Teacher extends Unit {
      private Circle damageBounds;
      private int damageRadius;
     
-      public Teacher(int x, int y,int movement,  String textureName,int radius ){
-        super(x,y,textureName, movement);
+      public Teacher(int x, int y, int movement,  String textureName,int radius ){
+        super(x,y,textureName,movement);
         
         this.damageRadius = radius;
         

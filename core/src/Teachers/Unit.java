@@ -49,6 +49,7 @@ public abstract class Unit {
     private int amount;
     
  private Array<Student> students;
+ 
 
     private TextureRegion textures;
     BitmapFont font = new BitmapFont(); 
@@ -80,8 +81,9 @@ public abstract class Unit {
         unitModel = new Texture(textureName);
         //unitModel = new Texture(textureName);
         
-       
-
+ 
+        
+ 
         //new changes 
         sprite = new Sprite(unitModel);
         //set size of sprite
@@ -105,9 +107,9 @@ public abstract class Unit {
         
         for (AISprites aiSprite : aiSprites) {
           
-            damageBounds = new Circle(aiSprite.getNextX() + aiSprite.getWidth()/2, aiSprite.getNextY() + aiSprite.getHeight()/2, 100 );
-            studentBounds = new Rectangle(aiSprite.getNextX(), aiSprite.getNextY(), aiSprite.getWidth(), aiSprite.getHeight());
-            amount++;
+            damageBounds = new Circle(aiSprite.getX() + aiSprite.getWidth()/2, aiSprite.getY() + aiSprite.getHeight()/2, 100 );
+            studentBounds = new Rectangle(aiSprite.getX(), aiSprite.getY(), aiSprite.getWidth(), aiSprite.getHeight());
+            
         }
         
         
@@ -164,7 +166,7 @@ public abstract class Unit {
 
     public void render(SpriteBatch batchs) {
         //draws the background since it's static and we don't change it in middle of the game
-        //batchs.draw(unitModel, 0, 0);
+        batchs.draw(unitModel, 0, 0);
 
         
 
@@ -177,13 +179,17 @@ public abstract class Unit {
         for (AISprites aiSprite : aiSprites) {
             aiSprite.draw(batch);
             
-            
-           
-            font.draw(batch, ""+ health , aiSprite.getX() + sprite.getWidth()/2 - 5, aiSprite.getY() + sprite.getHeight() + 20 );
         }
         
-        
+        font.draw(batch, "" + health, sprite.getX() + sprite.getWidth() / 2 - 5, sprite.getY() + sprite.getHeight() + 20);
+
      
+         for (Student student : students) {
+          
+            font.draw(batch, "SONICCCC" + student.getHealth(), student.getX() , student.getY() );
+             System.out.println("Snacky "+student.getHealth());
+             
+         }
       
         batch.end();
 
@@ -219,7 +225,7 @@ public abstract class Unit {
         for (AISprites aiSprite : aiSprites) {
             for (Vector2 waypoint : aiSprite.getPath()) {
                 sr.circle(waypoint.x, waypoint.y, 5);
-                sr.circle(damageBounds.x + sprite.getWidth()/2 ,damageBounds.y + aiSprite.getHeight()/2, 100);
+                sr.circle(sprite.getX() + sprite.getWidth()/2 ,damageBounds.y + aiSprite.getHeight()/2, 100);
                 
               
                 
@@ -284,10 +290,18 @@ public abstract class Unit {
         return position.y;
     }
     
+    public float getX(){
+        return position.x;
+    }
+    
+    public Texture getTexture(){
+        return unitModel;
+    }
+  
     
     
    
-public void death(Student a){
+public void death(){
    System.out.println(students.size);
      for ( int i = 0; i < 2; i++){
           
@@ -306,7 +320,7 @@ public void death(Student a){
     public boolean collides(Teacher a){
         
         if(Intersector.overlaps(a.getBounds(), getBoundaries())){
-            
+           
            health--;
          
             

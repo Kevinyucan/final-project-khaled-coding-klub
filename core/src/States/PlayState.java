@@ -49,7 +49,7 @@ public class PlayState extends State {
     private Texture panel;
     
     private boolean deployed;
-    private int money;
+    public int money;
     private int passed;
     private int teacherAmount = 1;
     public int studentAmount = 1;
@@ -103,8 +103,8 @@ public class PlayState extends State {
             
         }
         
-         students.add(new Student(400, 0,100,200, "teacher.jpg"));
-          students.add(new Student(400, 0,50,200, "teacher.jpg"));
+         students.add(new Student(400, 0,100,0, "teacher.jpg"));
+          students.add(new Student(400, 0,200,0, "teacher.jpg"));
         
         
         
@@ -149,6 +149,9 @@ public class PlayState extends State {
         }
          for (Student student : students) {
            student.render(batch);
+            
+            
+             
          }
             
         
@@ -216,23 +219,34 @@ public class PlayState extends State {
        
        for (Student student : students) {
            student.update(deltaTime);
+           for ( int i = 0; i < students.size; i++){
+             
+                 if(students.get(i).getHealth() <= -100){
+               students.removeIndex(i);
+               
+           }
+           }
          }
        
         for (Student studentz : students){
         for ( int i = 0; i < student.length; i++){
        if(studentz.collides(teacher[i])){
-           
-           
+           int temp = students.get(i).getHealth();
+           temp--;
+           students.get(i).setHealth(temp);
            money = money + 100;
-         
+          
         
            
 //           StateManager gsm = getStateManager();
 //            gsm.pop();
            
        }
+       
+       
+       
        //array method
-        if(student[i].collides(teacher[i])){
+        if(studentz.collides(teacher[i])){
            
            money = money + 100;
            
@@ -242,10 +256,8 @@ public class PlayState extends State {
            
        }
        
-       
-         if(students.get(i).getHealth() <= -100){
-               students.removeIndex(i);
-           }
+        
+        
     }
         }
        
@@ -274,6 +286,8 @@ public class PlayState extends State {
         }
        
     }
+    
+   
  
     
     
