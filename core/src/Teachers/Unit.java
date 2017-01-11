@@ -45,6 +45,7 @@ public abstract class Unit {
 
     private int damageRadius;
 
+    private Map map;
     private int health;
     private int amount;
     
@@ -57,7 +58,7 @@ public abstract class Unit {
     private Array<AISprites> aiSprites;
     private Sprite sprite;
     //instance variable designated for shaping a path
-    private ShapeRenderer sr;
+    ShapeRenderer sr;
     private SpriteBatch batch;
     
     
@@ -70,7 +71,7 @@ public abstract class Unit {
         batch = new SpriteBatch();
         game = new Game();
         students = new Array<Student>();
-       
+       map = new Map();
         
         
         
@@ -98,7 +99,7 @@ public abstract class Unit {
 
         aiSprites = new Array<AISprites>();
         
-        aiSprites.add(new AISprites(sprite, getRandomPath(), movement));
+        aiSprites.add(new AISprites(sprite, map.getRandomPath(), movement ));
         
 
         //the bounds where the teachers can attack once 
@@ -119,6 +120,8 @@ public abstract class Unit {
     public void fire() {
 
     }
+    
+   
     
     
     
@@ -142,27 +145,7 @@ public abstract class Unit {
         
     }
 
-    //new changes
-    private Array<Vector2> getRandomPath() {
-        Array<Vector2> path = new Array<Vector2>();
-        for (int i = 0; i < MathUtils.random(5, 10); i++) {
-            //adds random point, 
-            //path.add(new Vector2(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight())));
-           path.add(new Vector2(338, 0)); 
-           path.add(new Vector2(338, 148));
-           path.add(new Vector2(542, 148));
-            path.add(new Vector2(542, Gdx.graphics.getHeight() - 115));
-   
-           path.add(new Vector2(50, Gdx.graphics.getHeight() - 115));
-           path.add(new Vector2(50, 270));
-           path.add(new Vector2(257, 270));
-           path.add(new Vector2(257, 0));
-           
 
-        }
-        return path;
-
-    }
 
     public void render(SpriteBatch batchs) {
         //draws the background since it's static and we don't change it in middle of the game
@@ -182,24 +165,29 @@ public abstract class Unit {
         }
         
 //        font.draw(batch, "" + health, sprite.getX() + sprite.getWidth() / 2 - 5, sprite.getY() + sprite.getHeight() + 20);
+       
 
      
       
       
         batch.end();
 
-        //responsible for drawing the lines from point to point
-        sr.setColor(Color.WHITE);
-        sr.begin(ShapeType.Line);
+        sr.end();
         
-        sr.rect(542, 148, 55, 267);
-        sr.rect(50, 365,492 , 50);
-        sr.rect(50, 270, 55, 95);
-        sr.rect(50, 270, 207, 30);
-        sr.rect(257, 0, 50, 300);
-        sr.rect(307, 0, 30 , 132);
-        sr.rect(338, 0, 50, 190);
-        sr.rect(338, 148, 205, 42);
+        map.drawSquares();
+        
+        //responsible for drawing the lines from point to point
+//        sr.setColor(Color.WHITE);
+//        sr.begin(ShapeType.Line);
+//        
+//        sr.rect(542, 148, 55, 267);
+//        sr.rect(50, 365,492 , 50);
+//        sr.rect(50, 270, 55, 95);
+//        sr.rect(50, 270, 207, 30);
+//        sr.rect(257, 0, 50, 300);
+//        sr.rect(307, 0, 30 , 132);
+//        sr.rect(338, 0, 50, 190);
+//        sr.rect(338, 148, 205, 42);
         
         //loop for drawing each line
         for (AISprites aiSprite : aiSprites) {
@@ -212,7 +200,7 @@ public abstract class Unit {
                 previous = waypoint;
             }
         }
-        sr.end();
+//        sr.end();
 
         sr.setColor(Color.RED);
         sr.begin(ShapeType.Line);
@@ -220,7 +208,7 @@ public abstract class Unit {
         for (AISprites aiSprite : aiSprites) {
             for (Vector2 waypoint : aiSprite.getPath()) {
                 sr.circle(waypoint.x, waypoint.y, 5);
-                sr.circle(sprite.getX() + sprite.getWidth()/2 ,damageBounds.y + aiSprite.getHeight()/2, 100);
+//                sr.circle(sprite.getX() + sprite.getWidth()/2 ,sprite.getY() + aiSprite.getHeight()/2, 100);
                 
               
                 
@@ -289,10 +277,15 @@ public abstract class Unit {
         return sprite.getX();
     }
     
-    public Texture getTexture(){
-        return unitModel;
+    public float getTextureWidth(){
+        
+        return sprite.getWidth();
     }
   
+    public float getTextureHeight(){
+        
+        return sprite.getHeight();
+    }
     
     
    

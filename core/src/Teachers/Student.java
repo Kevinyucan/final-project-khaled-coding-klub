@@ -23,6 +23,9 @@ public class Student extends Unit {
         
         this.health = health;
         this.movement = movement;
+        
+        
+        
 
     }
     
@@ -39,8 +42,10 @@ public class Student extends Unit {
      
      public void renderz(SpriteBatch batchs){
          batch.begin();
-        font.draw(batchs, "" + health, this.getX() + this.getTexture().getWidth() / 2 - 5, this.getY() + this.getTexture().getHeight() + 20);
-         super.render(batchs);
+         
+        font.draw(batch, "" + health, this.getX() + this.getTextureWidth() / 2 - 5, this.getY() + this.getTextureHeight() + 20);
+       
+         super.render(batch);
          batch.end();
      }
      

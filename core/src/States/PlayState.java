@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -40,8 +41,8 @@ import com.pls.game.Game;
  */
 public class PlayState extends State {
     
-    private Student[] student;
-    private Teacher[] teacher;
+//    private Student[] student;
+//    private Teacher[] teacher;
     private Unit unit;
     private Texture bg;
     private Texture character;
@@ -51,8 +52,8 @@ public class PlayState extends State {
     private boolean deployed;
     public int money;
     private int passed;
-    private int teacherAmount = 1;
-    public int studentAmount = 1;
+//    private int teacherAmount = 1;
+//    public int studentAmount = 1;
     public int wave;
     
     private Stage stage;
@@ -63,16 +64,18 @@ public class PlayState extends State {
     
     private Array<AISprites> aiSprites;
     private Array<Student> students;
+    private Array<Teacher> teachers;
     
     //variable used to separate individual pieces within a picture
     private TextureRegion region[];
     private Texture balance;
     
-    private Array<Unit> help;
    
+
     
     public PlayState(StateManager sm){
         super(sm);
+        
         setCameraView(Game.WIDTH, Game.HEIGHT);
        setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
         bg = new Texture("Background.jpg");
@@ -81,6 +84,7 @@ public class PlayState extends State {
         balance = new Texture("money.jpg");
         
         students = new Array<Student>();
+        teachers = new Array<Teacher>();
         
         region = new TextureRegion[5];
         region[0] = new TextureRegion(panel,0,0,136,156);
@@ -93,18 +97,19 @@ public class PlayState extends State {
        
         
  
-         student = new Student[studentAmount];
-         teacher = new Teacher[teacherAmount];
-        for (int i = 0; i < student.length; i++) {
-            student[i] = new Student(338, 0,100,200, "student.jpg");
-            teacher[i] = new Teacher(338, 300,0, "teacher.jpg", 100);
-          
-            
-            
-        }
+//         student = new Student[studentAmount];
+//         teacher = new Teacher[teacherAmount];
+//        for (int i = 0; i < student.length; i++) {
+//            student[i] = new Student(338, 0,100,200, "student.jpg");
+//            teacher[i] = new Teacher(338, 300,0, "teacher.jpg", 100);
+//          
+//            
+//            
+//        }
         
-         students.add(new Student(400, 0,100,0, "teacher.jpg"));
-          students.add(new Student(400, 0,200,0, "teacher.jpg"));
+         students.add(new Student(400, 0,100,100, "teacher.jpg"));
+          students.add(new Student(400, 0,200,100, "teacher.jpg"));
+          teachers.add(new Teacher(338, 300, "student.jpg",100));
         
         
         
@@ -134,24 +139,31 @@ public class PlayState extends State {
            batch.draw(region[i],i*64,0, getViewWidth()/8 , getViewHeight()/8);
             
         }
+         
          batch.draw(balance, getViewWidth() - balance.getWidth() + 109 , 0, getViewWidth()/3 , getViewHeight()/8); 
            font.setColor(Color.BLACK);
-           font.draw(batch, "" + money, getViewWidth() - 125, 50 );
-        
-        for ( int i = 0; i < student.length; i++) {
-            student[i].render(batch);
-            
-        }
-        //student.render(batch);
-        
-        for (int i = 0; i < teacherAmount; i++) {
-            teacher[i].render(batch);
-        }
+           font.draw(batch, "" + money, getViewWidth(), 33 );
+       
+//        for ( int i = 0; i < student.length; i++) {
+//            student[i].render(batch);
+//            
+//        }
+//        //student.render(batch);
+//        
+//        for (int i = 0; i < teacherAmount; i++) {
+//            teacher[i].renderz(batch);
+//        }
          for (Student student : students) {
            student.renderz(batch);
+           
             
             
              
+         }
+         
+           for (Teacher teacher : teachers) {
+           teacher.renderz(batch);
+   
          }
             
         
@@ -172,8 +184,8 @@ public class PlayState extends State {
             
             // Convert that point to "game coordinates"
             unproject(touch);
-            System.out.println("Mouse X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY());
-              System.out.println("X " + touch.x + " Y " + touch.y);
+//            System.out.println("Mouse X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY());
+//              System.out.println("X " + touch.x + " Y " + touch.y);
                
 
             
@@ -193,49 +205,82 @@ public class PlayState extends State {
            
                
                 System.out.println("Button " + i);
-                create();
+                create(i);
+               
                
                
             }
-              }
+            
+            
   
             
             
          
 
         }
+              
+               for (Teacher teacher : teachers) {
+                  float buttonX = teacher.getX() ;
+                  float buttonY = teacher.getY();
+                  unproject(touch);
+                 
+                   System.out.println("Camera coords " + touch.x + " " + touch.y );
+                   System.out.println("x " + teacher.getX() + " y " + teacher.getY());
+            
+ 
+                  if (touch.x > buttonX && touch.x < buttonX + teacher.getTextureWidth()/2 
+                          && touch.y > buttonY && touch.y < buttonY + teacher.getTextureHeight()/2) {
+                     System.out.println("hello");
+                  }
+              }
+             
+              }
 
+    }
+    
+    
+    public void create(int i){
+        if(i == 0){
+             students.add(new Student(400, 0,100,100, "teacher.jpg"));
+        }
     }
 
     @Override
     public void update(float deltaTime) {
         
-       for (int i = 0; i < student.length; i++){
-        student[i].update(deltaTime);
-       }
+//       for (int i = 0; i < student.length; i++){
+//        student[i].update(deltaTime);
+//       }
+//       
+//       for (int i = 0; i < teacherAmount; i++){
+//        teacher[i].update(deltaTime);
+//       }
        
-       for (int i = 0; i < teacherAmount; i++){
-        teacher[i].update(deltaTime);
-       }
+           for (Teacher teacher : teachers) {
+           teacher.update(deltaTime);
+   
+         }
        
        for (Student student : students) {
            student.update(deltaTime);
            for ( int i = 0; i < students.size; i++){
              
-                 if(students.get(i).getHealth() <= -100){
+                 if(students.get(i).getHealth() == 0){
                students.removeIndex(i);
+               money = money + 100;
                
            }
            }
          }
-       
+       for (Teacher teacher : teachers){
         for (Student studentz : students){
-        for ( int i = 0; i < students.size; i++){
-       if(studentz.collides(teacher[0])){
-           int temp = students.get(i).getHealth();
+        
+       if(studentz.collides(teacher)){
+           int temp = studentz.getHealth();
+           
            temp--;
-           students.get(i).setHealth(temp);
-           money = money + 100;
+           studentz.setHealth(temp);
+           
           
         
            
@@ -244,18 +289,9 @@ public class PlayState extends State {
            
        }
        
+        
        
-       
-       //array method
-        if(studentz.collides(teacher[0])){
-           
-           money = money + 100;
-           
-           
-//           StateManager gsm = getStateManager();
-//            gsm.pop();
-           
-       }
+ 
        
         
         
@@ -278,15 +314,28 @@ public class PlayState extends State {
         balance.dispose();
         stage.dispose();
 
-        for (int i = 0; i < student.length; i++){
-           student[i].dispose(); 
-        }
+//        for (int i = 0; i < student.length; i++){
+//           student[i].dispose(); 
+//        }
+//        
+//        for (int i = 0; i < teacherAmount; i++) {
+//          teacher[i].dispose();  
+//        }
         
-        for (int i = 0; i < teacherAmount; i++) {
-          teacher[i].dispose();  
-        }
+           for (Student student : students) {
+           student.dispose();
+   
+         }
+           
+               for (Teacher teacher : teachers) {
+           teacher.dispose();
+   
+         }
+           
        
     }
+    
+
     
    
  
@@ -294,79 +343,7 @@ public class PlayState extends State {
     
   
     
-    public void create () {
-		stage = new Stage();
-		Gdx.input.setInputProcessor(stage);
-System.out.println("Dragging");
-		final Skin skin = new Skin();
-		skin.add("default", new LabelStyle(new BitmapFont(), Color.WHITE));
-		skin.add("badlogic", new Texture("student.jpg"));
-
-		Image sourceImage = new Image(skin, "badlogic");
-		sourceImage.setBounds(50, 125, 100, 100);
-		stage.addActor(sourceImage);
-
-		Image validTargetImage = new Image(skin, "badlogic");
-		validTargetImage.setBounds(200, 50, 100, 100);
-		stage.addActor(validTargetImage);
-
-		Image invalidTargetImage = new Image(skin, "badlogic");
-		invalidTargetImage.setBounds(200, 200, 100, 100);
-		stage.addActor(invalidTargetImage);
-
-		DragAndDrop dragAndDrop = new DragAndDrop();
-    
-    	dragAndDrop.addSource(new Source(sourceImage) {
-			public Payload dragStart (InputEvent event, float x, float y, int pointer) {
-				Payload payload = new Payload();
-				payload.setObject(payload);
-
-				payload.setDragActor(new Label("Some payload!", skin));
-
-				Label validLabel = new Label("Some payload!", skin);
-				validLabel.setColor(0, 1, 0, 1);
-				payload.setValidDragActor(validLabel);
-                                
-                                
-
-				Label invalidLabel = new Label("Some payload!", skin);
-				invalidLabel.setColor(1, 0, 0, 1);
-				payload.setInvalidDragActor(invalidLabel);
-
-				return payload;
-			}
-		});
-            dragAndDrop.addTarget(new Target(validTargetImage) {
-			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
-				getActor().setColor(Color.GREEN);
-				return true;
-			}
-
-                    @Override
-                    public void drop(Source source, Payload payload, float x, float y, int pointer) {
-                        System.out.println("Nice");
-                        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                    }
-        });
-                }
-    
-    
-    
-    
-    
-    
-    
-    public void dragStop(InputEvent event, float x, float y, int pointer, Payload payload, Target target) {
-        if (target == null) {
-            
-        }
-        
-       
-        
-    }
-     public void resize (int width, int height) {
-		stage.getViewport().update(width, height, true);
-	}
+ 
     
     
 
