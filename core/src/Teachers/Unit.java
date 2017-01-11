@@ -73,8 +73,7 @@ public abstract class Unit {
         students = new Array<Student>();
        map = new Map();
         
-        
-        
+
         
         //initializes the unit's coords
         position = new Vector3(x, y, 0);
@@ -114,10 +113,6 @@ public abstract class Unit {
         }
         
         
-
-    }
-
-    public void fire() {
 
     }
     

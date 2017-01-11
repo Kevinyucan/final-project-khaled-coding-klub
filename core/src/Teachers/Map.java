@@ -26,7 +26,7 @@ ShapeRenderer sr;
     //new changes
     public Array<Vector2> getRandomPath() {
         Array<Vector2> path = new Array<Vector2>();
-        for (int i = 0; i < MathUtils.random(5, 10); i++) {
+        
             //adds random point, 
             //path.add(new Vector2(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight())));
             path.add(new Vector2(338, 0));
@@ -41,7 +41,7 @@ ShapeRenderer sr;
 
          
 
-        }
+        
         return path;
 
     }
