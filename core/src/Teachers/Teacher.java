@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Vector2;
+import com.pls.game.AISprites;
 
 /**
  *
@@ -47,6 +49,18 @@ public class Teacher extends Unit {
          super.render(batchs);
          batch.end();
          
+         //I COPY PASTED,EDIT LATER
+         
+         for (AISprites aiSprite : aiSprites) {
+            Vector2 previous = aiSprite.getPath().first();
+            for (Vector2 waypoint : aiSprite.getPath()) {
+                //sr.line(previous, waypoint);
+//                sr.ellipse(0, 0, 300, 400);
+                
+                
+                previous = waypoint;
+            }
+        }
      }
 
 
