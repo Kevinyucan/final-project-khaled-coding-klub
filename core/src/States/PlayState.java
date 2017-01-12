@@ -4,6 +4,7 @@
  */
 package States;
 
+import Teachers.Bullet;
 import Teachers.Student;
 import Teachers.Teacher;
 import Teachers.Unit;
@@ -70,6 +71,7 @@ public class PlayState extends State {
     private TextureRegion region[];
     private Texture balance;
     
+   private Array<Bullet> bullets;
    
 
     
@@ -85,6 +87,9 @@ public class PlayState extends State {
         
         students = new Array<Student>();
         teachers = new Array<Teacher>();
+        bullets = new Array<Bullet>();
+        
+        
         
         region = new TextureRegion[5];
         region[0] = new TextureRegion(panel,0,0,136,156);
@@ -162,7 +167,7 @@ public class PlayState extends State {
          }
          
            for (Teacher teacher : teachers) {
-           teacher.renderz(batch);
+            teacher.renderz(batch);
    
          }
             
@@ -188,7 +193,7 @@ public class PlayState extends State {
 //              System.out.println("X " + touch.x + " Y " + touch.y);
                
 
-            
+            teachers.add(new Teacher((int)touch.x,(int)touch.y, "student.jpg",100));
 
             // Check if the button is pressed
               
@@ -222,15 +227,16 @@ public class PlayState extends State {
                for (Teacher teacher : teachers) {
                   float buttonX = teacher.getX() ;
                   float buttonY = teacher.getY();
-                  unproject(touch);
+                 
                  
                    System.out.println("Camera coords " + touch.x + " " + touch.y );
-                   System.out.println("x " + teacher.getX() + " y " + teacher.getY());
+                   System.out.println("x " + teacher.getX() + " y " + teacher.getY() + "   width: " + teacher.getTextureWidth() + "   height: " + teacher.getTextureHeight());
             
  
-                  if (touch.x > buttonX && touch.x < buttonX + teacher.getTextureWidth()/2 
-                          && touch.y > buttonY && touch.y < buttonY + teacher.getTextureHeight()/2) {
+                  if (touch.x > buttonX && touch.x < buttonX + teacher.getTextureWidth() 
+                          && touch.y > buttonY && touch.y < buttonY + teacher.getTextureHeight()) {
                      System.out.println("hello");
+                     
                   }
               }
              
@@ -280,6 +286,7 @@ public class PlayState extends State {
            
            temp--;
            studentz.setHealth(temp);
+           
            
           
         

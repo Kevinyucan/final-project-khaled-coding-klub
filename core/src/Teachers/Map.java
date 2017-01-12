@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.pls.game.Game;
 
 /**
  *
@@ -26,6 +27,7 @@ ShapeRenderer sr;
     //new changes
     public Array<Vector2> getRandomPath() {
         Array<Vector2> path = new Array<Vector2>();
+    
         
             //adds random point, 
             //path.add(new Vector2(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight())));

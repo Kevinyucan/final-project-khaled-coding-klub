@@ -17,19 +17,28 @@ import com.badlogic.gdx.utils.Array;
 
 public class Bullet {
     private boolean hit;
-    private int startX;
-    private int startY;
-    private int endX;
-    private int endY;
+    private float startX;
+    private float startY;
+    private float endX;
+    private float endY;
     private int speed;
     private Texture picture;
-    public Bullet(int startX, int startY, int endX, int endY, int speed, Texture picture){
+    
+    
+    
+    
+    public Bullet(float startX, float startY, float endX, float endY, int speed, Texture picture){
         this.startX = startX;
         this.startY = startY;
         this.endX = endX;
         this.endY = endY;
         this.speed = speed;
         this.picture = picture;
+        
+        
+        
+        
+        
     }
     //creating the paths for bullet
         public Array<Vector2> getRandomPath() {

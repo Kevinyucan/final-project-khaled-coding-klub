@@ -4,7 +4,11 @@
  */
 package Teachers;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 /**
  *
@@ -15,16 +19,20 @@ public class Student extends Unit {
     private int movement;
     private int health;
     private SpriteBatch batch;
-    
+     //The character essentially holds x and y coordinates 
+    private Vector2 velocity = new Vector2();
+    //Indicates how many pixels per seconds we move by, (tolerance is a way to notify once we reach 3 pixels before a waypoint)
+
+
+    //an array of set points  (holds x and y ) 
+   
   
     public Student(int x, int y, int movement, int health, String textureName){
         super(x,y,textureName, movement);
         batch = new SpriteBatch();
         
         this.health = health;
-        this.movement = movement;
-        
-        
+        this.movement = movement;  
         
 
     }
@@ -54,7 +62,7 @@ public class Student extends Unit {
      }
      
      
-    
+  
      
      
      
