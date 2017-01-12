@@ -41,7 +41,6 @@ public class MenuState extends State {
         
         
         
-        
        //stores the highscore... "highscore" is the name of file being stored
        Preferences pref = Gdx.app.getPreferences("highscore");
        highScore = pref.getInteger("highscore", 0);
@@ -80,6 +79,9 @@ public class MenuState extends State {
             // Check if the button is pressed
             float buttonX = getViewWidth() / 2 - button.getWidth() / 2;
             float buttonY = getViewHeight() / 2;
+            float buttonX2 = getViewWidth()/2 - button.getWidth() / 4;
+            float buttonY2 = getViewHeight()/2 - 25;
+            
             if (touch.x > buttonX && touch.x < buttonX + button.getWidth()
                     && touch.y > buttonY && touch.y < buttonY + button.getHeight()) {
                 StateManager gsm = getStateManager();
@@ -88,7 +90,15 @@ public class MenuState extends State {
                 gsm.push(new PlayState(gsm));
                
             }
+            
+            if(touch.x > buttonX2 && touch.x < buttonX2 + button.getWidth()/2 
+                    && touch.y < buttonY2 && touch.y > getViewHeight()/2 - 125){
+                StateManager gsm = getStateManager();
+                
+                gsm.push(new HowToState(gsm));                          
+            }
 
+            
         }
         
         
