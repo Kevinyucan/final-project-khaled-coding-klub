@@ -55,6 +55,7 @@ public class AISprites extends Sprite {
 
         //update position (move to the waypoint)
         setPosition(getNextX(), getNextY());
+        
         //set rotation of the character, converts radians to degrees
 //        setRotation(angle * MathUtils.radiansToDegrees);
 
@@ -92,6 +93,7 @@ public class AISprites extends Sprite {
     public Array<Vector2> getPath() {
         return path;
     }
+   
 
     public int getWaypoint() {
         return waypoint;
