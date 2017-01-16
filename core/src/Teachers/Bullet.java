@@ -6,6 +6,7 @@ package Teachers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
@@ -52,6 +53,15 @@ public class Bullet {
            
         return path;
 
+    }
+        
+        public void render(SpriteBatch batch){
+            batch.draw(picture,startX,endX,50,50);
+        }
+        public void update(float deltaTime){
+       
+        
+        
     }
     public boolean hashit(){
         return hit;

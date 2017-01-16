@@ -276,7 +276,7 @@ public class PlayState extends State {
            student.update(deltaTime);
            for ( int i = 0; i < students.size; i++){
              
-                 if(students.get(i).getHealth() == 0){
+                 if(students.get(i).getHealth() <= 0){
                students.removeIndex(i);
                money = money + 100;
                
