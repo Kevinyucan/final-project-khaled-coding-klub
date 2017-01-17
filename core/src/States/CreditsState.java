@@ -14,32 +14,25 @@ import com.pls.game.Game;
  *
  * @author guanv6321
  */
-public class HowToState extends State {
-    
+public class CreditsState extends State {
+
     private Texture bg;
     
-    public HowToState(StateManager gsm){
+    public CreditsState(StateManager gsm){
         super(gsm);
         setCameraView(Game.WIDTH, Game.HEIGHT);
         setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
         
-        bg = new Texture("images.jpg");
-        
+        bg = new Texture("credits.jpg");
     }
-    
     @Override
-    public void render(SpriteBatch batch){
+    public void render(SpriteBatch batch) {
         batch.setProjectionMatrix(getCombinedCamera());
         batch.begin();
         
         batch.draw(bg, 0, 0, getViewWidth(), getViewHeight());
         
         batch.end();
-    }
-    
-    @Override
-    public void dispose(){
-        bg.dispose();
     }
 
     @Override
@@ -54,9 +47,15 @@ public class HowToState extends State {
             unproject(touch);
             if(touch.x > 0 && touch.x < getViewWidth() && touch.y > 0 && touch.y < getViewHeight()){
                 StateManager gsm = getStateManager();
-                gsm.push(new PlayState(gsm)); 
+                gsm.push(new MenuState(gsm)); 
             }
             
         }
     }
+
+    @Override
+    public void dispose() {
+        bg.dispose();
+    }
+    
 }

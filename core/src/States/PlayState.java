@@ -66,7 +66,7 @@ public class PlayState extends State {
     private Array<AISprites> aiSprites;
     private Array<Student> students;
     private Array<Teacher> teachers;
-    private Array<Bullet> teachers;
+//    private Array<Bullet> teachers;
     
     
     //variable used to separate individual pieces within a picture
@@ -100,7 +100,7 @@ public class PlayState extends State {
         region[2] = new TextureRegion(panel,136*2,0,136,156);
         region[3] = new TextureRegion(panel,136*3,0,136,156);
         region[4] = new TextureRegion(panel,136*4,0,136,156);
-        bullet = new Bullet((float)250, (float)250, (float)250, (float)250, 100,bullet1);
+//        bullet = new Bullet((float)250, (float)250, (float)250, (float)250, 100,bullet1);
         
        
         
