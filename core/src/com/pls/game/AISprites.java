@@ -6,11 +6,13 @@
 package com.pls.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.pls.game.Game;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +22,7 @@ import java.util.Set;
  */
 public class AISprites extends Sprite {
 
+    
     //The character essentially holds x and y coordinates 
     private Vector2 velocity = new Vector2();
     //Indicates how many pixels per seconds we move by, (tolerance is a way to notify once we reach 3 pixels before a waypoint)
@@ -33,6 +36,7 @@ public class AISprites extends Sprite {
     private Array<Vector2> path;
 
     public AISprites(Sprite sprite, Array<Vector2> path, int speed) {
+        
         super(sprite);
         this.path = path;
 
@@ -46,7 +50,7 @@ public class AISprites extends Sprite {
     }
 
     public void update() {
-      
+       
         //the angle of the current point to next point which is used by arc tangent (inverse of tangent) hence (y,x)
         float angle = (float) Math.atan2(path.get(waypoint).y - getY(), path.get(waypoint).x - getX());
 

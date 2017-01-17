@@ -28,6 +28,7 @@ public abstract class State {
     public State(StateManager sm){
         stateManager = sm;
         cam = new OrthographicCamera();
+        
     }
     
     

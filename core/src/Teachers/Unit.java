@@ -9,6 +9,7 @@ import States.State;
 import States.StateManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -48,6 +49,7 @@ public abstract class Unit {
     private Map map;
     private int health;
     private int amount;
+    private OrthographicCamera cam;
     
  private Array<Student> students;
  
@@ -72,7 +74,9 @@ public abstract class Unit {
         game = new Game();
         students = new Array<Student>();
        map = new Map();
-        
+   cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+       cam.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+       cam.update();     
 
         
         //initializes the unit's coords
@@ -143,7 +147,7 @@ public abstract class Unit {
 
 
     public void render(SpriteBatch batchs) {
-        
+ 
 
         //draws the background since it's static and we don't change it in middle of the game
         batchs.draw(unitModel, 0, 0);
@@ -153,13 +157,14 @@ public abstract class Unit {
         
         //starts drawing (way to update screen)
         batch.begin();
-        
+     
         for (AISprites aiSprite : aiSprites) {
             aiSprite.draw(batch);
             
         }
-        
-//        font.draw(batch, "" + health, sprite.getX() + sprite.getWidth() / 2 - 5, sprite.getY() + sprite.getHeight() + 20);
+        //batch.draw(this.getTextureName(), position.x, position.y);
+     
+        //font.draw(batch, "" + health, sprite.getX() + sprite.getWidth() / 2 - 5, sprite.getY() + sprite.getHeight() + 20);
        
 
      
@@ -280,6 +285,11 @@ public abstract class Unit {
     public float getTextureHeight(){
         
         return sprite.getHeight();
+    }
+    
+    
+    public Texture getTextureName(){
+        return this.unitModel;
     }
     
     

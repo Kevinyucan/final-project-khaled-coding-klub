@@ -4,6 +4,7 @@
  */
 package States;
 
+import com.pls.game.AISprites;
 import Teachers.Bullet;
 import Teachers.Student;
 import Teachers.Teacher;
@@ -32,7 +33,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.Array;
-import com.pls.game.AISprites;
 import com.pls.game.Game;
 
 
@@ -41,10 +41,8 @@ import com.pls.game.Game;
  * @author hadik9595
  */
 public class PlayState extends State {
-    
-//    private Student[] student;
-//    private Teacher[] teacher;
-    private Unit unit;
+
+   
     private Texture bg;
     private Texture character;
     private Texture button;
@@ -81,7 +79,9 @@ public class PlayState extends State {
         super(sm);
         
         setCameraView(Game.WIDTH, Game.HEIGHT);
-       setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
+       setCameraPosition(getViewWidth()/2 , getViewHeight()/2 );
+        
+       
         bg = new Texture("Background.jpg");
         button = new Texture("button.jpg");
         panel = new Texture("units.jpg");
@@ -134,7 +134,7 @@ public class PlayState extends State {
         batch.setProjectionMatrix(getCombinedCamera());
 
         batch.begin();
-       
+        
         batch.draw(bg, 0 , 0,getViewWidth(), getViewHeight());
        
         //batch.draw(button, 0, 0);
@@ -149,9 +149,10 @@ public class PlayState extends State {
            
         }
          
-         batch.draw(balance, getViewWidth() - balance.getWidth() + 109 , 0, getViewWidth()/3 , getViewHeight()/8); 
+           batch.draw(balance, getViewWidth() - balance.getWidth() + 109 , 0, getViewWidth()/3 , getViewHeight()/8); 
            font.setColor(Color.BLACK);
-           font.draw(batch, "" + money, getViewWidth(), 33 );
+           font.draw(batch, "WOLOLO" + money, getViewWidth(), 33 );
+
        
 //        for ( int i = 0; i < student.length; i++) {
 //            student[i].render(batch);
@@ -177,7 +178,7 @@ public class PlayState extends State {
          }
             
         
-         
+           
         batch.end();
        
         
@@ -198,7 +199,7 @@ public class PlayState extends State {
 //              System.out.println("X " + touch.x + " Y " + touch.y);
                
 
-            teachers.add(new Teacher((int)touch.x,(int)touch.y, "student.jpg",100));
+            
 
             // Check if the button is pressed
               
@@ -234,6 +235,7 @@ public class PlayState extends State {
                   float buttonY = teacher.getY();
                  
                  
+                 
                    System.out.println("Camera coords " + touch.x + " " + touch.y );
                    System.out.println("x " + teacher.getX() + " y " + teacher.getY() + "   width: " + teacher.getTextureWidth() + "   height: " + teacher.getTextureHeight());
             
@@ -244,7 +246,7 @@ public class PlayState extends State {
                      
                   }
               }
-             
+             teachers.add(new Teacher((int)touch.x,(int)touch.y, "student.jpg",100));
               }
 
     }
@@ -258,14 +260,7 @@ public class PlayState extends State {
 
     @Override
     public void update(float deltaTime) {
-        
-//       for (int i = 0; i < student.length; i++){
-//        student[i].update(deltaTime);
-//       }
-//       
-//       for (int i = 0; i < teacherAmount; i++){
-//        teacher[i].update(deltaTime);
-//       }
+
        
            for (Teacher teacher : teachers) {
            teacher.update(deltaTime);
@@ -283,6 +278,8 @@ public class PlayState extends State {
            }
            }
          }
+       
+       
        for (Teacher teacher : teachers){
         for (Student studentz : students){
         
