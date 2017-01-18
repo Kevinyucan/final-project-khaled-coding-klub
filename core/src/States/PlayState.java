@@ -64,14 +64,13 @@ public class PlayState extends State {
     private Array<AISprites> aiSprites;
     private Array<Student> students;
     private Array<Teacher> teachers;
+//    private Array<Bullet> teachers;
     
-    //test
-    private Bullet bullet;
+    
     //variable used to separate individual pieces within a picture
     private TextureRegion region[];
     private Texture balance;
     
-   private Array<Bullet> bullets;
    
 
     
@@ -91,7 +90,7 @@ public class PlayState extends State {
         students = new Array<Student>();
         teachers = new Array<Teacher>();
         
-        bullets = new Array<Bullet>();
+        
         
         
         
@@ -101,7 +100,7 @@ public class PlayState extends State {
         region[2] = new TextureRegion(panel,136*2,0,136,156);
         region[3] = new TextureRegion(panel,136*3,0,136,156);
         region[4] = new TextureRegion(panel,136*4,0,136,156);
-        bullet = new Bullet((float)250, (float)250, (float)250, (float)250, 100,bullet1);
+//        bullet = new Bullet((float)250, (float)250, (float)250, (float)250, 100,bullet1);
         
        
         
@@ -143,7 +142,7 @@ public class PlayState extends State {
 //        batch.draw(region[1], 0, 0, getViewWidth()/8, getViewHeight()/8);
 //        batch.draw(region[4], 0, 0, getViewWidth()/8, getViewHeight()/8);
          
-        bullet.render(batch);
+        
          for (int i = 0; i < region.length; i++) {
            batch.draw(region[i],i*64,0, getViewWidth()/8 , getViewHeight()/8);
            
