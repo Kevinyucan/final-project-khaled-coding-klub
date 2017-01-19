@@ -50,12 +50,12 @@ public class Student extends Unit {
      
      public void renderz(SpriteBatch batchs){
 //         batchs.end();
-         batch.begin();
          
-        font.draw(batch, "" + health, this.getX() + this.getTextureWidth() / 2 - 5, this.getY() + this.getTextureHeight() + 20);
+         
+        font.draw(batchs, "" + health, this.getX() + this.getTextureWidth() / 2 - 5, this.getY() + this.getTextureHeight() + 20);
        
-         super.render(batch);
-         batch.end();
+         super.render(batchs);
+
      }
      
      public void setHealth(int hp){

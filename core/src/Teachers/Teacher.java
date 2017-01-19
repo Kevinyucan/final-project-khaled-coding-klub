@@ -46,11 +46,11 @@ public class Teacher extends Unit {
       
         public void renderz(SpriteBatch batchs){
 //         batch.begin();
-          
+          super.render(batchs);
          sr.setColor(Color.RED);
          sr.begin(ShapeRenderer.ShapeType.Line);
          sr.circle(this.getX() + this.getTextureWidth()/2 ,this.getY()+ this.getTextureHeight()/2, 100);
-         super.render(batchs);
+         
 //         batch.end();
          
          //I COPY PASTED,EDIT LATER

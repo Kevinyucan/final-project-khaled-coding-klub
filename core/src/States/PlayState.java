@@ -77,8 +77,8 @@ public class PlayState extends State {
     public PlayState(StateManager sm){
         super(sm);
         
-        setCameraView(Game.WIDTH, Game.HEIGHT);
-       setCameraPosition(getViewWidth()/2 , getViewHeight()/2 );
+        setCameraView(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//       setCameraPosition(getViewWidth()/2 , getViewHeight()/2 );
         
        
         bg = new Texture("Background.jpg");
@@ -142,15 +142,15 @@ public class PlayState extends State {
 //        batch.draw(region[1], 0, 0, getViewWidth()/8, getViewHeight()/8);
 //        batch.draw(region[4], 0, 0, getViewWidth()/8, getViewHeight()/8);
          
-        
+          
          for (int i = 0; i < region.length; i++) {
            batch.draw(region[i],i*64,0, getViewWidth()/8 , getViewHeight()/8);
            
         }
-         
-           batch.draw(balance, getViewWidth() - balance.getWidth() + 109 , 0, getViewWidth()/3 , getViewHeight()/8); 
+         batch.draw(balance, getViewWidth() - balance.getWidth() + 109 , 0, getViewWidth()/3 , getViewHeight()/8); 
            font.setColor(Color.BLACK);
-           font.draw(batch, "WOLOLO" + money, getViewWidth(), 33 );
+           font.draw(batch, "" + money, getViewWidth()-90, 33 );
+         
 
        
 //        for ( int i = 0; i < student.length; i++) {

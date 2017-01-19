@@ -74,9 +74,7 @@ public abstract class Unit {
         game = new Game();
         students = new Array<Student>();
        map = new Map();
-   cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-       cam.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-       cam.update();     
+       
 
         
         //initializes the unit's coords
@@ -162,13 +160,13 @@ public abstract class Unit {
             aiSprite.draw(batch);
             
         }
-        //batch.draw(this.getTextureName(), position.x, position.y);
+
      
         //font.draw(batch, "" + health, sprite.getX() + sprite.getWidth() / 2 - 5, sprite.getY() + sprite.getHeight() + 20);
        
 
      
-      
+     
       
         batch.end();
 
@@ -216,13 +214,13 @@ public abstract class Unit {
         }
         sr.end();
 
-        sr.setColor(Color.CYAN);
-        sr.begin(ShapeType.Line);
-        for (AISprites aiSprite : aiSprites) {
-            sr.line(new Vector2(aiSprite.getX(), aiSprite.getY()), aiSprite.getPath().get(aiSprite.getWaypoint()));
-          
-        }
-        sr.end();
+//        sr.setColor(Color.CYAN);
+//        sr.begin(ShapeType.Line);
+//        for (AISprites aiSprite : aiSprites) {
+//            sr.line(new Vector2(aiSprite.getX(), aiSprite.getY()), aiSprite.getPath().get(aiSprite.getWaypoint()));
+//          
+//        }
+//        sr.end();
 
 //        //new changes
 //        for (AISprites aiSprite : aiSprites) {

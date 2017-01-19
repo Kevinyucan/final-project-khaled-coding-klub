@@ -65,7 +65,9 @@ public abstract class State {
     }
 
     public float getViewWidth() {
+       
         return cam.viewportWidth;
+       
     }
 
     public float getViewHeight() {
