@@ -49,12 +49,14 @@ public class Student extends Unit {
      }
      
      public void renderz(SpriteBatch batchs){
-//         batchs.end();
-         
+      
+         batch.begin();
          
         font.draw(batchs, "" + health, this.getX() + this.getTextureWidth() / 2 - 5, this.getY() + this.getTextureHeight() + 20);
        
-         super.render(batchs);
+         super.render(batch);
+      
+       batch.end();
 
      }
      

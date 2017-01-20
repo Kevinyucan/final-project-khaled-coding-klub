@@ -79,6 +79,11 @@ public abstract class State {
         
     }
     
+    public void resize(int width, int height){
+        cam.setToOrtho(false, width, height);
+        cam.update();
+    }
+    
     
     
 }

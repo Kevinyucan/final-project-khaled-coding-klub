@@ -79,6 +79,11 @@ public class Game extends ApplicationAdapter {
         return studentAmount;
     }
     
+    @Override
+    public void resize(int width, int height){
+        stateManager.resize(width, height);
+    }
+    
 
 
 

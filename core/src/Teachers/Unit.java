@@ -161,6 +161,8 @@ public abstract class Unit {
             
         }
 
+        
+     
      
         //font.draw(batch, "" + health, sprite.getX() + sprite.getWidth() / 2 - 5, sprite.getY() + sprite.getHeight() + 20);
        
@@ -292,17 +294,7 @@ public abstract class Unit {
     
     
    
-public void death(){
-   System.out.println(students.size);
-     for ( int i = 0; i < 2; i++){
-          
-    for (Student studentz : students){
-        System.out.println("woah");
-        students.removeIndex(1);
-        
-    } 
-}
-}
+
   
 
    

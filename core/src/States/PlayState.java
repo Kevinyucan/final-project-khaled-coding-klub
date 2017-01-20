@@ -150,7 +150,9 @@ public class PlayState extends State {
          batch.draw(balance, getViewWidth() - balance.getWidth() + 109 , 0, getViewWidth()/3 , getViewHeight()/8); 
            font.setColor(Color.BLACK);
            font.draw(batch, "" + money, getViewWidth()-90, 33 );
-         
+           //draws the amount of waves (Teacher's lives) 
+           font.draw(batch, "" + wave, getViewWidth()-90 , getViewHeight()-100 );
+        
 
        
 //        for ( int i = 0; i < student.length; i++) {
@@ -274,7 +276,12 @@ public class PlayState extends State {
                students.removeIndex(i);
                money = money + 100;
                
+               
            }
+                 
+                 if(students.get(i).getY() > Gdx.graphics.getHeight()){
+                     wave++;
+                 }
            }
          }
        

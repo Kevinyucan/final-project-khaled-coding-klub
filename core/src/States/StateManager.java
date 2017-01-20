@@ -44,6 +44,10 @@ public class StateManager {
     public void handleInput() {
         states.peek().handleInput();
     }
+
+    public void resize(int width, int height) {
+        states.peek().resize(width, height);
+    }
 }
     
 
