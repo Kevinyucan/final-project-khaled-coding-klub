@@ -14,17 +14,17 @@ import com.pls.game.Game;
  *
  * @author guanv6321
  */
-public class CreditsState extends State {
+public class GameOverState extends State {
 
     private Texture bg;
     
-    public CreditsState(StateManager gsm){
+    public GameOverState(StateManager gsm){
         super(gsm);
         setCameraView(Game.WIDTH, Game.HEIGHT);
         setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
-        
-        bg = new Texture("creditspage.jpg");
+        bg = new Texture("bg.jpg");
     }
+    
     @Override
     public void render(SpriteBatch batch) {
         batch.setProjectionMatrix(getCombinedCamera());
