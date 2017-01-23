@@ -147,8 +147,8 @@ public abstract class Unit {
     public void render(SpriteBatch batchs) {
  
 
-        //draws the background since it's static and we don't change it in middle of the game
-        batchs.draw(unitModel, 0, 0);
+   
+       
 
         
         

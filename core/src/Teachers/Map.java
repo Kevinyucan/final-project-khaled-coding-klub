@@ -50,6 +50,7 @@ ShapeRenderer sr;
     }
     
     public void drawSquares(){
+        Array<Vector2> path = new Array<Vector2>();
            sr.setColor(Color.WHITE);
             sr.begin(ShapeRenderer.ShapeType.Line);
 

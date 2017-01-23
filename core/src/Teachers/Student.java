@@ -12,32 +12,28 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  *
- * @author yuk4142, Khaled and Victor Guanine 
+ * @author yuk4142, Khaled and Victor Guanine
  */
 public class Student extends Unit {
-    
+
     private int movement;
     private int health;
     private SpriteBatch batch;
-     //The character essentially holds x and y coordinates 
+    //The character essentially holds x and y coordinates 
     private Vector2 velocity = new Vector2();
     //Indicates how many pixels per seconds we move by, (tolerance is a way to notify once we reach 3 pixels before a waypoint)
 
-
     //an array of set points  (holds x and y ) 
-   
-  
-    public Student(int x, int y, int movement, int health, String textureName){
-        super(x,y,textureName, movement);
+    public Student(int x, int y, int movement, int health, String textureName) {
+        super(x, y, textureName, movement);
         batch = new SpriteBatch();
-        
+
         this.health = health;
-        this.movement = movement;  
-        
+        this.movement = movement;
 
     }
-    
-     public int getSpeed(){
+
+    public int getSpeed() {
         return this.movement;
         
     }
@@ -58,16 +54,26 @@ public class Student extends Unit {
       
        batch.end();
 
-     }
-     
-     public void setHealth(int hp){
-         this.health = hp;
-     }
-     
-     
-  
-     
-     
-     
-     
+    }
+
+    public int getHealth() {
+
+        return this.health;
+
+    }
+
+    public void renderz(SpriteBatch batchs) {
+//         batchs.end();
+        batch.begin();
+
+        font.draw(batchs, "" + health, this.getX() + this.getTextureWidth() / 2 - 5, this.getY() + this.getTextureHeight() + 20);
+
+        super.render(batchs);
+        batch.end();
+    }
+
+    public void setHealth(int hp) {
+        this.health = hp;
+    }
+
 }

@@ -53,18 +53,7 @@ public class Teacher extends Unit {
          
 //         batch.end();
          
-         //I COPY PASTED,EDIT LATER
-         
-//         for (AISprites aiSprite : aiSprites) {
-//            Vector2 previous = aiSprite.getPath().first();
-//            for (Vector2 waypoint : aiSprite.getPath()) {
-//                //sr.line(previous, waypoint);
-////                sr.ellipse(0, 0, 300, 400);
-//                
-//                
-//                previous = waypoint;
-//            }
-//        }
+
      }
 
 
