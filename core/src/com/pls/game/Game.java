@@ -81,7 +81,7 @@ public class Game extends ApplicationAdapter {
     
     @Override
     public void resize(int width, int height){
-        stateManager.resize(width, height);
+       // stateManager.resize(width, height);
     }
     
 

@@ -89,6 +89,7 @@ public class MenuState extends State {
                 
             }
             
+            //button #2 
             if(touch.x > buttonX2 && touch.x < buttonX2 + button.getWidth()/2 
                     && touch.y < buttonY2 && touch.y > getViewHeight()/2 - 125){
                 StateManager gsm = getStateManager();

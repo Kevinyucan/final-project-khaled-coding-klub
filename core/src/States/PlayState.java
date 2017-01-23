@@ -151,24 +151,26 @@ public class PlayState extends State {
 //        batch.draw(region[1], 0, 0, getViewWidth()/8, getViewHeight()/8);
 //        batch.draw(region[4], 0, 0, getViewWidth()/8, getViewHeight()/8);
          
-          
+          batch.draw(balance, getViewWidth() - balance.getWidth() + 109 , 0, getViewWidth()/3 , getViewHeight()/8); 
          for (int i = 0; i < region.length; i++) {
            batch.draw(region[i],i*64,0, getViewWidth()/10 , getViewHeight()/8);
             
         }
 
-         batch.draw(balance, getViewWidth() - balance.getWidth() + 109 , 0, getViewWidth()/3 , getViewHeight()/8); 
-           font.setColor(Color.BLACK);
-           font.draw(batch, "" + money, getViewWidth()-90, 33 );
-           //draws the amount of waves (Teacher's lives) 
-           font.draw(batch, "" + wave, getViewWidth()-90 , getViewHeight()-100 );
+         
+          
+           
+           
         
 
       
 
-         batch.draw(balance, getViewWidth() - balance.getWidth() + 109 , 0, getViewWidth()/3 , getViewHeight()/8);  
+//         batch.draw(balance, getViewWidth() - balance.getWidth() + 109 , 0, getViewWidth()/3 , getViewHeight()/8);  
          font.setColor(Color.BLACK);
          font.draw(batch, "" + money, getViewWidth()-90, 33 );
+          
+           //draws the amount of waves (Teacher's lives) 
+           font.draw(batch, "" + wave, getViewWidth()-90 , getViewHeight()-100 );
 
            
          for (Student student : students) {
@@ -379,9 +381,7 @@ public class PlayState extends State {
                 //invalid target
 		Image invalidTargetImage = new Image(skin, "badlogic");
 		invalidTargetImage.setBounds(542, 148, 55, 267);
-                
-                 
-                
+                invalidTargetImage.setBounds(50, 365, 492, 50);
 		stage.addActor(invalidTargetImage);
 
 		DragAndDrop dragAndDrop = new DragAndDrop();
