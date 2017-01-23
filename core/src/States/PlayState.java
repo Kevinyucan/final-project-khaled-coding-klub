@@ -47,6 +47,7 @@ public class PlayState extends State {
     private Texture character;
     private Texture button;
     private Texture panel;
+    private Texture teacher;
     
     private boolean deployed;
     public int money;
@@ -54,6 +55,8 @@ public class PlayState extends State {
 //    private int teacherAmount = 1;
 //    public int studentAmount = 1;
     public int wave;
+    
+ 
     
     private Stage stage;
    
@@ -76,17 +79,18 @@ public class PlayState extends State {
     
     public PlayState(StateManager sm){
         super(sm);
-        
+    
         setCameraView(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//       setCameraPosition(getViewWidth()/2 , getViewHeight()/2 );
-        
+       setCameraPosition(getViewWidth()/2 , getViewHeight()/2 );
+       
+       
        
         bg = new Texture("Background.jpg");
         button = new Texture("button.jpg");
         panel = new Texture("units.jpg");
         balance = new Texture("money.jpg");
         Texture bullet1 = new Texture("bullet.png");
-        
+        teacher = new Texture("teacher.jpg");
         students = new Array<Student>();
         teachers = new Array<Teacher>();
         
@@ -119,8 +123,10 @@ public class PlayState extends State {
           students.add(new Student(400, 0,200,100, "teacher.jpg"));
           teachers.add(new Teacher(338, 300, "student.jpg",100));
         
-        
-        
+        for (int i = 0; i < region.length; i++) {
+           create(i*64); 
+        }
+           
         
     
         
@@ -134,52 +140,37 @@ public class PlayState extends State {
 
         batch.begin();
         
-        batch.draw(bg, 0 , 0,getViewWidth(), getViewHeight());
+//        batch.draw(bg, 0 , 0,getViewWidth(), getViewHeight());
        
         //batch.draw(button, 0, 0);
-        //batch.draw(panel, 0 , 0 , getViewWidth()/4, getViewHeight());
+//        batch.draw(panel, 0 , 0 , getViewWidth()/4, getViewHeight());
 //        batch.draw(region[0],panel.getWidth()- getViewWidth(), 0, getViewWidth()/8 , getViewHeight()/8);
 //        batch.draw(region[1], 0, 0, getViewWidth()/8, getViewHeight()/8);
 //        batch.draw(region[4], 0, 0, getViewWidth()/8, getViewHeight()/8);
          
           
          for (int i = 0; i < region.length; i++) {
-           batch.draw(region[i],i*64,0, getViewWidth()/8 , getViewHeight()/8);
-           
+           batch.draw(region[i],i*64,0, getViewWidth()/10 , getViewHeight()/8);
+            
         }
-         batch.draw(balance, getViewWidth() - balance.getWidth() + 109 , 0, getViewWidth()/3 , getViewHeight()/8); 
-           font.setColor(Color.BLACK);
-           font.draw(batch, "" + money, getViewWidth()-90, 33 );
-         
-
-       
-//        for ( int i = 0; i < student.length; i++) {
-//            student[i].render(batch);
-//            
-//        }
-//        //student.render(batch);
-//        
-//        for (int i = 0; i < teacherAmount; i++) {
-//            teacher[i].renderz(batch);
-//        }
+         batch.draw(balance, getViewWidth() - balance.getWidth() + 109 , 0, getViewWidth()/3 , getViewHeight()/8);  
+         font.setColor(Color.BLACK);
+         font.draw(batch, "" + money, getViewWidth()-90, 33 );
+ 
            
          for (Student student : students) {
            student.renderz(batch);
-           
-            
-            
-             
+  
          }
-         
+        
            for (Teacher teacher : teachers) {
             teacher.renderz(batch);
    
          }
-            
-        
+       
            
         batch.end();
-       
+        
         
       
     }
@@ -214,8 +205,9 @@ public class PlayState extends State {
                 
            
                
-                System.out.println("Button " + i);
-                create(i);
+//                System.out.println("Button " + i);
+                createStudent(i);
+                
                
                
                
@@ -234,24 +226,26 @@ public class PlayState extends State {
                   float buttonY = teacher.getY();
                  
                  
-                 
-                   System.out.println("Camera coords " + touch.x + " " + touch.y );
-                   System.out.println("x " + teacher.getX() + " y " + teacher.getY() + "   width: " + teacher.getTextureWidth() + "   height: " + teacher.getTextureHeight());
+//                 
+//                   System.out.println("Camera coords " + touch.x + " " + touch.y );
+//                   System.out.println("x " + teacher.getX() + " y " + teacher.getY() + "   width: " + teacher.getTextureWidth() + "   height: " + teacher.getTextureHeight());
             
  
                   if (touch.x > buttonX && touch.x < buttonX + teacher.getTextureWidth() 
                           && touch.y > buttonY && touch.y < buttonY + teacher.getTextureHeight()) {
-                     System.out.println("hello");
+
                      
                   }
+                  
               }
-             teachers.add(new Teacher((int)touch.x,(int)touch.y, "student.jpg",100));
+               teachers.add(new Teacher((int)touch.x - (int)teacher.getWidth()/4 ,(int)touch.y  - (int)teacher.getHeight()/4, "student.jpg",100));
+             
               }
 
     }
     
     
-    public void create(int i){
+    public void createStudent(int i){
         if(i == 0){
              students.add(new Student(400, 0,100,100, "teacher.jpg"));
         }
@@ -260,7 +254,10 @@ public class PlayState extends State {
     @Override
     public void update(float deltaTime) {
 
-       
+        stage.act(deltaTime);
+       stage.draw();
+       Gdx.input.setInputProcessor(stage);
+    
            for (Teacher teacher : teachers) {
            teacher.update(deltaTime);
    
@@ -306,6 +303,7 @@ public class PlayState extends State {
     }
         }
        
+       
     }
     
     public int getMoney(){
@@ -343,6 +341,90 @@ public class PlayState extends State {
        
     }
     
+    
+	public void create (int i) {
+		stage = new Stage();
+		Gdx.input.setInputProcessor(stage);
+               
+		final Skin skin = new Skin();
+		skin.add("default", new LabelStyle(new BitmapFont(), Color.WHITE));
+		skin.add("badlogic", new Texture("teacher.jpg"));
+       
+                
+             
+                    
+                
+		Image sourceImage = new Image(skin, "badlogic");
+		sourceImage.setBounds(i,0, getViewWidth()/10 , getViewHeight()/8);
+		stage.addActor(sourceImage);
+               
+		Image validTargetImage = new Image(skin, "badlogic");
+		validTargetImage.setBounds(200, 50, 100, 100);
+		stage.addActor(validTargetImage);
+
+		Image invalidTargetImage = new Image(skin, "badlogic");
+		invalidTargetImage.setBounds(542, 148, 55, 267);
+                
+		stage.addActor(invalidTargetImage);
+
+		DragAndDrop dragAndDrop = new DragAndDrop();
+		dragAndDrop.addSource(new Source(sourceImage) {
+			public Payload dragStart (InputEvent event, float x, float y, int pointer) {
+				Payload payload = new Payload();
+                                System.out.println("seems familiar");
+                                String item = "hello";
+				payload.setObject(item);
+
+				payload.setDragActor(new Label("Some payload!", skin));
+
+				Label validLabel = new Label("Some payload!", skin);
+				validLabel.setColor(0, 1, 0, 1);
+				payload.setValidDragActor(validLabel);
+
+				Label invalidLabel = new Label("Some payload!", skin);
+				invalidLabel.setColor(1, 0, 0, 1);
+				payload.setInvalidDragActor(invalidLabel);
+
+				return payload;
+			}
+		});
+                
+                	dragAndDrop.addTarget(new Target(validTargetImage) {
+			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
+				getActor().setColor(Color.GREEN);
+                                 System.out.println("dragging");
+				return true;
+			}
+
+			public void reset (Source source, Payload payload) {
+				getActor().setColor(Color.WHITE);
+			}
+
+			public void drop (Source source, Payload payload, float x, float y, int pointer) {
+				System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
+                            teachers.add(new Teacher(Gdx.input.getX() - (int) teacher.getWidth() / 4, Gdx.input.getY() - (int) teacher.getHeight() / 4, "student.jpg", 100));
+
+                               
+			}
+		});
+		dragAndDrop.addTarget(new Target(invalidTargetImage) {
+			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
+				getActor().setColor(Color.RED);
+                                System.out.println("NOPE");
+                               
+				return false;
+			}
+
+			public void reset (Source source, Payload payload) {
+				getActor().setColor(Color.WHITE);
+			}
+
+			public void drop (Source source, Payload payload, float x, float y, int pointer) {
+                            System.out.println("DONT");
+                            
+			}
+		});
+	}
 
     
    
@@ -359,3 +441,4 @@ public class PlayState extends State {
 
     
 }
+

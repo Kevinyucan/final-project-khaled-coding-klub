@@ -41,12 +41,7 @@ public class MenuState extends State {
         button = new Texture("button.jpg");
         button3 = new Texture("credits.jpg");
         
-        
-       //stores the highscore... "highscore" is the name of file being stored
-       Preferences pref = Gdx.app.getPreferences("highscore");
-       highScore = pref.getInteger("highscore", 0);
-       
-       highScore = 0;
+
        
                                                         
     }
