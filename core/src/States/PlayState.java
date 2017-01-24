@@ -48,7 +48,7 @@ public class PlayState extends State {
     private Texture character;
     private Texture button;
     private Texture panel;
-   
+    private Texture start;
     
     private boolean deployed;
     public int money;
@@ -95,6 +95,8 @@ public class PlayState extends State {
         button = new Texture("button.jpg");
         panel = new Texture("units.jpg");
         balance = new Texture("money.jpg");
+        start = new Texture("start.png");
+        
         Texture bullet1 = new Texture("bullet.png");
        
         students = new Array<Student>();
@@ -156,6 +158,7 @@ public class PlayState extends State {
 //        batch.draw(region[4], 0, 0, getViewWidth()/8, getViewHeight()/8);
          
           batch.draw(balance, getViewWidth() - balance.getWidth() + 109 , 0, getViewWidth()/3 , getViewHeight()/8); 
+          batch.draw(start, getViewWidth() / 2, 0, 150, 50);
          for (int i = 0; i < region.length; i++) {
 //           batch.draw(region[i],i*64,0, getViewWidth()/10 , getViewHeight()/8);
             

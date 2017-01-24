@@ -23,7 +23,7 @@ public class HowToState extends State {
         setCameraView(Game.WIDTH, Game.HEIGHT);
         setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
         
-        bg = new Texture("images.jpg");
+        bg = new Texture("howto.jpg");
         
     }
     
