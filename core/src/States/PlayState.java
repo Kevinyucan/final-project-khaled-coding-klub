@@ -262,7 +262,7 @@ public class PlayState extends State {
     
     public void createStudent(int i){
         if(i == 0){
-             students.add(new Student(400, 0,100,100, "teacher.jpg"));
+             students.add(new Student(400, 0,100,100, "student.jpg"));
         }
         
     }
@@ -383,22 +383,38 @@ public class PlayState extends State {
 
                 //invalid target
 		Image invalidTargetImage = new Image(skin, "badlogic");
-		invalidTargetImage.setBounds(542, 148, 55, 267);
+//		invalidTargetImage.setBounds(542, 148, 55, 267);
                 invalidTargetImage.setBounds(50, 365, 492, 50);
-                inventory.add(validTargetImage);
+                
 		stage.addActor(invalidTargetImage);
                 
                 
                 Image sourceImage = new Image(skin, "badlogic");
-		sourceImage.setBounds(i,0, getViewWidth()/10 , getViewHeight()/8);
+		sourceImage.setBounds(0,0, getViewWidth()/10 , getViewHeight()/8);
+                
+                Image sourceImage2 = new Image(skin, "badlogic");
+		sourceImage2.setBounds(64,0, getViewWidth()/10 , getViewHeight()/8);
+                
+                 Image sourceImage3 = new Image(skin, "badlogic");
+		sourceImage3.setBounds(128,0, getViewWidth()/10 , getViewHeight()/8);
+                
+                  Image sourceImage4 = new Image(skin, "badlogic");
+		sourceImage4.setBounds(192,0, getViewWidth()/10 , getViewHeight()/8);
+                
 		stage.addActor(sourceImage);
-
+                inventory.add(sourceImage);
+                inventory.add(sourceImage2);
+                inventory.add(sourceImage3);
+                inventory.add(sourceImage4);
+                
+                
                 //Adding a new source of where the source of where teachers can be deployed
                 for (int j = 0; j < inventory.size; j++) {
-                stage.addActor(inventory.get(i));
+                stage.addActor(inventory.get(j));
+                    System.out.println("invetory " + inventory.size);
           
 		DragAndDrop dragAndDrop = new DragAndDrop();
-		dragAndDrop.addSource(new Source(inventory.get(i)) {
+		dragAndDrop.addSource(new Source(inventory.get(j)) {
 			public Payload dragStart (InputEvent event, float x, float y, int pointer) {
 				Payload payload = new Payload();
                                 
@@ -422,7 +438,7 @@ public class PlayState extends State {
                 	dragAndDrop.addTarget(new Target(validTargetImage) {
 			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
 				getActor().setColor(Color.GREEN);
-                                 System.out.println("dragging");
+                               
 				return true;
 			}
 
@@ -432,8 +448,7 @@ public class PlayState extends State {
 
 			public void drop (Source source, Payload payload, float x, float y, int pointer) {
                             System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
-                            Vector3 touch = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-                            unproject(touch);
+                           
                            teachers.add(new Teacher((int)x - (int)teachers.get(0).getTextureWidth()/4-10,(int)y  - (int)teachers.get(0).getTextureHeight()/4-10 , "teacher.jpg",100));
 
                            //teacher[0].getWidth()/4 teacher[0].getHeight()/4
@@ -443,7 +458,7 @@ public class PlayState extends State {
 		dragAndDrop.addTarget(new Target(invalidTargetImage) {
 			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
 				getActor().setColor(Color.RED);
-                                System.out.println("NOPE");
+                             
                                
 				return false;
 			}
@@ -453,7 +468,7 @@ public class PlayState extends State {
 			}
 
 			public void drop (Source source, Payload payload, float x, float y, int pointer) {
-                            System.out.println("DONT");
+                           
                             
 			}
 		});
@@ -461,19 +476,5 @@ public class PlayState extends State {
                   }
 	}
 
-    
-   
- 
-    
-    
-  
-    
- 
-    
-    
-
-  
-
-    
 }
 
