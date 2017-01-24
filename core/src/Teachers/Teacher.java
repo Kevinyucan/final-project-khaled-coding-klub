@@ -4,6 +4,7 @@
  */
 package Teachers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -20,6 +21,7 @@ public class Teacher extends Unit {
      private Circle damageBounds;
      private int damageRadius;
      private SpriteBatch batch;
+     private boolean isRadiusRevealed = false;
     
       public Teacher(int x, int y,  String textureName,int radius ){
         super(x,y,textureName,0);
@@ -49,12 +51,29 @@ public class Teacher extends Unit {
           super.render(batchs);
          sr.setColor(Color.RED);
          sr.begin(ShapeRenderer.ShapeType.Line);
+           
+         if(isRadiusRevealed == true){
          sr.circle(this.getX() + this.getTextureWidth()/2 ,this.getY()+ this.getTextureHeight()/2, 100);
-         
+         }
 //         batch.end();
          
 
      }
+        
+        
+        public boolean toggleRadius(){
+ 
+            if(isRadiusRevealed){
+            return isRadiusRevealed = false;
+            }else{
+                return isRadiusRevealed = true;
+            }
+            
+            
+             
+            
+            
+        }
 
 
 }

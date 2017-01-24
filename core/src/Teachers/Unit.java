@@ -126,7 +126,7 @@ public abstract class Unit {
 
     public void update(float deltaTime) {
 
-        // set the new bounds
+        // set the new boundaries of each student and teacher
         for (AISprites aiSprite : aiSprites) {
             
             sprite.setX(aiSprite.getX());
@@ -145,14 +145,7 @@ public abstract class Unit {
 
 
     public void render(SpriteBatch batchs) {
- 
 
-   
-       
-
-        
-        
-        
         //starts drawing (way to update screen)
         batch.begin();
      
@@ -216,40 +209,6 @@ public abstract class Unit {
         }
         sr.end();
 
-//        sr.setColor(Color.CYAN);
-//        sr.begin(ShapeType.Line);
-//        for (AISprites aiSprite : aiSprites) {
-//            sr.line(new Vector2(aiSprite.getX(), aiSprite.getY()), aiSprite.getPath().get(aiSprite.getWaypoint()));
-//          
-//        }
-//        sr.end();
-
-//        //new changes
-//        for (AISprites aiSprite : aiSprites) {
-//            Vector2 previous = aiSprite.getPath().first();
-//            
-//            
-//            
-//
-//            for (Vector2 waypoint : aiSprite.getPath()) {
-//                //draws first line
-//                sr.begin(ShapeType.Line);
-//                sr.line(previous, waypoint);
-//
-//                sr.end();
-//
-//                sr.begin(ShapeType.Filled);
-//
-//                sr.circle(waypoint.x, waypoint.y, 5);
-//
-//                previous = waypoint;
-//                
-//
-//                sr.end();
-//            }
-//
-//        }
-//      
     }
 
     public Circle getBounds() {
