@@ -257,7 +257,13 @@ public class PlayState extends State {
                   
               }
 //               teachers.add(new Teacher((int)touch.x - (int)teacher.getWidth()/4 ,(int)touch.y  - (int)teacher.getHeight()/4, "student.jpg",100));
+             float startX = getViewWidth()/2;
+             float startY = 0;
              
+             // clicking start button
+             if(touch.x > startX && touch.x < startX + 150 && touch.y > startY && touch.y < 50){
+                 
+             }
               }
 
     }

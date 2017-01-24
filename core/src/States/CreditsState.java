@@ -17,6 +17,7 @@ import com.pls.game.Game;
 public class CreditsState extends State {
 
     private Texture bg;
+    private Texture back;
     
     public CreditsState(StateManager gsm){
         super(gsm);
@@ -24,6 +25,7 @@ public class CreditsState extends State {
         setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
         
         bg = new Texture("creditspage.jpg");
+        back = new Texture("back.png");
     }
     @Override
     public void render(SpriteBatch batch) {
@@ -31,6 +33,7 @@ public class CreditsState extends State {
         batch.begin();
         
         batch.draw(bg, 0, 0, getViewWidth(), getViewHeight());
+        batch.draw(back, 0, 0, 100, 100);
         
         batch.end();
     }
@@ -45,7 +48,8 @@ public class CreditsState extends State {
         if(Gdx.input.justTouched()){
             Vector3 touch = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             unproject(touch);
-            if(touch.x > 0 && touch.x < getViewWidth() && touch.y > 0 && touch.y < getViewHeight()){
+            
+            if(touch.x > 0 && touch.x < 100 && touch.y > 0 && touch.y < 100){
                 StateManager gsm = getStateManager();
                 gsm.push(new MenuState(gsm)); 
             }
