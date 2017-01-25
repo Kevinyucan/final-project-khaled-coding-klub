@@ -31,7 +31,7 @@ public class Teacher extends Unit {
         batch = new SpriteBatch();
         sr = new ShapeRenderer();
         this.damageRadius = radius;
-        this.firingSpeed = 30;
+        this.firingSpeed = 10;
         this.timeSinceLastShot = 0;
         this.bullets = new Array<Bullet>();
         bullet1 = new Texture("bullet.png");
@@ -57,6 +57,7 @@ public class Teacher extends Unit {
 
                 if (bullet.collides(a)) {
                     bullets.removeIndex(i);
+                    System.out.println("heron never dies");
 
 
                 }
@@ -89,6 +90,7 @@ public class Teacher extends Unit {
             for (int i = 0; i < bullets.size; i++) {
             if (bullet.getX()<0||bullet.getX()>400||bullet.getY()<0||bullet.getY()>800){
                 bullets.removeIndex(i);
+               
             }
             }
         }
@@ -120,7 +122,7 @@ public class Teacher extends Unit {
         float bulletX = super.getX(); 
                  float bulletY = super.getY();
                  //add new bullet
-        bullets.add(new Bullet(bulletX, bulletY, (float) 30, (float) 30, bullet1));
+        bullets.add(new Bullet(bulletX, bulletY, (float) 100, (float) 30, bullet1));
         
         
     }

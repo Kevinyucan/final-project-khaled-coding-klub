@@ -16,7 +16,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 /**
  *
- * @author yuk4142p
+ * @author yuk4142????
  */
 public class Bullet {
 
@@ -29,6 +29,7 @@ public class Bullet {
     private Rectangle bulletBoundary;
     private Texture picture;
     private float direction;
+    public boolean shot;
 
     /**
      * Bullet constructor
@@ -77,12 +78,18 @@ public class Bullet {
     public float getY() {
         return currentY;
     }
+    
+    public boolean getShot(){
+        return shot;
+    }
 
     
     public void render(SpriteBatch batch) {
         batch.begin();
         //draw bullet
+        if(!shot){
         batch.draw(picture, currentX, currentY, 25, 25);
+        }
         batch.end();
 
         // 2 d straight projectile java
@@ -108,7 +115,7 @@ public class Bullet {
       
         currentY = (currentY + (speed * MathUtils.sin(direction)));
         bulletBoundary.setPosition(currentX, currentY);
-        System.out.println("Bullet X: " + currentX + " Bullet Y: " + currentY);
+//        System.out.println("Bullet X: " + currentX + " Bullet Y: " + currentY);
     }
 
     /**

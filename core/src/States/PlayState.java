@@ -55,7 +55,7 @@ public class PlayState extends State {
     private int passed;
 //    private int teacherAmount = 1;
 //    public int studentAmount = 1;
-    public int wave;
+    public int studentsPassing;
     private int counter;
     
  
@@ -128,12 +128,12 @@ public class PlayState extends State {
 //            
 //        }
         
-         students.add(new Student(400, 0,100,100, "student.jpg"));
-          students.add(new Student(400, 0,200,100, "student.jpg"));
+//         students.add(new Student(400, 1,100,100, "student.jpg"));
+//          students.add(new Student(400, 1,200,100, "student.jpg"));
           teachers.add(new Teacher(338, 300, "teacher.jpg",100));
     
       
-           create(); 
+           create(0); 
         
            
         
@@ -172,11 +172,13 @@ public class PlayState extends State {
          font.draw(batch, "" + money, getViewWidth()-90, 33 );
           
            //draws the amount of waves (Teacher's lives) 
-           font.draw(batch, "" + wave, getViewWidth()-90 , getViewHeight()-100 );
+         font.setColor(Color.RED);
+           font.draw(batch, "Passing: " + studentsPassing, getViewWidth()-90 , getViewHeight()-10 );
 
            
          for (Student student : students) {
            student.renderz(batch);
+           
   
          }
         
@@ -219,11 +221,11 @@ public class PlayState extends State {
                     && touch.y > buttonY && touch.y < buttonY + region[i].getRegionHeight()/2) {
                  System.out.println(i);
                 //unit.createCharacter(touch.x,touch.y);
-                
+               
            
                
-//                System.out.println("Button " + i);
-                createStudent(i);
+
+                
                 
                
                
@@ -271,7 +273,7 @@ public class PlayState extends State {
     
     public void createStudent(int i){
         
-             students.add(new Student(400, 0,100,100, "student.jpg"));
+             students.add(new Student(400, 1,100,100, "student.jpg"));
         
         
     }
@@ -296,9 +298,15 @@ public class PlayState extends State {
                students.removeIndex(i);
                money = money + 100;
                
+            
+               
                
            }
-                 
+                   if(students.get(i).getY() <= 0){
+                   students.removeIndex(i);
+                  
+                   System.out.println("Boom");
+               } 
                
            }
          }
@@ -359,7 +367,7 @@ public class PlayState extends State {
     }
     
     
-	public void create () {
+	public void create (int i) {
                 
 		stage = new Stage();
 
@@ -498,15 +506,17 @@ public class PlayState extends State {
 
 			public void drop (Source source, Payload payload, float x, float y, int pointer) {
                             System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
-                           
+                            
                            teachers.add(new Teacher((int)x - (int)teachers.get(0).getTextureWidth()/4-10,(int)y  - (int)teachers.get(0).getTextureHeight()/4-10 , "teacher.jpg",100));
+                               
+                            
 
                                
 			}
 		});
                         
-                        for (int i = 0; i < invalid.size; i++) {
-                        stage.addActor(invalid.get(i));
+                        for (int j = 0; j < invalid.size; j++) {
+                        stage.addActor(invalid.get(j));
                     
 		dragAndDrop.addTarget(new Target(invalid.get(i)) {
 			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {

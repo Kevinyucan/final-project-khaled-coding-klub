@@ -32,7 +32,7 @@ ShapeRenderer sr;
            
             //adds random point, 
             //path.add(new Vector2(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight())));
-            path.add(new Vector2(338, 0));
+            path.add(new Vector2(338, 1));
             path.add(new Vector2(338, 148));
             path.add(new Vector2(542, 148));
             path.add(new Vector2(542, Gdx.graphics.getHeight() - 115));
