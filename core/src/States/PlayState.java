@@ -51,12 +51,13 @@ public class PlayState extends State {
     private Texture start;
     
     private boolean deployed;
-    public int money;
+    public int money = 200;
     private int passed;
 //    private int teacherAmount = 1;
 //    public int studentAmount = 1;
-    public int studentsPassing;
+    public int studentsPassing = 100;
     private int counter;
+    private boolean toggle;
     
  
     
@@ -70,6 +71,7 @@ public class PlayState extends State {
     private Array<Student> students;
     private Array<Teacher> teachers;
    private Array<Image> buttonImages;
+    
     
 //    private Array<Bullet> teachers;
     
@@ -193,9 +195,24 @@ public class PlayState extends State {
         
       
     }
+    
+     public boolean toggling() {
+
+        if (toggle) {
+            return toggle = false;
+        } else {
+            return toggle = true;
+        }
+
+
+
+
+
+    }
 
     @Override
     public void handleInput() {
+        
           if (Gdx.input.justTouched()) {
               
              
@@ -221,9 +238,12 @@ public class PlayState extends State {
                     && touch.y > buttonY && touch.y < buttonY + region[i].getRegionHeight()/2) {
                  System.out.println(i);
                 //unit.createCharacter(touch.x,touch.y);
-               
-           
-               
+                 toggling();
+               if(toggle){
+                   System.out.println("silva");
+           create(i);
+               }
+                
 
                 
                 
@@ -280,11 +300,11 @@ public class PlayState extends State {
 
     @Override
     public void update(float deltaTime) {
-        
+        if(toggle){
         stage.act(deltaTime);
        stage.draw();
        Gdx.input.setInputProcessor(stage);
-    
+    }
            for (Teacher teacher : teachers) {
            teacher.update(deltaTime);
    
@@ -304,8 +324,9 @@ public class PlayState extends State {
            }
                    if(students.get(i).getY() <= 0){
                    students.removeIndex(i);
+                   studentsPassing = studentsPassing - 1;
                   
-                   System.out.println("Boom");
+                   
                } 
                
            }
@@ -317,6 +338,7 @@ public class PlayState extends State {
          int temp = studentz.getHealth();
        if(studentz.collides(teacher)){
            teacher.shoot();
+            teacher.getStudent(studentz);
            if(teacher.bulletCollide(studentz)){
            
            
@@ -368,7 +390,8 @@ public class PlayState extends State {
     
     
 	public void create (int i) {
-                
+                toggling();
+                System.out.println(i);
 		stage = new Stage();
 
               final Skin validTexture = new Skin();
@@ -481,7 +504,7 @@ public class PlayState extends State {
 
 				Label validLabel = new Label("Valid", skin);
 				validLabel.setColor(0, 1, 0, 1);
-//				payload.setValidDragActor(validLabel);
+				payload.setValidDragActor(validLabel);
                                 payload.setValidDragActor(item);
 
 				Label invalidLabel = new Label("Invalid", skin);
@@ -508,7 +531,7 @@ public class PlayState extends State {
                             System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
                             
                            teachers.add(new Teacher((int)x - (int)teachers.get(0).getTextureWidth()/4-10,(int)y  - (int)teachers.get(0).getTextureHeight()/4-10 , "teacher.jpg",100));
-                               
+                               money = money -100;
                             
 
                                

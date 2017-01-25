@@ -30,7 +30,7 @@ import com.pls.game.Game;
 
 /**
  *
- * @author yuk4142
+ * @author yuk4142 && Khaled
  */
 public abstract class Unit {
 
@@ -65,8 +65,7 @@ public abstract class Unit {
     
     
     private Teacher[] teacher;
-    
-    private AISprites spritee;
+
 
     public Unit(int x, int y, String textureName, int movement) {
         sr = new ShapeRenderer();
@@ -168,19 +167,7 @@ public abstract class Unit {
         sr.end();
         
         map.drawSquares();
-        
-        //responsible for drawing the lines from point to point
-//        sr.setColor(Color.WHITE);
-//        sr.begin(ShapeType.Line);
-//        
-//        sr.rect(542, 148, 55, 267);
-//        sr.rect(50, 365,492 , 50);
-//        sr.rect(50, 270, 55, 95);
-//        sr.rect(50, 270, 207, 30);
-//        sr.rect(257, 0, 50, 300);
-//        sr.rect(307, 0, 30 , 132);
-//        sr.rect(338, 0, 50, 190);
-//        sr.rect(338, 148, 205, 42);
+
         
         //loop for drawing each line
         for (AISprites aiSprite : aiSprites) {

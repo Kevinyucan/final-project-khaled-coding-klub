@@ -108,12 +108,24 @@ public class Bullet {
 //    vy += this.ay * this.time;
     }
 
-    public void update(float deltaTime) {
-
-     
-        currentX += deltaTime * speed;
+    public void updateBullet(float deltaTime, Student a) {
       
-        currentY = (currentY + (speed * MathUtils.sin(direction)));
+             if(currentX < a.getX()){
+                  currentX += deltaTime * speed;
+             }
+             if(currentX > a.getX()){
+                  currentX -= deltaTime * speed;
+             }
+             if(currentY < a.getY()){
+                 currentY += deltaTime * speed;
+             }
+             if(currentY > a.getY()){
+                  currentY -= deltaTime * speed;
+             }
+     
+       
+      
+//        currentY += deltaTime*speed;
         bulletBoundary.setPosition(currentX, currentY);
 //        System.out.println("Bullet X: " + currentX + " Bullet Y: " + currentY);
     }

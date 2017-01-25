@@ -24,6 +24,7 @@ public class Teacher extends Unit {
     private float firingSpeed;
     private Array<Bullet> bullets;
     private Texture bullet1;
+    private Student temp;
 
     public Teacher(int x, int y, String textureName, int radius) {
         //initialize variables
@@ -31,10 +32,11 @@ public class Teacher extends Unit {
         batch = new SpriteBatch();
         sr = new ShapeRenderer();
         this.damageRadius = radius;
-        this.firingSpeed = 10;
+        this.firingSpeed = 500;
         this.timeSinceLastShot = 0;
         this.bullets = new Array<Bullet>();
         bullet1 = new Texture("bullet.png");
+       
     }
 
     /**
@@ -107,9 +109,11 @@ public class Teacher extends Unit {
 
             shoot();
         }
+       
         for (Bullet bullet : bullets) {
-            bullet.update(deltaTime);
+            bullet.updateBullet(deltaTime,temp);
         }
+    
     }
 
     /**
@@ -122,7 +126,7 @@ public class Teacher extends Unit {
         float bulletX = super.getX(); 
                  float bulletY = super.getY();
                  //add new bullet
-        bullets.add(new Bullet(bulletX, bulletY, (float) 100, (float) 30, bullet1));
+        bullets.add(new Bullet(bulletX, bulletY, (float) 300, (float) 30, bullet1));
         
         
     }
@@ -163,10 +167,17 @@ public class Teacher extends Unit {
         } else {
             return isRadiusRevealed = true;
         }
-
-
+        
+        
+     
 
 
 
     }
+    
+       public Student getStudent(Student a){
+           temp = a;
+            return a;
+        } 
+
 }

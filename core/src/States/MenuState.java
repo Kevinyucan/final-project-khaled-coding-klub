@@ -38,7 +38,7 @@ public class MenuState extends State {
        setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
      
        
-        bg = new Texture("menu.jpg");
+        bg = new Texture("main.png");
         button = new Texture("button.jpg");
         button2 = new Texture("instructions.png");
         button3 = new Texture("credits.jpg");
