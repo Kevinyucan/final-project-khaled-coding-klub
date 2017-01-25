@@ -75,9 +75,23 @@ public class Teacher extends Unit {
         }
         return false;
     }
+    
+    public void bulletOutOfBounds(){
+        for (Bullet bullet : bullets) {
+            for (int i = 0; i < bullets.size; i++) {
+            if (bullet.getX()<0||bullet.getX()>400||bullet.getY()<0||bullet.getY()>800){
+                bullets.removeIndex(i);
+            }
+            }
+        }
+    }
+    
+    
 
     public void update(float deltaTime) {
-        timeSinceLastShot += Gdx.graphics.getDeltaTime();
+        
+        timeSinceLastShot += deltaTime;
+        
         if (timeSinceLastShot > firingSpeed) {
 
             shoot();
@@ -91,9 +105,9 @@ public class Teacher extends Unit {
         timeSinceLastShot = 0;
         float bulletX = super.getX(); 
                  float bulletY = super.getY();
-        bullets.add(new Bullet(bulletX +  30, bulletY + 30, (float) 30, (float) 30, bullet1));
+        bullets.add(new Bullet(bulletX, bulletY, (float) 30, (float) 30, bullet1));
         
-        System.out.println("X:" + bulletX + " Y:" + bulletY);
+        
     }
 
     public void setRadius(int radius) {
@@ -101,8 +115,7 @@ public class Teacher extends Unit {
         damageRadius = radius;
     }
 
-    public void fire() {
-    }
+ 
 
     public void renderz(SpriteBatch batchs) {
 //         batch.begin();

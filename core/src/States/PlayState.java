@@ -131,7 +131,7 @@ public class PlayState extends State {
          students.add(new Student(400, 0,100,100, "student.jpg"));
           students.add(new Student(400, 0,200,100, "student.jpg"));
           teachers.add(new Teacher(338, 300, "teacher.jpg",100));
-        
+    
         for (int i = 0; i < region.length; i++) {
            create(i*64); 
         }
@@ -278,7 +278,7 @@ public class PlayState extends State {
 
     @Override
     public void update(float deltaTime) {
-
+        
         stage.act(deltaTime);
        stage.draw();
        Gdx.input.setInputProcessor(stage);
@@ -306,28 +306,24 @@ public class PlayState extends State {
        
        for (Teacher teacher : teachers){
         for (Student studentz : students){
-        
+         int temp = studentz.getHealth();
        if(studentz.collides(teacher)){
-           int temp = studentz.getHealth();
+           teacher.shoot();
+           if(teacher.bulletCollide(studentz)){
+           
            
            temp--;
            studentz.setHealth(temp);
+           //remove the bullet according to the student hit
+           teacher.removeBullet(studentz);
            
-           
-          
-        
-           
+           }//else if(teacher.getBulletCoordX())
+}
 //           StateManager gsm = getStateManager();
 //            gsm.pop();
            
-       }
        
-        
-       
- 
-       
-        
-        
+
     }
         }
        
@@ -420,7 +416,7 @@ public class PlayState extends State {
                 //Adding a new source of where the source of where teachers can be deployed
                 for (int j = 0; j < inventory.size; j++) {
                 stage.addActor(inventory.get(j));
-                    System.out.println("invetory " + inventory.size);
+                    //System.out.println("invetory " + inventory.size);
           
 		DragAndDrop dragAndDrop = new DragAndDrop();
 		dragAndDrop.addSource(new Source(inventory.get(j)) {

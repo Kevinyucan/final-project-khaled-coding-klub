@@ -39,7 +39,7 @@ public class Bullet {
      private ShapeRenderer sr;
     
     public Bullet(float startX, float startY,  float speed,float damage, Texture picture){
-        
+        //initialize variables
         sr = new ShapeRenderer();
         this.startX = startX;
         this.startY = startY;
@@ -49,7 +49,7 @@ public class Bullet {
         this.picture = picture;
         
        
-        
+        //create boundary for the bullet
         bulletBoundary = new Rectangle(startX, startY,25,40);
         
 //                Line line = new Line();
@@ -58,23 +58,26 @@ public class Bullet {
         
         
     }
-    //creating the paths for bullet
-        public Array<Vector2> getRandomPath() {
-            //create array of paths coordinates
-        Array<Vector2> path = new Array<Vector2>();
-        
-            //adds random point, 
-            //path.add(new Vector2(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight())));
-            path.add(new Vector2(startX, startY));
-            path.add(new Vector2(endX, endY));
-            
-           
-        return path;
-
-    }
-        
+//    //creating the paths for bullet
+//        public Array<Vector2> getRandomPath() {
+//            //create array of paths coordinates
+//        Array<Vector2> path = new Array<Vector2>();
+//        
+//            
+//            
+//           
+//        return path;
+//
+//    }
+        public float getX(){
+            return currentX;
+        }
+        public float getY(){
+            return currentY;
+        }
         public void render(SpriteBatch batch){
-            batch.begin();
+           batch.begin();
+            //draw bullet
             batch.draw(picture, startX, startY,25,25);
             batch.end();
             
@@ -95,11 +98,11 @@ public class Bullet {
         }
         public void update(float deltaTime){
             
-            
-            currentX = deltaTime*speed;
+          
+            currentX += deltaTime*speed;
             currentY = (currentY + (speed * MathUtils.sin(direction)));
             bulletBoundary.setPosition(currentX, currentY);
-            
+            System.out.println("Bullet X: " + currentX +" Bullet Y: "+ currentY);
     }
 
     public boolean collides(Student a) {
