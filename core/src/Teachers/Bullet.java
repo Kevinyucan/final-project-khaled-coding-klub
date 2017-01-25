@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package Teachers;
+
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,48 +16,39 @@ import com.badlogic.gdx.math.Rectangle;
 
 /**
  *
- * @author yuk4142p 
+ * @author yuk4142p
  */
-
-
 public class Bullet {
-    private boolean hit;
-    private float startX;
-    private float startY;
+
+
     private float currentX;
     private float currentY;
-    private float endX;
-    private float endY;
+
+
     private float speed;
     private Rectangle bulletBoundary;
     private Texture picture;
-    private Vector2 velocity = new Vector2();
-    private Array<Vector2> path;
-    
-    private float time = 0;
     private float direction;
-    
-     private ShapeRenderer sr;
-    
-    public Bullet(float startX, float startY,  float speed,float damage, Texture picture){
+
+    /**
+     * Bullet constructor
+     * @param currentX the x coordinate of bullet
+     * @param currentY the y coordindate of bullet
+     * @param speed the speed the bullet is moving
+     * @param damage damage bullet does
+     * @param picture Texture
+     */
+    public Bullet(float currentX, float currentY, float speed, float damage, Texture picture) {
         //initialize variables
-        sr = new ShapeRenderer();
-        this.startX = startX;
-        this.startY = startY;
-        this.endX = endX;
-        this.endY = endY;
+        this.currentX = currentX;
+        this.currentY = currentY;
         this.speed = speed;
         this.picture = picture;
-        
-       
         //create boundary for the bullet
-        bulletBoundary = new Rectangle(startX, startY,25,40);
-        
-//                Line line = new Line();
-        
-        
-        
-        
+        bulletBoundary = new Rectangle(currentX, currentY, 25, 40);
+
+
+
     }
 //    //creating the paths for bullet
 //        public Array<Vector2> getRandomPath() {
@@ -69,20 +61,32 @@ public class Bullet {
 //        return path;
 //
 //    }
-        public float getX(){
-            return currentX;
-        }
-        public float getY(){
-            return currentY;
-        }
-        public void render(SpriteBatch batch){
-           batch.begin();
-            //draw bullet
-            batch.draw(picture, startX, startY,25,25);
-            batch.end();
-            
-           // 2 d straight projectile java
-            //http://gamedev.stackexchange.com/questions/84017/how-to-move-an-object-uniformly-from-one-point-to-another-at-a-fixed-angle
+
+    /**
+     * Returns X coordinate of bullet
+     * @return x coordinate of bullet
+     */
+    public float getX() {
+        return currentX;
+    }
+
+    /**
+     * Returns y coordinate of bullet
+     * @return y coordinate of bullet
+     */
+    public float getY() {
+        return currentY;
+    }
+
+    
+    public void render(SpriteBatch batch) {
+        batch.begin();
+        //draw bullet
+        batch.draw(picture, currentX, currentY, 25, 25);
+        batch.end();
+
+        // 2 d straight projectile java
+        //http://gamedev.stackexchange.com/questions/84017/how-to-move-an-object-uniformly-from-one-point-to-another-at-a-fixed-angle
 //             this.time = this.time + deltaTime;
 //
 //    // Vertical : Speed * Sine * Angle
@@ -95,21 +99,27 @@ public class Bullet {
 //
 //    vx += this.ax * this.time;
 //    vy += this.ay * this.time;
-        }
-        public void update(float deltaTime){
-            
-          
-            currentX += deltaTime*speed;
-            currentY = (currentY + (speed * MathUtils.sin(direction)));
-            bulletBoundary.setPosition(currentX, currentY);
-            System.out.println("Bullet X: " + currentX +" Bullet Y: "+ currentY);
     }
 
+    public void update(float deltaTime) {
+
+     
+        currentX += deltaTime * speed;
+      
+        currentY = (currentY + (speed * MathUtils.sin(direction)));
+        bulletBoundary.setPosition(currentX, currentY);
+        System.out.println("Bullet X: " + currentX + " Bullet Y: " + currentY);
+    }
+
+    /**
+     * Boolean collides method
+     * @param a Student colliding with
+     * @return true if bullet has collided with student
+     */
     public boolean collides(Student a) {
-        if(bulletBoundary.overlaps((a.getBoundaries()))){
-        return true ;
+        if (bulletBoundary.overlaps((a.getBoundaries()))) {
+            return true;
         }
         return false;
     }
-    
 }

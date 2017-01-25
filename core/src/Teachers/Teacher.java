@@ -26,6 +26,7 @@ public class Teacher extends Unit {
     private Texture bullet1;
 
     public Teacher(int x, int y, String textureName, int radius) {
+        //initialize variables
         super(x, y, textureName, 0);
         batch = new SpriteBatch();
         sr = new ShapeRenderer();
@@ -66,7 +67,11 @@ public class Teacher extends Unit {
         }
 
     }
-
+/**
+ * Check if bullet collides with student
+ * @param a student bullet is colliding with
+ * @return true if bullet has collided
+ */
     public boolean bulletCollide(Student a) {
         for (Bullet bullet : bullets) {
             if (bullet.collides(a)) {
@@ -76,6 +81,9 @@ public class Teacher extends Unit {
         return false;
     }
     
+    /**
+     * If bullet is out of bounds, remove it
+     */
     public void bulletOutOfBounds(){
         for (Bullet bullet : bullets) {
             for (int i = 0; i < bullets.size; i++) {
@@ -89,9 +97,10 @@ public class Teacher extends Unit {
     
 
     public void update(float deltaTime) {
-        
+        //set timesincelastshot by adding on to deltatime
         timeSinceLastShot += deltaTime;
         
+        //if the time since last shot is bigger than the firing speed, fire a bullet
         if (timeSinceLastShot > firingSpeed) {
 
             shoot();
@@ -101,15 +110,25 @@ public class Teacher extends Unit {
         }
     }
 
+    /**
+     *Fire a bullet
+     */
     public void shoot() {
+        //set time last shot = 0
         timeSinceLastShot = 0;
+        
         float bulletX = super.getX(); 
                  float bulletY = super.getY();
+                 //add new bullet
         bullets.add(new Bullet(bulletX, bulletY, (float) 30, (float) 30, bullet1));
         
         
     }
 
+    /**
+     * Sets range of teacher
+     * @param radius the radius for the range of teacher
+     */
     public void setRadius(int radius) {
 
         damageRadius = radius;
@@ -122,9 +141,11 @@ public class Teacher extends Unit {
         super.render(batchs);
         sr.setColor(Color.RED);
         sr.begin(ShapeRenderer.ShapeType.Line);
+        //render bullets in array
         for (Bullet bullet : bullets) {
             bullet.render(batch);
         }
+        //draw radius circle for range
         if (isRadiusRevealed == true) {
             sr.circle(this.getX() + this.getTextureWidth() / 2, this.getY() + this.getTextureHeight() / 2, 100);
         }
