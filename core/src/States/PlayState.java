@@ -95,7 +95,7 @@ public class PlayState extends State {
         button = new Texture("button.jpg");
         panel = new Texture("units.jpg");
         balance = new Texture("money.jpg");
-        start = new Texture("start.png");
+        start = new Texture("start.jpg");
         
         Texture bullet1 = new Texture("bullet.png");
        
@@ -132,9 +132,9 @@ public class PlayState extends State {
           students.add(new Student(400, 0,200,100, "student.jpg"));
           teachers.add(new Teacher(338, 300, "teacher.jpg",100));
     
-        for (int i = 0; i < region.length; i++) {
-           create(i*64); 
-        }
+      
+           create(); 
+        
            
         
     
@@ -149,18 +149,13 @@ public class PlayState extends State {
 
         batch.begin();
         
-//        batch.draw(bg, 0 , 0,getViewWidth(), getViewHeight());
-       
-        //batch.draw(button, 0, 0);
-//        batch.draw(panel, 0 , 0 , getViewWidth()/4, getViewHeight());
-//        batch.draw(region[0],panel.getWidth()- getViewWidth(), 0, getViewWidth()/8 , getViewHeight()/8);
-//        batch.draw(region[1], 0, 0, getViewWidth()/8, getViewHeight()/8);
-//        batch.draw(region[4], 0, 0, getViewWidth()/8, getViewHeight()/8);
+        batch.draw(bg, 0 , 0,getViewWidth(), getViewHeight());
+
          
           batch.draw(balance, getViewWidth() - balance.getWidth() + 109 , 0, getViewWidth()/3 , getViewHeight()/8); 
           batch.draw(start, getViewWidth() / 2, 0, 150, 50);
          for (int i = 0; i < region.length; i++) {
-//           batch.draw(region[i],i*64,0, getViewWidth()/10 , getViewHeight()/8);
+           batch.draw(region[i],i*64,0, getViewWidth()/10 , getViewHeight()/8);
             
         }
 
@@ -250,7 +245,7 @@ public class PlayState extends State {
                   if (touch.x > buttonX && touch.x < buttonX + teacher.getTextureWidth() 
                           && touch.y > buttonY && touch.y < buttonY + teacher.getTextureHeight()) {
                       teacher.toggleRadius();
-                     System.out.println(teacher.toggleRadius());
+                    
 
                      
                   }
@@ -262,22 +257,22 @@ public class PlayState extends State {
              
              // clicking start button
              if(touch.x > startX && touch.x < startX + 150 && touch.y > startY && touch.y < 50){
-                 
+                 createStudent(0);
              }
              
-             if(wave <=0){
-                 StateManager gsm = getStateManager();
-                 gsm.push(new GameOverState(gsm));  
-             }
+//             if(wave <=0){
+//                 StateManager gsm = getStateManager();
+//                 gsm.push(new GameOverState(gsm));  
+//             }
               }
 
     }
     
     
     public void createStudent(int i){
-        if(i == 0){
+        
              students.add(new Student(400, 0,100,100, "student.jpg"));
-        }
+        
         
     }
 
@@ -364,26 +359,30 @@ public class PlayState extends State {
     }
     
     
-	public void create (int i) {
+	public void create () {
                 
 		stage = new Stage();
 
-              
+              final Skin validTexture = new Skin();
+              final Skin invalidTexture = new Skin();
 		final Skin skin = new Skin();
 		skin.add("default", new LabelStyle(new BitmapFont(), Color.WHITE));
 		skin.add("badlogic", new Texture("teacher.jpg"));
+                validTexture.add("badlogic", new Texture("valid.jpg"));
+                invalidTexture.add("badlogic", new Texture("invalid.jpg"));
+                
        
                
             
                     //valid target
-		Image validTargetImage = new Image(skin, "badlogic");
+		Image validTargetImage = new Image(validTexture, "badlogic");
 		validTargetImage.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.addActor(validTargetImage); 
                 
 		
                
-                Array<Image> inventory = new Array();
-                
+                Array<Image> buttons = new Array();
+                Array<Image> invalid = new Array();
                 
                
                 
@@ -391,12 +390,35 @@ public class PlayState extends State {
                
             
 
-                //invalid target
-		Image invalidTargetImage = new Image(skin, "badlogic");
-//		invalidTargetImage.setBounds(542, 148, 55, 267);
+                //invalid targets which each correspond 
+		Image invalidTargetImage = new Image(invalidTexture, "badlogic");
                 invalidTargetImage.setBounds(50, 365, 492, 50);
                 
-		stage.addActor(invalidTargetImage);
+		Image invalidTargetImage2 = new Image(invalidTexture, "badlogic");
+                invalidTargetImage2.setBounds(542, 148, 55, 267);
+                
+                Image invalidTargetImage3 = new Image(invalidTexture, "badlogic");
+                invalidTargetImage3.setBounds(50, 270, 55, 95);
+                
+                Image invalidTargetImage4 = new Image(invalidTexture, "badlogic");
+                invalidTargetImage4.setBounds(50, 270, 207, 30);
+                
+                Image invalidTargetImage5 = new Image(invalidTexture, "badlogic");
+                invalidTargetImage5.setBounds(257, getViewHeight()/8, 50, 300);
+                
+                Image invalidTargetImage6 = new Image(invalidTexture, "badlogic");
+                invalidTargetImage6.setBounds(307, 0, 30, 132);
+                
+                Image invalidTargetImage7 = new Image(invalidTexture, "badlogic");
+                invalidTargetImage7.setBounds(338, 0, 50, 190);
+                
+                Image invalidTargetImage8 = new Image(invalidTexture, "badlogic");
+                invalidTargetImage8.setBounds(338, 148, 205, 42);
+                
+                Image invalidTargetImage9 = new Image(invalidTexture, "badlogic");
+                invalidTargetImage9.setBounds(256+ getViewWidth()/10,0, 300 , getViewHeight()/8);
+                
+                
                 
                 
                 Image sourceImage = new Image(skin, "badlogic");
@@ -411,31 +433,48 @@ public class PlayState extends State {
                   Image sourceImage4 = new Image(skin, "badlogic");
 		sourceImage4.setBounds(192,0, getViewWidth()/10 , getViewHeight()/8);
                 
-		stage.addActor(sourceImage);
-                inventory.add(sourceImage);
-                inventory.add(sourceImage2);
-                inventory.add(sourceImage3);
-                inventory.add(sourceImage4);
+                Image sourceImage5 = new Image(skin, "badlogic");
+		sourceImage5.setBounds(256,0, getViewWidth()/10 , getViewHeight()/8);
+                
+                invalid.add(invalidTargetImage);
+                invalid.add(invalidTargetImage2);
+                invalid.add(invalidTargetImage3);
+                invalid.add(invalidTargetImage4);
+                invalid.add(invalidTargetImage5);
+                invalid.add(invalidTargetImage6);
+                invalid.add(invalidTargetImage7);
+                invalid.add(invalidTargetImage8);
+                invalid.add(invalidTargetImage9);
                 
                 
+		
+                buttons.add(sourceImage);
+                buttons.add(sourceImage2);
+                buttons.add(sourceImage3);
+                buttons.add(sourceImage4);
+                buttons.add(sourceImage5);
+                
+                DragAndDrop dragAndDrop = new DragAndDrop();
                 //Adding a new source of where the source of where teachers can be deployed
-                for (int j = 0; j < inventory.size; j++) {
-                stage.addActor(inventory.get(j));
-                    //System.out.println("invetory " + inventory.size);
+                for (int j = 0; j < buttons.size; j++) {
+                stage.addActor(buttons.get(j));
+                    //System.out.println("invetory " + buttons.size);
           
-		DragAndDrop dragAndDrop = new DragAndDrop();
-		dragAndDrop.addSource(new Source(inventory.get(j)) {
+		
+		dragAndDrop.addSource(new Source(buttons.get(j)) {
 			public Payload dragStart (InputEvent event, float x, float y, int pointer) {
 				Payload payload = new Payload();
                                 
-                                Teacher item = new Teacher(0, 300, "student.jpg",100);
+                              Image item = new Image(skin, "badlogic");
+                              item.setBounds(128,0, getViewWidth()/10 , getViewHeight()/8);
 				payload.setObject(item);
 
 				payload.setDragActor(new Label("Moving", skin));
 
 				Label validLabel = new Label("Valid", skin);
 				validLabel.setColor(0, 1, 0, 1);
-				payload.setValidDragActor(validLabel);
+//				payload.setValidDragActor(validLabel);
+                                payload.setValidDragActor(item);
 
 				Label invalidLabel = new Label("Invalid", skin);
 				invalidLabel.setColor(1, 0, 0, 1);
@@ -444,7 +483,8 @@ public class PlayState extends State {
 				return payload;
 			}
 		});
-                
+                }
+                 
                 	dragAndDrop.addTarget(new Target(validTargetImage) {
 			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
 				getActor().setColor(Color.GREEN);
@@ -461,11 +501,14 @@ public class PlayState extends State {
                            
                            teachers.add(new Teacher((int)x - (int)teachers.get(0).getTextureWidth()/4-10,(int)y  - (int)teachers.get(0).getTextureHeight()/4-10 , "teacher.jpg",100));
 
-                           //teacher[0].getWidth()/4 teacher[0].getHeight()/4
                                
 			}
 		});
-		dragAndDrop.addTarget(new Target(invalidTargetImage) {
+                        
+                        for (int i = 0; i < invalid.size; i++) {
+                        stage.addActor(invalid.get(i));
+                    
+		dragAndDrop.addTarget(new Target(invalid.get(i)) {
 			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
 				getActor().setColor(Color.RED);
                              
@@ -482,8 +525,8 @@ public class PlayState extends State {
                             
 			}
 		});
-                counter++;
-                  }
+                        }
+                  
 	}
 
 }
