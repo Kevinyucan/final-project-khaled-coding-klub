@@ -1,5 +1,6 @@
 package com.pls.game;
 
+import States.MainState;
 import States.MenuState;
 import States.State;
 
@@ -48,7 +49,7 @@ public class Game extends ApplicationAdapter {
 
         stateManager = new StateManager();
 
-        State firstScreen = new MenuState(stateManager);
+        State firstScreen = new MainState(stateManager);
         //set the screen (load first screen)
         stateManager.push(firstScreen);
 
