@@ -23,18 +23,15 @@ public class Bullet {
 
     private float currentX;
     private float currentY;
-
-
     private float speed;
     private Rectangle bulletBoundary;
     private Texture picture;
-    private float direction;
     public boolean shot;
 
     /**
      * Bullet constructor
      * @param currentX the x coordinate of bullet
-     * @param currentY the y coordindate of bullet
+     * @param currentY the y coordinate of bullet
      * @param speed the speed the bullet is moving
      * @param damage damage bullet does
      * @param picture Texture
@@ -79,6 +76,10 @@ public class Bullet {
         return currentY;
     }
     
+    /**
+     * 
+     * @return if bullet has been shot/rendered
+     */
     public boolean getShot(){
         return shot;
     }
@@ -110,6 +111,7 @@ public class Bullet {
 
     public void updateBullet(float deltaTime, Student a) {
       
+        //fire bullet according to where the bullet is to the student
              if(currentX < a.getX()){
                   currentX += deltaTime * speed;
              }
