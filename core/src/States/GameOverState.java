@@ -22,7 +22,7 @@ public class GameOverState extends State {
         super(gsm);
         setCameraView(Game.WIDTH, Game.HEIGHT);
         setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
-        bg = new Texture("bg.jpg");
+        bg = new Texture("");
     }
     
     @Override

@@ -21,6 +21,7 @@ import com.pls.game.Game;
 public class MenuState extends State {
     private Texture bg;
     private Texture button;
+    private Texture button2;
     private Texture button3;
     
     public boolean keyPressed;
@@ -39,10 +40,9 @@ public class MenuState extends State {
        
         bg = new Texture("menu.jpg");
         button = new Texture("button.jpg");
+        button2 = new Texture("instructions.png");
         button3 = new Texture("credits.jpg");
         
-
-       
                                                         
     }
 
@@ -56,7 +56,8 @@ public class MenuState extends State {
         // the getviewwidth and height commands are used to stretch the screen according to your screen (phone or pc)
         batch.draw(bg, 0, 0,getViewWidth(), getViewHeight());
         batch.draw(button, getViewWidth() / 2 - button.getWidth() / 2, getViewHeight() / 2);
-        batch.draw(button3, getViewWidth() / 2 - button.getWidth()/2, 110);
+        batch.draw(button2, getViewWidth()/2 - 100, getViewHeight()/2 - 130, 200, 100);
+        batch.draw(button3, getViewWidth() / 2 - 100, 100, 200, 100);
         
         
         // to match the button and centre it!
@@ -75,10 +76,10 @@ public class MenuState extends State {
             // Check if the button is pressed
             float buttonX = getViewWidth() / 2 - button.getWidth() / 2;
             float buttonY = getViewHeight() / 2;
-            float buttonX2 = getViewWidth()/2 - button.getWidth() / 4;
-            float buttonY2 = getViewHeight()/2 - 25;
+            float buttonX2 = getViewWidth()/2 -100;
+            float buttonY2 = getViewHeight()/2 - 130;
             float buttonX3 = getViewWidth()/2 - 100 ;
-            float buttonY3 = 110;
+            float buttonY3 = 100;
             
             if (touch.x > buttonX && touch.x < buttonX + button.getWidth()
                     && touch.y > buttonY && touch.y < buttonY + button.getHeight()) {
@@ -90,15 +91,16 @@ public class MenuState extends State {
             }
             
             //button #2 
-            if(touch.x > buttonX2 && touch.x < buttonX2 + button.getWidth()/2 
-                    && touch.y < buttonY2 && touch.y > getViewHeight()/2 - 125){
+            if(touch.x > buttonX2 && touch.x < buttonX2 + 200 
+                    && touch.y > buttonY2 && touch.y < buttonY2 + 100){
                 StateManager gsm = getStateManager();
                 
                 gsm.push(new HowToState(gsm));                          
             }
 
-            if(touch.x > buttonX3 && touch.x < buttonX3 + button3.getWidth()
-                    && touch.y > buttonY3 && touch.y < buttonY3 + button3.getHeight() ){
+            
+            if(touch.x > buttonX3 && touch.x < buttonX3 + 200
+                    && touch.y > buttonY3 && touch.y < buttonY3 + 100 ){
                 StateManager gsm = getStateManager();
                 
                 gsm.push(new CreditsState(gsm));
