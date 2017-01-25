@@ -37,7 +37,7 @@ public class MenuState extends State {
        setCameraView(Game.WIDTH, Game.HEIGHT);
        setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
      
-       
+        // sets an image for each variable 
         bg = new Texture("main.png");
         button = new Texture("button.jpg");
         button2 = new Texture("instructions.png");

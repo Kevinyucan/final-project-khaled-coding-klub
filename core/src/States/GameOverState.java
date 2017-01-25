@@ -16,6 +16,7 @@ import com.pls.game.Game;
  */
 public class GameOverState extends State {
 
+    
     private Texture bg;
     
     public GameOverState(StateManager gsm){

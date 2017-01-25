@@ -23,6 +23,7 @@ public class HowToState extends State {
         setCameraView(Game.WIDTH, Game.HEIGHT);
         setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
         
+        // sets image for the background
         bg = new Texture("howto.jpg");
         
     }
@@ -32,6 +33,7 @@ public class HowToState extends State {
         batch.setProjectionMatrix(getCombinedCamera());
         batch.begin();
         
+        // draws the background
         batch.draw(bg, 0, 0, getViewWidth(), getViewHeight());
         
         batch.end();
