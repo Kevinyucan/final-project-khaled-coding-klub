@@ -59,7 +59,7 @@ public class Teacher extends Unit {
 
                 if (bullet.collides(a)) {
                     bullets.removeIndex(i);
-                    System.out.println("heron never dies");
+                
 
 
                 }

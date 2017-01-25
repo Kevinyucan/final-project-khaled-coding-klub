@@ -166,7 +166,7 @@ public abstract class Unit {
 
         sr.end();
         
-        map.drawSquares();
+//        map.drawSquares();
 
         
         //loop for drawing each line
@@ -182,18 +182,18 @@ public abstract class Unit {
         }
 //        sr.end();
 
-        sr.setColor(Color.RED);
-        sr.begin(ShapeType.Line);
-       
-        for (AISprites aiSprite : aiSprites) {
-            for (Vector2 waypoint : aiSprite.getPath()) {
-                sr.circle(waypoint.x, waypoint.y, 5);
-//                sr.circle(sprite.getX() + sprite.getWidth()/2 ,sprite.getY() + aiSprite.getHeight()/2, 100);
-                
-              
-                
-            }
-        }
+//        sr.setColor(Color.RED);
+//        sr.begin(ShapeType.Line);
+//       
+//        for (AISprites aiSprite : aiSprites) {
+//            for (Vector2 waypoint : aiSprite.getPath()) {
+//                sr.circle(waypoint.x, waypoint.y, 5);
+////                sr.circle(sprite.getX() + sprite.getWidth()/2 ,sprite.getY() + aiSprite.getHeight()/2, 100);
+//                
+//              
+//                
+//            }
+//        }
         sr.end();
 
     }

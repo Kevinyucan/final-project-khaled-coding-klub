@@ -80,6 +80,7 @@ public class PlayState extends State {
     private TextureRegion region[];
     
     private Texture balance;
+    private int wave = 10;
    
     
    
@@ -120,19 +121,11 @@ public class PlayState extends State {
        
         
  
-//         student = new Student[studentAmount];
-//         teacher = new Teacher[teacherAmount];
-//        for (int i = 0; i < student.length; i++) {
-//            student[i] = new Student(338, 0,100,200, "student.jpg");
-//            teacher[i] = new Teacher(338, 300,0, "teacher.jpg", 100);
-//          
-//            
-//            
-//        }
+ 
         
 //         students.add(new Student(400, 1,100,100, "student.jpg"));
 //          students.add(new Student(400, 1,200,100, "student.jpg"));
-          teachers.add(new Teacher(338, 300, "teacher.jpg",100));
+//          teachers.add(new Teacher(338, 300, "teacher.jpg",100));
     
       
            create(0); 
@@ -279,21 +272,29 @@ public class PlayState extends State {
              
              // clicking start button
              if(touch.x > startX && touch.x < startX + 150 && touch.y > startY && touch.y < 50){
-                 createStudent(0);
+                 wave = wave + 5;
+                 createStudent(wave);
+                 System.out.println(wave);
              }
              
-//             if(wave <=0){
-//                 StateManager gsm = getStateManager();
-//                 gsm.push(new GameOverState(gsm));  
-//             }
+             if(studentsPassing <=0){
+                 StateManager gsm = getStateManager();
+                 gsm.push(new GameOverState(gsm));  
+             }
               }
 
     }
     
-    
+    /**
+     * Creates students when the button is pressed 
+     * @param i the parameter of which when pressed the amount of students increase 
+     */
     public void createStudent(int i){
-        
-             students.add(new Student(400, 1,100,100, "student.jpg"));
+        for (int j = 0; j < i; j++) {
+            j = j*15;
+            students.add(new Student(400+j, 1,100,100, "student.jpg"));
+        }
+             
         
         
     }
@@ -314,6 +315,14 @@ public class PlayState extends State {
            student.update(deltaTime);
            for ( int i = 0; i < students.size; i++){
              
+                   if(students.get(i).getY() <= 0){
+                   students.removeIndex(i);
+                   studentsPassing = studentsPassing - 1;
+                  
+                   
+               } 
+               
+               
                  if(students.get(i).getHealth() <= 0){
                students.removeIndex(i);
                money = money + 100;
@@ -322,12 +331,8 @@ public class PlayState extends State {
                
                
            }
-                   if(students.get(i).getY() <= 0){
-                   students.removeIndex(i);
-                   studentsPassing = studentsPassing - 1;
-                  
-                   
-               } 
+                
+               
                
            }
          }
@@ -391,7 +396,7 @@ public class PlayState extends State {
     
 	public void create (int i) {
                 toggling();
-                System.out.println(i);
+                
 		stage = new Stage();
 
               final Skin validTexture = new Skin();
@@ -529,10 +534,10 @@ public class PlayState extends State {
 
 			public void drop (Source source, Payload payload, float x, float y, int pointer) {
                             System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
-                            
-                           teachers.add(new Teacher((int)x - (int)teachers.get(0).getTextureWidth()/4-10,(int)y  - (int)teachers.get(0).getTextureHeight()/4-10 , "teacher.jpg",100));
+                            if(money >= 100){
+                           teachers.add(new Teacher((int)x ,(int)y   , "teacher.jpg",100));
                                money = money -100;
-                            
+                            }
 
                                
 			}
