@@ -264,6 +264,11 @@ public class PlayState extends State {
              if(touch.x > startX && touch.x < startX + 150 && touch.y > startY && touch.y < 50){
                  
              }
+             
+             if(wave <=0){
+                 StateManager gsm = getStateManager();
+                 gsm.push(new GameOverState(gsm));  
+             }
               }
 
     }

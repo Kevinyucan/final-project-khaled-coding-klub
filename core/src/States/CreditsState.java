@@ -16,14 +16,20 @@ import com.pls.game.Game;
  */
 public class CreditsState extends State {
 
+    // instance variables
     private Texture bg;
     private Texture back;
     
+    /**
+     * Constructor to initialize variables
+     * @param gsm 
+     */
     public CreditsState(StateManager gsm){
         super(gsm);
         setCameraView(Game.WIDTH, Game.HEIGHT);
         setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
         
+        // sets an image for each variable
         bg = new Texture("creditspage.jpg");
         back = new Texture("back.png");
     }
@@ -32,8 +38,9 @@ public class CreditsState extends State {
         batch.setProjectionMatrix(getCombinedCamera());
         batch.begin();
         
+        // draws the background and button
         batch.draw(bg, 0, 0, getViewWidth(), getViewHeight());
-        batch.draw(back, 0, 0, 100, 100);
+        batch.draw(back, getViewWidth()-120, 50, 100, 100);
         
         batch.end();
     }
@@ -46,10 +53,18 @@ public class CreditsState extends State {
     @Override
     public void handleInput() {
         if(Gdx.input.justTouched()){
+            // Get the mouse click/touch position
             Vector3 touch = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            // Convert that point to "game coordinates"
             unproject(touch);
             
-            if(touch.x > 0 && touch.x < 100 && touch.y > 0 && touch.y < 100){
+            // check if button is pressed
+            float backX = getViewWidth()-110;
+            float backY = 50;
+            
+            // if clicked in any of these areas
+            if(touch.x > backX && touch.x < backX + 100 && touch.y > backY && touch.y < backY + 100){
+                // create a new state over this state 
                 StateManager gsm = getStateManager();
                 gsm.push(new MenuState(gsm)); 
             }
