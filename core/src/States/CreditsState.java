@@ -22,20 +22,24 @@ public class CreditsState extends State {
     
     /**
      * Constructor to initialize variables
-     * @param gsm 
+     * @param gsm the state of which is being passed in
      */
     public CreditsState(StateManager gsm){
+        // since this is extended to state, all inheritance is passed here
         super(gsm);
-        setCameraView(Game.WIDTH, Game.HEIGHT);
+        // sets camera view to fit the entire screen that way coordinates are aligned 
+        setCameraView(Game.WIDTH, Game.HEIGHT);        
         setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
         
-        // sets an image for each variable
+        // assigns a Texture for each variable
         bg = new Texture("creditspage.jpg");
         back = new Texture("back.png");
     }
     @Override
     public void render(SpriteBatch batch) {
+        // Sets the projection matrix to be used by this Batch
         batch.setProjectionMatrix(getCombinedCamera());
+        // Calls the batch to draw
         batch.begin();
         
         // draws the background and button
@@ -58,13 +62,13 @@ public class CreditsState extends State {
             // Convert that point to "game coordinates"
             unproject(touch);
             
-            // check if button is pressed
+            // sets starting coordinates of button
             float backX = getViewWidth()-110;
             float backY = 50;
             
-            // if clicked in any of these areas
+            // if button is clicked
             if(touch.x > backX && touch.x < backX + 100 && touch.y > backY && touch.y < backY + 100){
-                // create a new state over this state 
+                // changes to the main menu 
                 StateManager gsm = getStateManager();
                 gsm.push(new MenuState(gsm)); 
             }
@@ -74,6 +78,7 @@ public class CreditsState extends State {
 
     @Override
     public void dispose() {
+        // disposes background and back button
         bg.dispose();
         back.dispose();
     }

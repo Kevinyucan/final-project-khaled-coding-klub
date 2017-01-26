@@ -42,6 +42,7 @@ import com.pls.game.Game;
  */
 public class PlayState extends State {
 
+    // instance variables
     private Texture bg;
     private Texture character;
     private Texture button;
@@ -129,13 +130,13 @@ public class PlayState extends State {
      */
     @Override
     public void render(SpriteBatch batch) {
-        //Sets the projection matrix to be used by this Batch
+        // Sets the projection matrix to be used by this Batch
         batch.setProjectionMatrix(getCombinedCamera());
 
-        //Calls the batch in order to draw which will setup appropriate render states
+        // Calls the batch in order to draw which will setup appropriate render states
         batch.begin();
 
-        //Draws the background on to the screen, and sets its size according to screen
+        // Draws the background on to the screen, and sets its size according to screen
         batch.draw(bg, 0, 0, getViewWidth(), getViewHeight());
 
         //Draws the balance score on the bottom right corner 
@@ -155,15 +156,6 @@ public class PlayState extends State {
 
         // draws the score
         font.draw(batch, "Score: " + score, getViewWidth() - 90, getViewHeight() - 30);
-
-
-
-
-
-
-
-
-
 
         for (Student student : students) {
             student.renderz(batch);
@@ -209,7 +201,6 @@ public class PlayState extends State {
     public void handleInput() {
 
         if (Gdx.input.justTouched()) {
-
 
             // Get the mouse click/touch position
             Vector3 touch = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);

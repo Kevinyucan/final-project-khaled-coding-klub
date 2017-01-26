@@ -16,9 +16,11 @@ import com.pls.game.Game;
 
 /**
  *
- * @author hadik9595
+ * @author hadik9595, guanv6321
  */
 public class MenuState extends State {
+    
+    // instance variables
     private Texture bg;
     private Texture button;
     private Texture button2;
@@ -26,18 +28,22 @@ public class MenuState extends State {
     
     public boolean keyPressed;
 
-    
+   
     private int highScore;
     
     
-    //passes in the gamestate manager 
-    
+    /**
+     * Constructor to initialize variables
+     * @param gsm the state of which is being passed in
+     */
     public MenuState(StateManager gsm){
+       // since this is extended to state, all inheritance is passed here 
        super(gsm);
+       // sets camera view to fit the entire screen that way coordinates are aligned
        setCameraView(Game.WIDTH, Game.HEIGHT);
        setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
      
-        // sets an image for each variable 
+        // assigns a Texture for each variable 
         bg = new Texture("main.png");
         button = new Texture("button.jpg");
         button2 = new Texture("instructions.png");
@@ -48,6 +54,8 @@ public class MenuState extends State {
 
     @Override
     public void render(SpriteBatch batch) {
+        
+        // Sets the projection matrix to be used by this Batch
          batch.setProjectionMatrix(getCombinedCamera());
         //start drawing stuff 
         batch.begin();
@@ -81,28 +89,28 @@ public class MenuState extends State {
             float buttonX3 = getViewWidth()/2 - 100 ;
             float buttonY3 = 100;
             
+            // if play button is clicked
             if (touch.x > buttonX && touch.x < buttonX + button.getWidth()
                     && touch.y > buttonY && touch.y < buttonY + button.getHeight()) {
                 StateManager gsm = getStateManager();
-
-                // Created a new game state on top of the game state
+                // change to playing screen
                 gsm.push(new PlayState(gsm));
                 
             }
             
-            //button #2 
+            // if instructions button is pressed
             if(touch.x > buttonX2 && touch.x < buttonX2 + 200 
                     && touch.y > buttonY2 && touch.y < buttonY2 + 100){
                 StateManager gsm = getStateManager();
-                
+                // change to instructions screen
                 gsm.push(new HowToState(gsm));                          
             }
 
-            
+            // if credits button is pressed
             if(touch.x > buttonX3 && touch.x < buttonX3 + 200
                     && touch.y > buttonY3 && touch.y < buttonY3 + 100 ){
                 StateManager gsm = getStateManager();
-                
+                // change to credits screen
                 gsm.push(new CreditsState(gsm));
             }
                         
@@ -146,6 +154,7 @@ public class MenuState extends State {
 
     @Override
     public void dispose() {
+        // dispose the background and all buttons
         bg.dispose();
         button.dispose();
         button2.dispose();
