@@ -42,28 +42,25 @@ import com.pls.game.Game;
  * @author hadik9595
  */
 public class PlayState extends State {
-
-   
     private Texture bg;
     private Texture character;
     private Texture button;
     private Texture panel;
     private Texture start;
-    
     private boolean deployed;
+    //money variable used to store money 
     public int money = 200;
     private int passed;
-//    private int teacherAmount = 1;
-//    public int studentAmount = 1;
-    public int studentsPassing = 50;
-    public int score = 0;
+
+    public int studentsPassing = 100;
+    private int counter;
     private boolean toggle;
+    private int score;
     
  
     
     private Stage stage;
    
-    //Skin skin = Assets.manager.get(Assets.uiskin, Skin.class);
     
     BitmapFont font = new BitmapFont();
     
@@ -72,8 +69,6 @@ public class PlayState extends State {
     private Array<Teacher> teachers;
    private Array<Image> buttonImages;
     
-    
-//    private Array<Bullet> teachers;
     
     
     //variable used to separate individual pieces within a picture
@@ -85,47 +80,49 @@ public class PlayState extends State {
     
    
 
-    
+    /**
+     * Constructor of PlayState where all variables such as textures are initialized here
+     * @param sm the state of which is being passed in
+     */
     public PlayState(StateManager sm){
+        //since this is extended to state, all inheritance is passed to playState
         super(sm);
     
+        //sets camera view to fit the entire screen that way coordinates are aligned 
         setCameraView(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-       setCameraPosition(getViewWidth()/2 , getViewHeight()/2 );
+       
+//       setCameraPosition(getViewWidth()/2 , getViewHeight()/2 );
        
        
-       
+       //declaring bunch of textures below
+       //assigning background with a texture 
         bg = new Texture("Background.jpg");
+       //assigning button with a texture
         button = new Texture("button.jpg");
+        //assigning the button panel with a texture
         panel = new Texture("units.jpg");
+        //assigning the balance where money is drawn with a texture
         balance = new Texture("money.jpg");
+        //assigning the start button with a texture
         start = new Texture("start.jpg");
         
-        Texture bullet1 = new Texture("bullet.png");
-       
+
+        //the array used to add students to the screen
         students = new Array<Student>();
+        //the array used to add teachers to the screen
         teachers = new Array<Teacher>();
+        //array used to add bullets (paper) to the screen when called
         buttonImages = new Array<Image>();
-        
-        
-        
-        
-        
+
+        //region is essentially texture region where one picture can be used as many models
         region = new TextureRegion[5];
+        //assigning each square with a texture 
         region[0] = new TextureRegion(panel,0,0,136,156);
         region[1] = new TextureRegion(panel,136,0,136,156);
         region[2] = new TextureRegion(panel,136*2,0,136,156);
         region[3] = new TextureRegion(panel,136*3,0,136,156);
         region[4] = new TextureRegion(panel,136*4,0,136,156);
-//        bullet = new Bullet((float)250, (float)250, (float)250, (float)250, 100,bullet1);
-        
-       
-        
- 
- 
-        
-//         students.add(new Student(400, 1,100,100, "student.jpg"));
-//          students.add(new Student(400, 1,200,100, "student.jpg"));
-//          teachers.add(new Teacher(338, 300, "teacher.jpg",100));
+
     
       
            create(0); 
@@ -191,8 +188,13 @@ public class PlayState extends State {
       
     }
     
+    /**
+     * A toggle setter that flips teacher's toggle from false to true, vice versa 
+     * @return the boolean toggle 
+     */
      public boolean toggling() {
 
+         //if toggle is true, then set it to false, vice versa
         if (toggle) {
             return toggle = false;
         } else {
@@ -205,6 +207,9 @@ public class PlayState extends State {
 
     }
 
+     /**
+      * Handles any input done by the user, specifically any mouse clicks
+      */
     @Override
     public void handleInput() {
         
@@ -216,8 +221,7 @@ public class PlayState extends State {
             
             // Convert that point to "game coordinates"
             unproject(touch);
-//            System.out.println("Mouse X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY());
-//              System.out.println("X " + touch.x + " Y " + touch.y);
+
                
 
             
@@ -232,10 +236,10 @@ public class PlayState extends State {
             if (touch.x > buttonX && touch.x < buttonX + region[i].getRegionWidth()/2
                     && touch.y > buttonY && touch.y < buttonY + region[i].getRegionHeight()/2) {
                  System.out.println(i);
-                //unit.createCharacter(touch.x,touch.y);
+                
                  toggling();
                if(toggle){
-                   System.out.println("silva");
+                   
            create(i);
                }
                 
@@ -252,13 +256,7 @@ public class PlayState extends State {
                for (Teacher teacher : teachers) {
                   float buttonX = teacher.getX() ;
                   float buttonY = teacher.getY();
-                 
-                 
-//                 
-//                   System.out.println("Camera coords " + touch.x + " " + touch.y );
-//                   System.out.println("x " + teacher.getX() + " y " + teacher.getY() + "   width: " + teacher.getTextureWidth() + "   height: " + teacher.getTextureHeight());
-            
- 
+
                   if (touch.x > buttonX && touch.x < buttonX + teacher.getTextureWidth() 
                           && touch.y > buttonY && touch.y < buttonY + teacher.getTextureHeight()) {
                       teacher.toggleRadius();
@@ -276,7 +274,7 @@ public class PlayState extends State {
              if(touch.x > startX && touch.x < startX + 150 && touch.y > startY && touch.y < 50){
                  wave = wave + 5;
                  createStudent(wave);
-                 System.out.println(wave);
+               
              }
              
               }
@@ -297,7 +295,7 @@ public class PlayState extends State {
         
     }
 
-    @Override
+  @Override
     public void update(float deltaTime) {
         if(toggle){
         stage.act(deltaTime);
@@ -319,20 +317,18 @@ public class PlayState extends State {
                   
                    
                } 
-                   
-               // if a student is at 0    
-               if(student.getHealth() == 0){
-                   score++;
-               }   
                
-               // if students passing reaches 0    
-               if(studentsPassing <=0){
-                 StateManager gsm = getStateManager();
-                 // changes to the game over menu
-                 gsm.push(new GameOverState(gsm));  
-             }
+             
+              
+                
                
-                 if(students.get(i).getHealth() <= 0){
+               
+           }
+         }
+       
+        for (Student student : students) {
+            for ( int i = 0; i < students.size; i++){
+                   if(students.get(i).getHealth() <= 0){
                students.removeIndex(i);
                money = money + 100;
                
@@ -340,11 +336,14 @@ public class PlayState extends State {
                
                
            }
-                
-               
-               
-           }
-         }
+                     // if students passing reaches 0    
+               if(studentsPassing <=0){
+                 StateManager gsm = getStateManager();
+                 // changes to the game over menu
+                 gsm.push(new GameOverState(gsm));  
+             }
+            }
+        }
        
        
        for (Teacher teacher : teachers){
@@ -361,10 +360,9 @@ public class PlayState extends State {
            //remove the bullet according to the student hit
            teacher.removeBullet(studentz);
            
-           }//else if(teacher.getBulletCoordX())
+           }
 }
-//           StateManager gsm = getStateManager();
-//            gsm.pop();
+
            
        
 
@@ -373,6 +371,7 @@ public class PlayState extends State {
        
        
     }
+
     
     public int getMoney(){
         return money;
@@ -403,6 +402,10 @@ public class PlayState extends State {
     }
     
     
+    /**
+     * method that is responsible for buttons as well as drag and dropping 
+     * @param i 
+     */
 	public void create (int i) {
                 toggling();
                 
@@ -461,7 +464,7 @@ public class PlayState extends State {
                 invalidTargetImage8.setBounds(338, 148, 205, 42);
                 
                 Image invalidTargetImage9 = new Image(invalidTexture, "badlogic");
-                invalidTargetImage9.setBounds(256+ getViewWidth()/10,0, 300 , getViewHeight()/8);
+                invalidTargetImage9.setBounds(256+ getViewWidth()/10,0, 400 , getViewHeight()/8);
                 
                 
                 
@@ -490,6 +493,7 @@ public class PlayState extends State {
                 invalid.add(invalidTargetImage7);
                 invalid.add(invalidTargetImage8);
                 invalid.add(invalidTargetImage9);
+               
                 
                 
 		
@@ -544,7 +548,7 @@ public class PlayState extends State {
 			public void drop (Source source, Payload payload, float x, float y, int pointer) {
                             System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
                             if(money >= 100){
-                           teachers.add(new Teacher((int)x ,(int)y   , "teacher.jpg",100));
+                           teachers.add(new Teacher((int)x-25 ,(int)y-25   , "teacher.jpg",100));
                                money = money -100;
                             }
 

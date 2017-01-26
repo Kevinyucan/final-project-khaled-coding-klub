@@ -34,7 +34,7 @@ public class Game extends ApplicationAdapter {
     public static final int PRINTER = 550;
     public static final int ENGLISH = 2000;
     
-    public int studentAmount = 3;
+    
     
 
     @Override
