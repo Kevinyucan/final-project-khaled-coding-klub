@@ -22,38 +22,55 @@ import java.util.Set;
  */
 public class AISprites extends Sprite {
 
-    
     //The character essentially holds x and y coordinates 
     private Vector2 velocity = new Vector2();
     //Indicates how many pixels per seconds we move by, (tolerance is a way to notify once we reach 3 pixels before a waypoint)
 
-    //waypoint
+    //the amount of waypoints 
     private int waypoint = 0;
 
+    //speed of which student is travelling at
     private int speed;
 
     //an array of set points  (holds x and y ) 
     private Array<Vector2> path;
 
+    /**
+     * Constructor method for the moving students known as the aiSprites
+     *
+     * @param sprite the student which is passed in as sprite with vital
+     * information (X,Y)
+     * @param path the path which the students follow
+     * @param speed the speed of which student travels at
+     */
     public AISprites(Sprite sprite, Array<Vector2> path, int speed) {
-        
+
+        //takes inheritance of the upper class which is the Sprite in this case 
         super(sprite);
+        //initializes the path 
         this.path = path;
 
+        //initializes the speed of which student is travelling at 
         this.speed = speed;
     }
 
+    /**
+     * The drawing method that continuously draws the students moving
+     *
+     * @param spriteBatch the student's batch that is being passed in from Unit
+     */
     public void draw(SpriteBatch spriteBatch) {
-        //updates the screen
+        //updates the screen with the changes applied
         update();
+        //uses the upper class to draw the student 
         super.draw(spriteBatch);
     }
 
     /**
-     * 
+     * Constantly updates the students in terms of movement
      */
     public void update() {
-       
+
         //the angle of the current point to next point which is used by arc tangent (inverse of tangent) hence (y,x)
         float angle = (float) Math.atan2(path.get(waypoint).y - getY(), path.get(waypoint).x - getX());
 
@@ -62,17 +79,16 @@ public class AISprites extends Sprite {
 
         //update position (move to the waypoint)
         setPosition(getNextX(), getNextY());
-        
-        //set rotation of the character, converts radians to degrees
-//        setRotation(angle * MathUtils.radiansToDegrees);
 
+        //set rotation of the character, converts radians to degrees, You can mess around with it 
+//        setRotation(angle * MathUtils.radiansToDegrees);
         // checks if we have reached a point by calling method out
         if (isWayPointReached()) {
             //Once the unit reached current point, update position
             setPosition(path.get(waypoint).x, path.get(waypoint).y);
             //if we reached a point, restart amount
             if (waypoint + 1 >= path.size) {
-               
+
                 waypoint = 0;
                 //otherwise add on till the path is complete
             } else {
@@ -100,25 +116,35 @@ public class AISprites extends Sprite {
     public Array<Vector2> getPath() {
         return path;
     }
-   
 
+    /**
+     * a getter that is used to access the number of waypoint
+     *
+     * @return the number of waypoints
+     */
     public int getWaypoint() {
         return waypoint;
     }
 
-    public float getXCord() {
-        return velocity.x;
-    }
-
-    public float getYCord() {
-        return velocity.y;
-    }
-
+    /**
+     * a getter that is used to get the next X coordinate of the student which
+     * is caclulated
+     *
+     * @return the next x coordinate of the student that is moving
+     */
     public float getNextX() {
+        //takes the current X coordinate of student then multiples it by velocity and time 
         return getX() + velocity.x * Gdx.graphics.getDeltaTime();
     }
 
+    /**
+     * a getter that is used to get the next Y coordinate of the student which
+     * is caclulated
+     *
+     * @return the next Y coordinate of the student that is moving
+     */
     public float getNextY() {
+        //takes the current Y coordinate of student then multiples it by velocity and time 
         return getY() + velocity.y * Gdx.graphics.getDeltaTime();
     }
 

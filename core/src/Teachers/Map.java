@@ -19,7 +19,12 @@ import com.pls.game.Game;
  */
 public class Map {
 ShapeRenderer sr;
+
+/**
+ *   map class that is used specifically to get coordinates of each path
+ */
     public Map() {
+        //initializes the shaperenderer 
         sr = new ShapeRenderer();
 
     }

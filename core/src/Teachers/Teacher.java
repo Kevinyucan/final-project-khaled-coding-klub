@@ -138,7 +138,7 @@ public class Teacher extends Unit {
 
  
 
-    public void renderz(SpriteBatch batchs) {
+    public void teacherRender(SpriteBatch batchs) {
 //         batch.begin();
         super.render(batchs);
         sr.setColor(Color.RED);

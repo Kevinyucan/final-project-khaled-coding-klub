@@ -65,6 +65,7 @@ public class Game extends ApplicationAdapter {
      * disposes an object
      */
     public void dispose() {
+        //disposes of batch
         batch.dispose();
 
     }
