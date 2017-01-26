@@ -4,28 +4,28 @@
  */
 package Teachers;
 
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
  *
- * @author yuk4142????
+ * @author yuk4142
  */
 public class Bullet {
 
-
+    //create private variables
+    //the x and y coordinates
     private float currentX;
     private float currentY;
+    //speed of the bullet
     private float speed;
+    //bullet boundary
     private Rectangle bulletBoundary;
+    //picture for bullet
     private Texture picture;
+    //storing if bullet has been shot
     public boolean shot;
 
     /**
@@ -45,20 +45,8 @@ public class Bullet {
         //create boundary for the bullet
         bulletBoundary = new Rectangle(currentX, currentY, 25, 40);
 
-
-
     }
-//    //creating the paths for bullet
-//        public Array<Vector2> getRandomPath() {
-//            //create array of paths coordinates
-//        Array<Vector2> path = new Array<Vector2>();
-//        
-//            
-//            
-//           
-//        return path;
-//
-//    }
+
 
     /**
      * Returns X coordinate of bullet
@@ -93,20 +81,6 @@ public class Bullet {
         }
         batch.end();
 
-        // 2 d straight projectile java
-        //http://gamedev.stackexchange.com/questions/84017/how-to-move-an-object-uniformly-from-one-point-to-another-at-a-fixed-angle
-//             this.time = this.time + deltaTime;
-//
-//    // Vertical : Speed * Sine * Angle
-//    double vy = (this.speed * Math.sin(this.angle)) + this.ax*this.time ;
-//    // Horizontal : Speed * Cosine * Angle
-//    double vx = (this.speed * Math.cos(this.angle)) + this.ay*this.time;
-//
-//    this.x = this.x + vx*this.time;
-//    this.y = this.y + vy*this.time + this.ay*(this.time*this.time); 
-//
-//    vx += this.ax * this.time;
-//    vy += this.ay * this.time;
     }
 
     public void updateBullet(float deltaTime, Student a) {
@@ -124,12 +98,8 @@ public class Bullet {
              if(currentY > a.getY()){
                   currentY -= deltaTime * speed;
              }
-     
-       
-      
-//        currentY += deltaTime*speed;
         bulletBoundary.setPosition(currentX, currentY);
-//        System.out.println("Bullet X: " + currentX + " Bullet Y: " + currentY);
+
     }
 
     /**
@@ -138,9 +108,12 @@ public class Bullet {
      * @return true if bullet has collided with student
      */
     public boolean collides(Student a) {
+        //if bullet overlaps student
         if (bulletBoundary.overlaps((a.getBoundaries()))) {
+            //return true
             return true;
         }
+        //else return false
         return false;
     }
 }

@@ -1,9 +1,7 @@
 package com.pls.game;
-
 import States.MainState;
 import States.MenuState;
 import States.State;
-
 import States.StateManager;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -21,10 +19,9 @@ import com.badlogic.gdx.utils.Array;
 public class Game extends ApplicationAdapter {
 
 
-    
+    //spritebatch used to draw
     private SpriteBatch batch;
-  
- 
+    //state manager to "manage" order of states
     private StateManager stateManager;
 
     //resolution of the screen
@@ -42,13 +39,13 @@ public class Game extends ApplicationAdapter {
 
     @Override
     public void create() {
-        
+        //create new spritebatch
         batch = new SpriteBatch();
-
+        //clear colour
         Gdx.gl.glClearColor(0, 0, 0, 0);
-
+        //create new state manager
         stateManager = new StateManager();
-
+        //set what state is first seen after booting up game
         State firstScreen = new MainState(stateManager);
         //set the screen (load first screen)
         stateManager.push(firstScreen);
@@ -68,25 +65,13 @@ public class Game extends ApplicationAdapter {
         stateManager.render(batch);
 
     }
-
+    
     @Override
+    /**
+     * disposes an object
+     */
     public void dispose() {
         batch.dispose();
 
     }
-    
-      
-    public int getStudentAmount(){
-        return studentAmount;
-    }
-    
-    @Override
-    public void resize(int width, int height){
-       // stateManager.resize(width, height);
-    }
-    
-
-
-
- 
 }

@@ -1,33 +1,45 @@
 package Teachers;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.pls.game.AISprites;
+
 
 /**
  *
  * @author yuk4142
  */
 public class Teacher extends Unit {
-
-    private Circle damageBounds;
+    
+    //create private variables
+    //firing range of teacher
     private int damageRadius;
+    //spritebatch used to draw
     private SpriteBatch batch;
+    //boolean toggles radius visibility of teacher
     private boolean isRadiusRevealed = false;
+    //storing time since last bullet was fired
     private float timeSinceLastShot;
+    //how fast bullets shoot out
     private float firingSpeed;
+    //array of bullets
     private Array<Bullet> bullets;
+    //picture of bullet
     private Texture bullet1;
+    //temporary variable storing a student
     private Student temp;
 
+    /**
+     * Teacher constructor
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param textureName what picture is used to draw teacher
+     * @param radius firing radius for bullets
+     */
     public Teacher(int x, int y, String textureName, int radius) {
         //initialize variables
+        //store x and y coordinates to super
         super(x, y, textureName, 0);
         batch = new SpriteBatch();
         sr = new ShapeRenderer();
@@ -54,22 +66,18 @@ public class Teacher extends Unit {
      * @param a student the bullet is hitting
      */
     public void removeBullet(Student a) {
+        //going through list of bullets
         for (Bullet bullet : bullets) {
             for (int i = 0; i < bullets.size; i++) {
-
+                //if bullet collides with student
                 if (bullet.collides(a)) {
+                    //remove bullet at specified index in array
                     bullets.removeIndex(i);
-                
-
-
                 }
-
-
             }
-
         }
-
     }
+    
 /**
  * Check if bullet collides with student
  * @param a student bullet is colliding with
@@ -84,19 +92,7 @@ public class Teacher extends Unit {
         return false;
     }
     
-    /**
-     * If bullet is out of bounds, remove it
-     */
-    public void bulletOutOfBounds(){
-        for (Bullet bullet : bullets) {
-            for (int i = 0; i < bullets.size; i++) {
-            if (bullet.getX()<0||bullet.getX()>400||bullet.getY()<0||bullet.getY()>800){
-                bullets.removeIndex(i);
-               
-            }
-            }
-        }
-    }
+
     
     
 
@@ -160,6 +156,10 @@ public class Teacher extends Unit {
 
     }
 
+    /**
+     * Turns teacher radius on and off(visibility)
+     * @return true if radius is revealed, else return false
+     */
     public boolean toggleRadius() {
 
         if (isRadiusRevealed) {
@@ -167,14 +167,13 @@ public class Teacher extends Unit {
         } else {
             return isRadiusRevealed = true;
         }
-        
-        
-     
-
-
-
     }
-    
+        
+        /**
+         * Return specified student
+         * @param a specified student
+         * @return specified student
+         */
        public Student getStudent(Student a){
            temp = a;
             return a;
