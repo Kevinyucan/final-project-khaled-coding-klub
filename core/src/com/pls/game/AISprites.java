@@ -49,6 +49,9 @@ public class AISprites extends Sprite {
         super.draw(spriteBatch);
     }
 
+    /**
+     * 
+     */
     public void update() {
        
         //the angle of the current point to next point which is used by arc tangent (inverse of tangent) hence (y,x)

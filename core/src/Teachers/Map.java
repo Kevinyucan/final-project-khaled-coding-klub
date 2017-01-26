@@ -24,19 +24,22 @@ ShapeRenderer sr;
 
     }
 
-    //new changes
-    public Array<Vector2> getRandomPath() {
+    
+    /**
+     * The manually assigned path that students follow in the map
+     * @return returns each piece of path (in this case each line segment)
+     */
+    public Array<Vector2> getAssignedPath() {
         
+        //creates new array of paths that is considered vector2 (x,y)
         Array<Vector2> path = new Array<Vector2>();
     
            
-            //adds random point, 
-            //path.add(new Vector2(MathUtils.random(0, Gdx.graphics.getWidth()), MathUtils.random(0, Gdx.graphics.getHeight())));
+            //adds paths accordingly
             path.add(new Vector2(338, 1));
             path.add(new Vector2(338, 148));
             path.add(new Vector2(542, 148));
             path.add(new Vector2(542, Gdx.graphics.getHeight() - 115));
-
             path.add(new Vector2(50, Gdx.graphics.getHeight() - 115));
             path.add(new Vector2(50, 270));
             path.add(new Vector2(257, 270));
@@ -44,16 +47,23 @@ ShapeRenderer sr;
 
          
 
-        
+        //returns the path that is added back to the Unit Class 
         return path;
 
     }
     
+    /**
+     * Rectangles that are used to outline the path, THIS IS FOR TESTING PURPOSES (NOT DRAWN), in case you want to see it 
+     */
     public void drawSquares(){
-        Array<Vector2> path = new Array<Vector2>();
+        
+        //sets renderer to white
            sr.setColor(Color.WHITE);
+           
+          //just like batch.begin();, this initializes the shape renderer in order to draw shapes
             sr.begin(ShapeRenderer.ShapeType.Line);
 
+            //draws rectangles accordingly by manually inserting 
             sr.rect(542, 148, 55, 267);
             sr.rect(50, 365, 492, 50);
             sr.rect(50, 270, 55, 95);

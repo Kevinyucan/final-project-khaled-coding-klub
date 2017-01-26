@@ -21,14 +21,16 @@ public class GameOverState extends State {
     private Texture bg;
     private Texture back;
     BitmapFont font = new BitmapFont();
-    public int counter;
+    public int score;
     
-    public GameOverState(StateManager gsm){
+    public GameOverState(StateManager gsm, int score){
         super(gsm);
         setCameraView(Game.WIDTH, Game.HEIGHT);
         setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
         bg = new Texture("GameOverScreen.jpg");
         back = new Texture("back.png");
+        
+        this.score = score;
     }
     
     @Override
@@ -39,7 +41,7 @@ public class GameOverState extends State {
         batch.draw(bg, 0, 0, getViewWidth(), getViewHeight());
         batch.draw(back, getViewWidth()-150, 100, 100, 100);
         font.setColor(Color.RED);
-        font.draw(batch, "" + counter, getViewWidth()/2 + 100, getViewHeight()/2);
+        font.draw(batch, "" + score, getViewWidth()/2 + 100, getViewHeight()/2);
         
         batch.end();
     }
@@ -48,6 +50,8 @@ public class GameOverState extends State {
     public void update(float deltaTime) {
         
     }
+    
+   
 
     @Override
     public void handleInput() {

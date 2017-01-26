@@ -99,7 +99,7 @@ public abstract class Unit {
 
         aiSprites = new Array<AISprites>();
         
-        aiSprites.add(new AISprites(sprite, map.getRandomPath(), movement ));
+        aiSprites.add(new AISprites(sprite, map.getAssignedPath(), movement ));
         
 
         //the bounds where the teachers can attack once 
@@ -123,6 +123,10 @@ public abstract class Unit {
     
     
 
+    /**
+     * update method used to constantly update any changes happening to units
+     * @param deltaTime the amount of time between events 
+     */
     public void update(float deltaTime) {
 
         // set the new boundaries of each student and teacher
