@@ -75,6 +75,7 @@ public class CreditsState extends State {
     @Override
     public void dispose() {
         bg.dispose();
+        back.dispose();
     }
     
 }

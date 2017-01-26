@@ -148,6 +148,7 @@ public class MenuState extends State {
     public void dispose() {
         bg.dispose();
         button.dispose();
+        button2.dispose();
         button3.dispose();
     }
 }

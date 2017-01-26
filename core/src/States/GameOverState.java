@@ -5,7 +5,9 @@
 package States;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.pls.game.Game;
@@ -15,15 +17,18 @@ import com.pls.game.Game;
  * @author guanv6321
  */
 public class GameOverState extends State {
-
     
     private Texture bg;
+    private Texture back;
+    BitmapFont font = new BitmapFont();
+    public int counter;
     
     public GameOverState(StateManager gsm){
         super(gsm);
         setCameraView(Game.WIDTH, Game.HEIGHT);
         setCameraPosition(getViewWidth() / 2, getViewHeight() / 2);
-        bg = new Texture("");
+        bg = new Texture("GameOverScreen.jpg");
+        back = new Texture("back.png");
     }
     
     @Override
@@ -32,6 +37,9 @@ public class GameOverState extends State {
         batch.begin();
         
         batch.draw(bg, 0, 0, getViewWidth(), getViewHeight());
+        batch.draw(back, getViewWidth()-150, 100, 100, 100);
+        font.setColor(Color.RED);
+        font.draw(batch, "" + counter, getViewWidth()/2 + 100, getViewHeight()/2);
         
         batch.end();
     }
@@ -46,7 +54,13 @@ public class GameOverState extends State {
         if(Gdx.input.justTouched()){
             Vector3 touch = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             unproject(touch);
-            if(touch.x > 0 && touch.x < getViewWidth() && touch.y > 0 && touch.y < getViewHeight()){
+            // check if button is pressed
+            float backX = getViewWidth()-150;
+            float backY = 100;
+            
+            // if clicked in any of these areas
+            if(touch.x > backX && touch.x < backX + 100 && touch.y > backY && touch.y < backY + 100){
+                // create a new state over this state 
                 StateManager gsm = getStateManager();
                 gsm.push(new MenuState(gsm)); 
             }
@@ -57,6 +71,7 @@ public class GameOverState extends State {
     @Override
     public void dispose() {
         bg.dispose();
+        back.dispose();
     }
     
 }

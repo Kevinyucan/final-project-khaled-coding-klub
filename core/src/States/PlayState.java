@@ -55,8 +55,8 @@ public class PlayState extends State {
     private int passed;
 //    private int teacherAmount = 1;
 //    public int studentAmount = 1;
-    public int studentsPassing = 100;
-    private int counter;
+    public int studentsPassing = 50;
+    public int score = 0;
     private boolean toggle;
     
  
@@ -168,8 +168,10 @@ public class PlayState extends State {
           
            //draws the amount of waves (Teacher's lives) 
          font.setColor(Color.RED);
-           font.draw(batch, "Passing: " + studentsPassing, getViewWidth()-90 , getViewHeight()-10 );
-
+         font.draw(batch, "Passing: " + studentsPassing, getViewWidth()-90 , getViewHeight()-10 );
+         
+         // draws the score
+         font.draw(batch, "Score: " + score, getViewWidth()-90 , getViewHeight()-30 );
            
          for (Student student : students) {
            student.renderz(batch);
@@ -277,10 +279,6 @@ public class PlayState extends State {
                  System.out.println(wave);
              }
              
-             if(studentsPassing <=0){
-                 StateManager gsm = getStateManager();
-                 gsm.push(new GameOverState(gsm));  
-             }
               }
 
     }
@@ -321,7 +319,18 @@ public class PlayState extends State {
                   
                    
                } 
+                   
+               // if a student is at 0    
+               if(student.getHealth() == 0){
+                   score++;
+               }   
                
+               // if students passing reaches 0    
+               if(studentsPassing <=0){
+                 StateManager gsm = getStateManager();
+                 // changes to the game over menu
+                 gsm.push(new GameOverState(gsm));  
+             }
                
                  if(students.get(i).getHealth() <= 0){
                students.removeIndex(i);

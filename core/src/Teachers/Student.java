@@ -44,7 +44,7 @@ public class Student extends Unit {
          
      }
      
-  
+     
 
 
     public void renderz(SpriteBatch batchs) {
