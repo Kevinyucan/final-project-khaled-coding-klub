@@ -25,10 +25,7 @@ public class MenuState extends State {
     private Texture button;
     private Texture button2;
     private Texture button3;
-    
-    public boolean keyPressed;
-
-   
+      
     private int highScore;
     
     
@@ -117,30 +114,7 @@ public class MenuState extends State {
         }
         
     }
-    
-    
         
-    
-    
-//     @Override
-//    public boolean keyDown(int keycode) {
-//        if (keycode == Input.Keys.XXX) {
-//            keyPressed = true;
-//        }
-//
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean keyUp(int keycode) {
-//        if (keycode == Input.Keys.) {
-//            keyPressed = false;
-//        }
-//
-//        return false;
-//    }
-    
-    
     
     public void updateScore(){
           Preferences pref = Gdx.app.getPreferences("highscore");
